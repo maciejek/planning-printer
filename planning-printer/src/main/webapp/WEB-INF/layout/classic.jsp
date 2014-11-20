@@ -16,6 +16,10 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
 </head>
 <body>
+<%@ taglib uri="http://tiles.apache.org/tags-tiles-extras" prefix="tilesx" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="security" %>
+<tilesx:useAttribute name="current"/>
+
 	<div class="container">
 
 		<!-- Static navbar -->
@@ -33,15 +37,16 @@
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
-					<li class="active"><a href='<spring:url value="/"></spring:url>'>Home</a></li>
-					<li><a href="#">About</a></li>
-					<li><a href="#">Contact</a></li>
+					<li class="${current == 'index' ? 'active' : ''}"><a href='<spring:url value="/"></spring:url>'>Home</a></li>
+					<security:authorize access="hasRole('ROLE_ADMIN')"><li class="${current == 'users' ? 'active' : ''}"><a href="<spring:url value="/account.html" />">My account</a></li></security:authorize>
+					<li class="${current == 'register' ? 'active' : ''}"><a href="<spring:url value="/register.html" />">Register</a></li>
+					
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<li class="active"><a href="./">Default <span
 							class="sr-only">(current)</span></a></li>
-					<li><a href="../navbar-static-top/">Static top</a></li>
-					<li><a href="../navbar-fixed-top/">Fixed top</a></li>
+					<security:authorize access="!isAuthenticated()"><li class="${current == 'login' ? 'active' : ''}"><a href="<spring:url value="/login.html" />">Login</a></li></security:authorize>
+					<security:authorize access="isAuthenticated()"><li><a href="<spring:url value="/logout"/>">Logout</a></li></security:authorize>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
@@ -50,11 +55,8 @@
 
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h1>Navbar example</h1>
-			<p>This example is a quick exercise to illustrate how the
-				default, static navbar and fixed to top navbar work. It includes the
-				responsive CSS and HTML, so it also adapts to your viewport and
-				device.</p>
+			<h1>Marcin, serwer nie dziala!</h1>
+			<p>Cos ladnego</p>
 			<p>
 				<a class="btn btn-lg btn-primary" href="../../components/#navbar"
 					role="button">View navbar docs &raquo;</a>
