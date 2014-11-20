@@ -21,8 +21,7 @@ public class InitDbService {
         user1.setName("Bugi");
         user1.setEmail("bugi@pwr.edu.pl");
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        //user1.setPassword(encoder.encode("bugi"));
-        user1.setPassword("bugi");
+        user1.setPassword(encoder.encode("bugi"));
         userRepository.save(user1);
     }
 }
