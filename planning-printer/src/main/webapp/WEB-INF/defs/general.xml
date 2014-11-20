@@ -9,5 +9,26 @@
 	<definition name="index" extends="common">
 		<put-attribute name="title" value="Planning Printer" />
 		<put-attribute name="body" value="/WEB-INF/jsp/index.jsp" />
+		<put-attribute name="current" value="index"></put-attribute>
+	</definition>
+	<definition name="users" extends="common">
+		<put-attribute name="title" value="Users" />
+		<put-attribute name="body" value="/WEB-INF/jsp/users.jsp" />
+		<put-attribute name="current" value="users"></put-attribute>
+	</definition>
+	<definition name="user-detail" extends="common">
+		<put-attribute name="title" value="User detail" />
+		<put-attribute name="body" value="/WEB-INF/jsp/user-detail.jsp" />
+		<put-attribute name="current" value="users"></put-attribute>
+	</definition>
+		<definition name="user-register" extends="common">
+		<put-attribute name="title" value="User registration" />
+		<put-attribute name="body" value="/WEB-INF/jsp/user-register.jsp" />
+		<put-attribute name="current" value="register"></put-attribute>
+	</definition>
+		<definition name="login" extends="common">
+		<put-attribute name="title" value="Login" />
+		<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
+		<put-attribute name="current" value="login"></put-attribute>
 	</definition>
 </tiles-definitions>
