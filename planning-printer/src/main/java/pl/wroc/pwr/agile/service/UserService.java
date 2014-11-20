@@ -28,12 +28,13 @@ public class UserService {
 
     public void save(User user) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
+        //user.setPassword(encoder.encode(user.getPassword()));
         userRepository.save(user);
     }
 
     public User findOne(String name) {
-        return userRepository.findByName(name);
+        User user = userRepository.findByName(name);
+        return findOne(user.getId());
     }
     
 }
