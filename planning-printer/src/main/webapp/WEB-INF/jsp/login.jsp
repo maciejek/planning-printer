@@ -42,31 +42,6 @@
 	border-top-right-radius: 0;
 }
 </style>
-
-<table class="table table-bordered table-hover">
-	<thead>
-	<tr>
-	<th>user name</th>
-	</tr>
-	</thead>
-	<tbody>
-		<c:forEach items="${users}" var="user">
-			<tr>
-				<td>
-						${user.name}
-					</a>
-				</td>
-				<td>
-						${user.password}
-				</td>
-			</tr>
-		</c:forEach>
-	</tbody>
-</table>
-
-
-
-
 <form class="form-signin" role="form" method="POST" action="/j_spring_security_check">
 	<h2 class="form-signin-heading">Please sign in</h2>
 	<label for="inputEmail" class="sr-only">Email address</label> 
