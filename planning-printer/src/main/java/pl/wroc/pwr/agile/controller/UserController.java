@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.service.UserService;
@@ -33,8 +34,17 @@ public class UserController {
     }
     
     @RequestMapping(value="/updatePassword", method=RequestMethod.POST)
-    public String submitChangePassword(@ModelAttribute("user") User userWithNewPassword, Principal principal) {
-        userService.updatePassword(principal.getName(), userWithNewPassword.getPassword());
+    public String submitChangePassword(Model model, 
+    		@RequestParam(value = "oldPassword", required = false) String oldPassword,
+    		@RequestParam(value = "newPassword", required = false) String newPassword,
+    		@RequestParam(value = "passwordRepeated", required = false) String repeatedPassword,
+    		Principal principal) {
+    	if (newPassword.equals(repeatedPassword)) {
+    		userService.updatePassword(principal.getName(), newPassword);
+        	model.addAttribute("passwordChanged", true);
+    	} else {
+        	model.addAttribute("differentPasswords", true);
+    	}
         return "user-detail";
     }
     
