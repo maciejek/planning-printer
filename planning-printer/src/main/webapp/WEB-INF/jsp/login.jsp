@@ -3,7 +3,7 @@
 	
 	<%@ include file="../layout/taglib.jsp"%>
 
-<form class="form-signin" role="form" method="POST" action="/j_spring_security_check">
+<form class="form-signin" role="form" method="POST" action="${pageContext.request.contextPath}/j_spring_security_check">
 	<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
 	<div class="alert alert-danger">
 		Can not login: <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
