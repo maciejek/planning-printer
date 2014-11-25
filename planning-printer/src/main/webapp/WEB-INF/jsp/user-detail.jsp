@@ -23,7 +23,8 @@
 			<div class="modal-body">
 
 
-				<form:form commandName="user" cssClass="form-horizontal" action="userC.html">
+				<form:form commandName="user" cssClass="form-horizontal"
+					action="userC.html">
 					<div class="form-group">
 						<label for="email" class="col-sm-2 control-label">Email:</label>
 						<div class="col-sm-10">
@@ -46,16 +47,19 @@
 </div>
 
 
-	<form:form commandName="user" cssClass="form-horizontal" action="updatePassword.html">
-					<div class="form-group">
-						<label for="password" class="col-sm-2 control-label">Your new password:</label>
-						<div class="col-sm-10">
-							<form:password path="password" cssClass="form-control" />
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-2">
-							<input type="submit" value="Update password" class="btn btn-lg btn-primary" />
-						</div>
-					</div>
-				</form:form>
+<form:form commandName="user" cssClass="form-horizontal"
+	action="updatePassword.html">
+	<div class="form-group">
+		<label for="password" class="col-sm-2 control-label">Your new
+			password:</label>
+		<div class="col-sm-10">
+			<form:password path="password" cssClass="form-control" />
+		</div>
+	</div>
+	<div class="form-group">
+		<div class="col-sm-2">
+			<input type="submit" value="Update password"
+				class="btn btn-lg btn-primary" />
+		</div>
+	</div>
+</form:form>
