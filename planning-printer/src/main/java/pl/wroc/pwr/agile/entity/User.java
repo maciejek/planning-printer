@@ -3,6 +3,7 @@ package pl.wroc.pwr.agile.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 @Entity
 public class User {
@@ -11,19 +12,12 @@ public class User {
     @GeneratedValue
     private Integer id;
     
-    private String name;
-    
     private String email;
     
     private String password;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    
+    @OneToOne
+    private Workspace workspace;
 
     public String getEmail() {
         return email;
@@ -47,6 +41,14 @@ public class User {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public Workspace getWorkspace() {
+        return workspace;
+    }
+
+    public void setWorkspace(Workspace workspace) {
+        this.workspace = workspace;
     }
     
     

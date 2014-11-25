@@ -18,7 +18,6 @@ public class InitDbService {
     @PostConstruct
     public void init() {
         User user1 = new User();
-        user1.setName("Bugi");
         user1.setEmail("bugi@pwr.edu.pl");
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user1.setPassword(encoder.encode("bugi"));

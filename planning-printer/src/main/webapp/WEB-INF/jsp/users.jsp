@@ -6,7 +6,7 @@
 <table class="table table-bordered table-hover">
 	<thead>
 	<tr>
-	<th>user name</th>
+	<th>user email</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -14,7 +14,7 @@
 			<tr>
 				<td>
 					<a href="<spring:url value="/users/${user.id}.html"/>">
-						${user.name}
+						${user.email}
 					</a>
 				</td>
 			</tr>

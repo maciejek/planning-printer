@@ -16,8 +16,8 @@
 	<authentication-manager>
 		<authentication-provider>
 			<jdbc-user-service data-source-ref="dataSource"
-				authorities-by-username-query="select user.name, 'ROLE_USER' from user where user.name = ?"
-				users-by-username-query="select name, password, 1 from user where name = ?" />
+				authorities-by-username-query="select user.email, 'ROLE_USER' from user where user.email = ?"
+				users-by-username-query="select email, password, 1 from user where email = ?" />
 			<password-encoder hash="bcrypt"></password-encoder>
 		</authentication-provider>
 	</authentication-manager>

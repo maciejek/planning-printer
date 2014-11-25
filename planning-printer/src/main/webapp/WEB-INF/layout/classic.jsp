@@ -55,7 +55,7 @@
 
 		<!-- Main component for a primary marketing message or call to action -->
 		<div class="jumbotron">
-			<h1>Marcin, serwer nie dziala!</h1>
+			<h1>Wszystko dziala!</h1>
 			<p>Cos ladnego</p>
 			<p>
 				<a class="btn btn-lg btn-primary" href="../../components/#navbar"
