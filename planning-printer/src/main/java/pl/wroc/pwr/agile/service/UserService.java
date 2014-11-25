@@ -33,8 +33,16 @@ public class UserService {
     }
 
     public User findOne(String name) {
-        User user = userRepository.findByName(name);
+        User user = userRepository.findByEmail(name);
         return findOne(user.getId());
+    }
+    
+    public User updatePassword(String name, String password) {
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        User user = findOne(name);
+        user.setPassword(encoder.encode(password));
+        userRepository.save(user);
+        return user;
     }
     
 }

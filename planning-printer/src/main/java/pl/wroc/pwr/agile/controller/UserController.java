@@ -3,6 +3,7 @@ package pl.wroc.pwr.agile.controller;
 import java.security.Principal;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,6 +23,19 @@ public class UserController {
     @ModelAttribute("user")
     public User construct() {
         return new User();
+    }
+    
+    @RequestMapping(value="/createDeputy", method=RequestMethod.POST)
+    public String submitCreateDeputy(@ModelAttribute("user") User user) {
+        user.setPassword("bugi");
+        userService.save(user);
+        return "user-detail";
+    }
+    
+    @RequestMapping(value="/updatePassword", method=RequestMethod.POST)
+    public String submitChangePassword(@ModelAttribute("user") User userWithNewPassword, Principal principal) {
+        userService.updatePassword(principal.getName(), userWithNewPassword.getPassword());
+        return "user-detail";
     }
     
     @RequestMapping("/users")
@@ -53,4 +67,6 @@ public class UserController {
         model.addAttribute("user", userService.findOne(name));
         return "user-detail";
     }
+    
+
 }
