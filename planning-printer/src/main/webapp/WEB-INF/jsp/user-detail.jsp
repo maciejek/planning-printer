@@ -51,7 +51,7 @@
 				<h4 class="modal-title" id="myModalLabel">Assign a deputy</h4>
 			</div>
 			<form:form commandName="user" cssClass="form-horizontal"
-				action="userC.html">
+				action="createDeputy.html">
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="email" class="col-sm-4 control-label">Your deputy email:</label>
