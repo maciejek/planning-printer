@@ -18,6 +18,12 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
     
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    
+    public BCryptPasswordEncoder getEncoder() {
+        return encoder;
+    }
+
     public List<User> findAll() {
         return userRepository.findAll();
     }
@@ -26,10 +32,9 @@ public class UserService {
         return userRepository.findOne(id);
     }
 
-    public void save(User user) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    public User save(User user) {
         user.setPassword(encoder.encode(user.getPassword()));
-        userRepository.save(user);
+        return userRepository.save(user);
     }
 
     public User findOne(String name) {
@@ -38,11 +43,12 @@ public class UserService {
     }
     
     public User updatePassword(String name, String password) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         User user = findOne(name);
         user.setPassword(encoder.encode(password));
         userRepository.save(user);
         return user;
     }
+    
+    
     
 }
