@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class Workspace {
@@ -13,11 +14,9 @@ public class Workspace {
     @GeneratedValue
     private Integer id;
     
-    @OneToOne(mappedBy="workspace", cascade=CascadeType.ALL)
+    @OneToOne
+    @PrimaryKeyJoinColumn
     User scrumMaster;
-    
-    @OneToOne(mappedBy="workspace", cascade=CascadeType.ALL)
-    User deputy;
 
     public Integer getId() {
         return id;
@@ -33,14 +32,6 @@ public class Workspace {
 
     public void setScrumMaster(User scrumMaster) {
         this.scrumMaster = scrumMaster;
-    }
-
-    public User getDeputy() {
-        return deputy;
-    }
-
-    public void setDeputy(User deputy) {
-        this.deputy = deputy;
     }
     
 }
