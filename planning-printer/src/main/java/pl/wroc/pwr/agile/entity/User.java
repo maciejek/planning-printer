@@ -1,9 +1,17 @@
 package pl.wroc.pwr.agile.entity;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+
+import pl.wroc.pwr.agile.annotation.UniqueEmail;
 
 @Entity
 public class User {
@@ -12,11 +20,16 @@ public class User {
     @GeneratedValue
     private Integer id;
     
+    @Email(message = "Invalid email!")
+    @Size(min = 1, message = "You must provide an email address!")
+    @Column(unique = true)
+    @UniqueEmail(message = "Such email already exists!")
     private String email;
     
+    @Size(min = 5, message = "Password must be at least 5 characters!")
     private String password;
     
-    @OneToOne
+    @OneToOne(mappedBy="scrumMaster", cascade=CascadeType.ALL)
     private Workspace workspace;
 
     public String getEmail() {

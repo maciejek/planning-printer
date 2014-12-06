@@ -2,10 +2,13 @@ package pl.wroc.pwr.agile.controller;
 
 import java.security.Principal;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.wroc.pwr.agile.entity.User;
+import pl.wroc.pwr.agile.entity.Workspace;
 import pl.wroc.pwr.agile.service.UserService;
+import pl.wroc.pwr.agile.service.WorkspaceService;
 
 @Controller
 public class UserController {
@@ -21,16 +26,18 @@ public class UserController {
     @Autowired
     private UserService userService;
     
-    @ModelAttribute("user")
-    public User construct() {
-        return new User();
-    }
+    @Autowired
+    private WorkspaceService workspaceService;
     
     @RequestMapping(value="/createDeputy", method=RequestMethod.POST)
-    public String submitCreateDeputy(@ModelAttribute("user") User user) {
-        user.setPassword("bugi");
-        userService.save(user);
-        return "user-detail";
+    public String submitCreateDeputy(Model model, Principal principal, @ModelAttribute("user") User deputyUser) {
+        User currentUser = userService.findOne(principal.getName());
+        deputyUser.setPassword("bugi");
+        Workspace currentWorkspace = currentUser.getWorkspace();
+        //currentWorkspace.setDeputy(deputyUser);
+        workspaceService.save(currentWorkspace);
+        model.addAttribute("deputyCreated", true);
+        return "user-account";
     }
     
     @RequestMapping(value="/updatePassword", method=RequestMethod.POST)
@@ -45,7 +52,7 @@ public class UserController {
     	} else {
         	model.addAttribute("differentPasswords", true);
     	}
-        return "user-detail";
+        return "user-account";
     }
     
     @RequestMapping("/users")
@@ -57,25 +64,18 @@ public class UserController {
     @RequestMapping("/users/{id}")
     public String detail(Model model, @PathVariable int id) {
         model.addAttribute("user", userService.findOne(id));
-        return "user-detail";
-    }
-    
-    @RequestMapping("/register")
-    public String showRegister() {
-        return "user-register";
-    }
-
-    @RequestMapping(value="/register", method=RequestMethod.POST)
-    public String doRegister(@ModelAttribute("user") User user) {
-        userService.save(user);
-        return "redirect:/register.html?success=true";
+        return "user-account";
     }
     
     @RequestMapping("/account")
     public String account(Model model, Principal principal) {
         String name = principal.getName();
-        model.addAttribute("user", userService.findOne(name));
-        return "user-detail";
+        User currentUser = userService.findOne(name);
+        model.addAttribute("user", currentUser);
+        //if (currentUser.getWorkspace().getDeputy() != null) {
+        //    model.addAttribute("deputy", currentUser.getWorkspace().getDeputy());
+        //}
+        return "user-account";
     }
     
 

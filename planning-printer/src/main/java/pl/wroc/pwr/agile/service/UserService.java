@@ -37,9 +37,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findOne(String name) {
-        User user = userRepository.findByEmail(name);
-        return findOne(user.getId());
+    public User findOne(String email) {
+        return userRepository.findByEmail(email);
     }
     
     public User updatePassword(String name, String password) {

@@ -10,10 +10,10 @@
 	</div>
 	</c:if>
 	<h2 class="form-signin-heading">Please sign in</h2>
-	<label for="inputEmail" class="sr-only">Email address</label> 
+	<label for="inputEmail" class="sr-only">Email address <span class="required-field">*</span></label> 
 	<input type="text" name="j_username" id="inputEmail" class="form-control" placeholder="Email"
 		required autofocus> 
-	<label for="inputPassword" class="sr-only">Password</label>
+	<label for="inputPassword" class="sr-only">Password <span class="required-field">*</span></label>
 	<input type="password" name="j_password" id="inputPassword" class="form-control"
 		placeholder="Password" required>
 	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>

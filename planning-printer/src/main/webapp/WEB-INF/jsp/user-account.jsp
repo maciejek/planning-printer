@@ -12,6 +12,11 @@
 		Your password has been changed successfuly!
 	</div>
 </c:if>
+<c:if test="${deputyCreated eq true}">
+	<div class="alert alert-success">
+		Your deputy account has been created!
+	</div>
+</c:if>
 
 <div class="bs-example">
 	<ul class="nav nav-pills" role="tablist">
@@ -53,12 +58,17 @@
 			<form:form commandName="user" cssClass="form-horizontal"
 				action="createDeputy.html">
 				<div class="modal-body">
+				<c:if test="${not empty deputy}">
+					<p>${deputy.email}</p>
+				</c:if>
+				<c:if test="${empty deputy}">
 					<div class="form-group">
 						<label for="email" class="col-sm-4 control-label">Your deputy email:</label>
 						<div class="col-sm-8">
 							<form:input path="email" cssClass="form-control" />
 						</div>
 					</div>
+				</c:if>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
