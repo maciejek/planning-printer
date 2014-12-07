@@ -17,7 +17,7 @@
 		<put-attribute name="current" value="users"></put-attribute>
 	</definition>
 	<definition name="user-account" extends="common">
-		<put-attribute name="title" value="User detail" />
+		<put-attribute name="title" value="User account" />
 		<put-attribute name="body" value="/WEB-INF/jsp/user-account.jsp" />
 		<put-attribute name="current" value="account"></put-attribute>
 	</definition>

@@ -2,9 +2,10 @@
 	pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/taglib.jsp"%>
-<c:if test="${differentPasswords eq true}">
+
+<c:if test="${passwordNotChanged eq true}">
 	<div class="alert alert-danger">
-		You must enter the same passwords!
+		Cannot change password!
 	</div>
 </c:if>
 <c:if test="${passwordChanged eq true}">
@@ -91,25 +92,25 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Change password</h4>
 			</div>
-			<form:form cssClass="form-horizontal"
+			<form:form cssClass="form-horizontal change-password-form"
 				action="updatePassword.html">
 				<div class="modal-body">
 					<div class="form-group">
-						<label for="password" class="col-sm-4 control-label">Old password:</label>
+						<label for="oldPassword" class="col-sm-4 control-label">Old password <span class="required-field">*</span></label>
 						<div class="col-sm-8">
-							<input type="password" name="oldPassword" class="form-control" />
+							<input type="password" name="oldPassword" id="oldPassword" class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="password" class="col-sm-4 control-label">New password:</label>
+						<label for="newPassword" class="col-sm-4 control-label">New password <span class="required-field">*</span></label>
 						<div class="col-sm-8">
-							<input type="password" name="newPassword" class="form-control" />
+							<input type="password" name="newPassword" id="newPassword" class="form-control" />
 						</div>
 					</div>
 					<div class="form-group">
-						<label for="passwordRepeated" class="col-sm-4 control-label">Reenter password:</label>
+						<label for="confirmPassword" class="col-sm-4 control-label">Confirm password <span class="required-field">*</span></label>
 						<div class="col-sm-8">
-							<input type="password" name="passwordRepeated" class="form-control" />
+							<input type="password" name="confirmPassword" id="confirmPassword" class="form-control" />
 						</div>
 					</div>
 				</div>
@@ -121,3 +122,46 @@
 		</div>
 	</div>
 </div>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$(".change-password-form").validate(
+		{
+			rules : {
+				oldPassword : {
+					required : true,
+					remote : {
+						url : "<spring:url value='/passwordCorrect.html' />",
+						type : "get",
+						data : {
+							oldPassword : function() {
+								return $("#oldPassword").val();
+							}
+						}
+					}
+				},
+				newPassword : {
+					required : true,
+					minlength : 5
+				},
+				confirmPassword : {
+					required : true,
+					minlength : 5,
+					equalTo : "#newPassword"
+				}
+			},
+			highlight: function(element) {
+				$(element).closest(".form-group").removeClass('has-success').addClass('has-error').addClass('has-feedback');
+			},
+			unhighlight: function(element) {
+				$(element).closest(".form-group").removeClass('has-error').addClass('has-success').addClass('has-feedback');
+			},
+			messages : {
+				oldPassword : {
+					remote : "Password is incorrect!"
+				}
+			}
+		}
+	);
+});
+</script>

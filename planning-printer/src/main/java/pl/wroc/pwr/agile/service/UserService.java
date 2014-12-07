@@ -53,6 +53,4 @@ public class UserService {
     public String encyptPassword(String plainPassword) {
         return encoder.encode(plainPassword);
     }
-    
-    
 }

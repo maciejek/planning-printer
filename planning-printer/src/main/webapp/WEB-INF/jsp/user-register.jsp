@@ -41,49 +41,49 @@
 <div class="col-md-2"></div>
 
 <script type="text/javascript">
-	$(document).ready(function() {
-		$(".registration-form").validate(
-			{
-				rules: {
-					email: {
-						required : true,
-						email : true,
-						remote : {
-							url : "<spring:url value='/register/available.html' />",
-							type : "get",
-							data : {
-								email : function() {
-									return $("#email").val();
-								}
+$(document).ready(function() {
+	$(".registration-form").validate(
+		{
+			rules: {
+				email: {
+					required : true,
+					email : true,
+					remote : {
+						url : "<spring:url value='/register/available.html' />",
+						type : "get",
+						data : {
+							email : function() {
+								return $("#email").val();
 							}
 						}
-					},
-					password: {
-						required : true,
-						minlength : 5
-					},
-					confirmPassword: {
-						required : true,
-						minlength : 5,
-						equalTo : "#password"
 					}
 				},
-				highlight: function(element) {
-					$(element).closest(".form-group").removeClass('has-success').addClass('has-error').addClass('has-feedback');
-					$("span[id$='errors']").remove();
+				password: {
+					required : true,
+					minlength : 5
 				},
-				unhighlight: function(element) {
-					$(element).closest(".form-group").removeClass('has-error').addClass('has-success').addClass('has-feedback');
-					$("span[id$='errors']").remove();
-				},
-				messages : {
-					email : {
-						remote : "Such email already exists!"
-					}
+				confirmPassword: {
+					required : true,
+					minlength : 5,
+					equalTo : "#password"
+				}
+			},
+			highlight: function(element) {
+				$(element).closest(".form-group").removeClass('has-success').addClass('has-error').addClass('has-feedback');
+				$("span[id$='errors']").remove();
+			},
+			unhighlight: function(element) {
+				$(element).closest(".form-group").removeClass('has-error').addClass('has-success').addClass('has-feedback');
+				$("span[id$='errors']").remove();
+			},
+			messages : {
+				email : {
+					remote : "Such email already exists!"
 				}
 			}
-		);
-		
-		$("span[id$='errors']").closest('.form-group').addClass('has-error');
-	});
+		}
+	);
+	
+	$("span[id$='errors']").closest('.form-group').addClass('has-error');
+});
 </script>
