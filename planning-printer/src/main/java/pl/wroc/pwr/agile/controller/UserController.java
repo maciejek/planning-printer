@@ -2,13 +2,12 @@ package pl.wroc.pwr.agile.controller;
 
 import java.security.Principal;
 
-import javax.validation.Valid;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.entity.Workspace;
+import pl.wroc.pwr.agile.service.InitDbService;
 import pl.wroc.pwr.agile.service.UserService;
 import pl.wroc.pwr.agile.service.WorkspaceService;
 
@@ -31,11 +31,14 @@ public class UserController {
     
     @RequestMapping(value="/createDeputy", method=RequestMethod.POST)
     public String submitCreateDeputy(Model model, Principal principal, @ModelAttribute("user") User deputyUser) {
+        Logger logger = LoggerFactory.getLogger(InitDbService.class);
+        logger.info("===========================================userController");
         User currentUser = userService.findOne(principal.getName());
-        deputyUser.setPassword("bugi");
+        deputyUser.setPassword(userService.encyptPassword("bugi"));
         Workspace currentWorkspace = currentUser.getWorkspace();
-        //currentWorkspace.setDeputy(deputyUser);
+        currentWorkspace.setDeputy(deputyUser);
         workspaceService.save(currentWorkspace);
+        //userService.save(deputyUser);
         model.addAttribute("deputyCreated", true);
         return "user-account";
     }
@@ -72,9 +75,11 @@ public class UserController {
         String name = principal.getName();
         User currentUser = userService.findOne(name);
         model.addAttribute("user", currentUser);
-        //if (currentUser.getWorkspace().getDeputy() != null) {
-        //    model.addAttribute("deputy", currentUser.getWorkspace().getDeputy());
-        //}
+        Logger logger = LoggerFactory.getLogger(InitDbService.class);
+        logger.info(currentUser.toString());
+//        if (currentUser.getWorkspace().getDeputy() != null && currentUser.getWorkspace() != null) {
+//            model.addAttribute("deputy", currentUser.getWorkspace().getDeputy());
+//        }
         return "user-account";
     }
     

@@ -5,6 +5,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.validation.constraints.Size;
@@ -26,11 +28,15 @@ public class User {
     @UniqueEmail(message = "Such email already exists!")
     private String email;
     
-    @Size(min = 5, message = "Password must be at least 5 characters!")
+    @Size(min = 4, message = "Password must be at least 4 characters!")
     private String password;
     
-    @OneToOne(mappedBy="scrumMaster", cascade=CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name="workspace_id")
     private Workspace workspace;
+    
+//    @OneToOne
+//    private Workspace workspace;
 
     public String getEmail() {
         return email;
@@ -62,6 +68,10 @@ public class User {
 
     public void setWorkspace(Workspace workspace) {
         this.workspace = workspace;
+    }
+    
+    public String toString() {
+        return email + ", " + password + ", " + workspace;
     }
     
     
