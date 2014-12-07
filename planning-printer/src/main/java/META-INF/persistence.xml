@@ -3,5 +3,6 @@
 	<persistence-unit name="planning-printer">
 		<class>pl.wroc.pwr.agile.entity.User</class>
 		<class>pl.wroc.pwr.agile.entity.Workspace</class>
+		<class>pl.wroc.pwr.agile.entity.UserStory</class>
 	</persistence-unit>
 </persistence>

@@ -1,5 +1,6 @@
 package pl.wroc.pwr.agile.entity;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.persistence.Entity;
@@ -19,6 +20,9 @@ public class Workspace {
 //    @OneToMany(mappedBy="workspace")
 //    Collection<User> users;
 
+    @OneToMany(mappedBy="workspace")
+    List<UserStory> userStories;
+    
     public Integer getId() {
         return id;
     }
@@ -50,6 +54,16 @@ public class Workspace {
     public User getDeputy() {
         return users.get(UserType.DEPUTY);
     }
+
+    public List<UserStory> getUserStories() {
+        return userStories;
+    }
+
+    public void setUserStories(List<UserStory> userStories) {
+        this.userStories = userStories;
+    }
+    
+    
 
 //    public Collection<User> getUsers() {
 //        return users;

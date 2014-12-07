@@ -21,7 +21,7 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/user-account.jsp" />
 		<put-attribute name="current" value="account"></put-attribute>
 	</definition>
-		<definition name="user-register" extends="common">
+	<definition name="user-register" extends="common">
 		<put-attribute name="title" value="User registration" />
 		<put-attribute name="body" value="/WEB-INF/jsp/user-register.jsp" />
 		<put-attribute name="current" value="register"></put-attribute>
@@ -30,5 +30,10 @@
 		<put-attribute name="title" value="Login" />
 		<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
 		<put-attribute name="current" value="login"></put-attribute>
+	</definition>
+	<definition name="user-workspace" extends="common">
+		<put-attribute name="title" value="User workspace" />
+		<put-attribute name="body" value="/WEB-INF/jsp/user-workspace.jsp" />
+		<put-attribute name="current" value="workspace"></put-attribute>
 	</definition>
 </tiles-definitions>
