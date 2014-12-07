@@ -17,6 +17,9 @@
 						${user.email}
 					</a>
 				</td>
+				<td>
+						${user.password}
+				</td>
 			</tr>
 		</c:forEach>
 	</tbody>

@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,7 +35,7 @@ public class UserService {
     }
 
     public User save(User user) {
-        user.setPassword(encoder.encode(user.getPassword()));
+        user.setPassword(encyptPassword(user.getPassword()));
         return userRepository.save(user);
     }
 
@@ -43,11 +45,14 @@ public class UserService {
     
     public User updatePassword(String name, String password) {
         User user = findOne(name);
-        user.setPassword(encoder.encode(password));
+        user.setPassword(encyptPassword(password));
         userRepository.save(user);
         return user;
     }
     
+    public String encyptPassword(String plainPassword) {
+        return encoder.encode(plainPassword);
+    }
     
     
 }
