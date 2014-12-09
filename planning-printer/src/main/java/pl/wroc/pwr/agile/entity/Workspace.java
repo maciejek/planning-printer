@@ -1,12 +1,16 @@
 package pl.wroc.pwr.agile.entity;
 
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+
+import org.springframework.util.CollectionUtils;
 
 @Entity
 public class Workspace {
@@ -15,14 +19,9 @@ public class Workspace {
     @GeneratedValue
     private Integer id;
     
-    @OneToMany(targetEntity=User.class, mappedBy="workspace")
-    Map<UserType, User> users;
-//    @OneToMany(mappedBy="workspace")
-//    Collection<User> users;
+    @OneToMany(targetEntity=User.class, mappedBy="workspace", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private List<User> users;
 
-    @OneToMany(mappedBy="workspace")
-    List<UserStory> userStories;
-    
     public Integer getId() {
         return id;
     }
@@ -31,46 +30,43 @@ public class Workspace {
         this.id = id;
     }
 
-    public Map<UserType, User> getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(Map<UserType, User> users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
-    
-    public void setScrumMaster(User sMaster) {
-        users.put(UserType.SCRUM_MASTER, sMaster);
-    }
-    
-    public void setDeputy(User deputy) {
-        users.put(UserType.DEPUTY, deputy);
-    }
-    
-    public User getScrumMaster() {
-        return users.get(UserType.SCRUM_MASTER);
-    }
-    
+
     public User getDeputy() {
-        return users.get(UserType.DEPUTY);
-    }
-
-    public List<UserStory> getUserStories() {
-        return userStories;
-    }
-
-    public void setUserStories(List<UserStory> userStories) {
-        this.userStories = userStories;
+        for (User user : users) {
+            if (user.getType() == UserType.DEPUTY) {
+                return user;
+            }
+        }
+        return null;
     }
     
-    
 
-//    public Collection<User> getUsers() {
-//        return users;
-//    }
-//
-//    public void setUsers(Collection<User> users) {
-//        this.users = users;
-//    }
+    public User getScrumMaster() {
+        for (User user : users) {
+            if (user.getType() == UserType.SCRUM_MASTER) {
+                return user;
+            }
+        }
+        return null;
+    }
+
+    public void setDeputy(User deputy) {
+        deputy.setType(UserType.DEPUTY);
+        addUser(deputy);
+    }
+
+    private void addUser(User user) {
+        if (CollectionUtils.isEmpty(users)) {
+            users = new LinkedList<User>();
+        }
+        users.add(user);
+    }
 
 }
