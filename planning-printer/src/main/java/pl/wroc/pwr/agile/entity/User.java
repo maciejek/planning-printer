@@ -32,8 +32,8 @@ public class User {
     @JoinColumn(name="workspace_id")
     private Workspace workspace;
     
-//    @OneToOne
-//    private Workspace workspace;
+    @Column
+    private UserType type;
 
     public String getEmail() {
         return email;
@@ -67,6 +67,14 @@ public class User {
         this.workspace = workspace;
     }
     
+    public UserType getType() {
+        return type;
+    }
+
+    public void setType(UserType type) {
+        this.type = type;
+    }
+
     public String toString() {
         return email + ", " + password + ", " + workspace;
     }
