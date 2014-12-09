@@ -61,6 +61,11 @@ public class Workspace {
         deputy.setType(UserType.DEPUTY);
         addUser(deputy);
     }
+    
+    public void setScrumMaster(User scrumMaster) {
+        scrumMaster.setType(UserType.SCRUM_MASTER);
+        addUser(scrumMaster);
+    }
 
     private void addUser(User user) {
         if (CollectionUtils.isEmpty(users)) {

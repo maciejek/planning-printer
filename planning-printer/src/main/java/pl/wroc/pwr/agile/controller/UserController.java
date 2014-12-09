@@ -44,21 +44,6 @@ public class UserController {
         return "user-account";
     }
     
-    @RequestMapping(value="/updatePassword", method=RequestMethod.POST)
-    public String submitChangePassword(Model model, 
-    		@RequestParam(value = "oldPassword", required = false) String oldPassword,
-    		@RequestParam(value = "newPassword", required = false) String newPassword,
-    		@RequestParam(value = "passwordRepeated", required = false) String repeatedPassword,
-    		Principal principal) {
-    	if (newPassword.equals(repeatedPassword)) {
-    		userService.updatePassword(principal.getName(), newPassword);
-        	model.addAttribute("passwordChanged", true);
-    	} else {
-        	model.addAttribute("differentPasswords", true);
-    	}
-        return "user-account";
-    }
-    
     @RequestMapping("/users")
     public String users(Model model) {
         model.addAttribute("users", userService.findAll());

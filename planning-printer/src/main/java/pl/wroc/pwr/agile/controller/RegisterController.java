@@ -43,6 +43,8 @@ public class RegisterController {
         }
         Workspace workspace = new Workspace();
         user.setWorkspace(workspace);
+        workspace.setScrumMaster(user);
+        workspaceService.save(workspace);
         userService.save(user);
         return "redirect:/register.html?success=true";
     }
