@@ -58,7 +58,7 @@
 			<!--/.nav-collapse -->
 		</div>
 		<!--/.container-fluid --> </nav>
-
+	
 		<tiles:insertAttribute name="body" />
 
 		<br>

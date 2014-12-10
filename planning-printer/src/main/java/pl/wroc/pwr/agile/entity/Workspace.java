@@ -22,6 +22,12 @@ public class Workspace {
     @OneToMany(targetEntity=User.class, mappedBy="workspace", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<User> users;
 
+    @OneToMany(mappedBy="workspace")
+    private List<UserStory> userStories;
+    
+    @OneToMany(mappedBy="workspace")
+    private List<Employee> employees;
+
     public Integer getId() {
         return id;
     }
@@ -72,6 +78,22 @@ public class Workspace {
             users = new LinkedList<User>();
         }
         users.add(user);
+    }
+    
+    public List<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(List<Employee> employees) {
+        this.employees = employees;
+    }
+
+    public List<UserStory> getUserStories() {
+        return userStories;
+    }
+
+    public void setUserStories(List<UserStory> userStories) {
+        this.userStories = userStories;
     }
 
 }

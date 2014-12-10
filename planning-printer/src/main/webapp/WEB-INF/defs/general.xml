@@ -36,4 +36,9 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/user-workspace.jsp" />
 		<put-attribute name="current" value="workspace"></put-attribute>
 	</definition>
+	<definition name="create-team" extends="common">
+		<put-attribute name="title" value="Create your team" />
+		<put-attribute name="body" value="/WEB-INF/jsp/create-team.jsp" />
+		<put-attribute name="current" value="create-team"></put-attribute>
+	</definition>
 </tiles-definitions>

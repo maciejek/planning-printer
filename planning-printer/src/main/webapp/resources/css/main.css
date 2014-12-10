@@ -70,3 +70,28 @@ span[id$="errors"], .error, .has-error .help-block, .has-error .radio, .has-erro
 label.error {
 	font-weight: normal;
 }
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+	padding: 8px 15px;
+}
+
+.add-employee {
+	font-size: 20px;
+	color: #428bca;
+	margin-top: 5px;
+	cursor: pointer;
+}
+
+.remove-employee {
+	font-size: 20px;
+	cursor: pointer;
+	color: #555;
+}
+
+.table-footer {
+	background-color: rgba(244,244,244,0.3);
+}
+
+.table-footer:hover {
+	background-color: #d9edf7;
+}
