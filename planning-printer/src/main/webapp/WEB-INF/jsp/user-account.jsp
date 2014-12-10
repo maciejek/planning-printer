@@ -45,6 +45,35 @@
 
 <p>This is your account page.</p>
 
+<br/>
+
+<div class="row">
+<div class="col-md-6">
+	<div class="panel panel-default">
+		<div class="panel-heading">Your workspace</div>
+		<div class="panel-body">
+			<p>Here is a summary of your workspace.</p>
+			<ul>
+				<li>Your team contains <span class="label label-primary">6 developers</span> and <span class="label label-primary">4 testers</span>.</li>
+				<li>You have defined <span class="label label-primary">10 user stories</span>.</li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<div class="col-md-6">
+	<div class="panel panel-default">
+		<div class="panel-heading">Create your team</div>
+		<div class="panel-body">
+			<p>To start working with Planning Printer first you need to
+				create your team!</p>
+			<p class="text-right">
+				<a class="btn btn-primary" href="<spring:url value="/createTeam.html" />" role="button">Create team</a>
+			</p>
+		</div>
+	</div>
+</div>
+</div>
 <!-- Assign a deputy Modal -->
 <div class="modal fade" id="assignDeputyDialog" tabindex="-1"
 	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

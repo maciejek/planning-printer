@@ -4,5 +4,7 @@
 		<class>pl.wroc.pwr.agile.entity.User</class>
 		<class>pl.wroc.pwr.agile.entity.Workspace</class>
 		<class>pl.wroc.pwr.agile.entity.UserStory</class>
+		<class>pl.wroc.pwr.agile.entity.Task</class>
+		<class>pl.wroc.pwr.agile.entity.Employee</class>
 	</persistence-unit>
 </persistence>
