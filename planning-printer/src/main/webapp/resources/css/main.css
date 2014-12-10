@@ -100,7 +100,7 @@ label.error {
 	width: 50px;
 }
 
-.developers-hours td {
+.developers-hours td, .testers-hours td {
 	vertical-align: middle!important;
 }
 
