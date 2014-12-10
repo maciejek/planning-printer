@@ -95,3 +95,15 @@ label.error {
 .table-footer:hover {
 	background-color: #d9edf7;
 }
+
+.developers-hours-input, .testers-hours-input {
+	width: 50px;
+}
+
+.developers-hours td {
+	vertical-align: middle!important;
+}
+
+.hours-summary {
+	background-color: #fcf8e3;
+}

@@ -9,8 +9,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import pl.wroc.pwr.agile.entity.Employee;
+import pl.wroc.pwr.agile.entity.EmployeeType;
 import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.entity.Workspace;
+import pl.wroc.pwr.agile.repository.EmployeeRepository;
 import pl.wroc.pwr.agile.repository.UserRepository;
 import pl.wroc.pwr.agile.repository.WorkspaceRepository;
 
@@ -22,6 +25,9 @@ public class InitDbService {
     
     @Autowired
     private WorkspaceRepository workspaceRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
     
     @PostConstruct
     public void init() {
@@ -34,5 +40,26 @@ public class InitDbService {
         workspaceRepository.save(workspace);
         user1.setWorkspace(workspace);
         userRepository.save(user1);
+        
+        Employee employee1 = new Employee();
+        employee1.setName("Dariusz");
+        employee1.setSurname("P³awecki");
+        employee1.setType(EmployeeType.DEVELOPER);
+        employee1.setWorkspace(workspace);
+        employeeRepository.save(employee1);
+        
+        Employee employee2 = new Employee();
+        employee2.setName("Maciej");
+        employee2.setSurname("Radoszko");
+        employee2.setType(EmployeeType.DEVELOPER);
+        employee2.setWorkspace(workspace);
+        employeeRepository.save(employee2);
+        
+        Employee employee3 = new Employee();
+        employee3.setName("Wiktoria");
+        employee3.setSurname("Poœlednicka");
+        employee3.setType(EmployeeType.TESTER);
+        employee3.setWorkspace(workspace);
+        employeeRepository.save(employee3);
     }
 }

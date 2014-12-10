@@ -44,7 +44,7 @@
 				<ul class="nav navbar-nav">
 					<li class="${current == 'index' ? 'active' : ''}"><a href='<spring:url value="/"></spring:url>'>Home</a></li>
 					<security:authorize access="hasRole('ROLE_USER')"><li class="${current == 'account' ? 'active' : ''}"><a href="<spring:url value="/account.html" />">My account</a></li></security:authorize>
-					<security:authorize access="hasRole('ROLE_USER')"><li class="${current == 'workspace' ? 'active' : ''}"><a href="<spring:url value="/workspace.html" />">My workspace</a></li></security:authorize>
+					<security:authorize access="hasRole('ROLE_USER')"><li class="${current == 'planning' ? 'active' : ''}"><a href="<spring:url value="/planning.html" />">Planning</a></li></security:authorize>
 					<security:authorize access="!isAuthenticated()"><li class="${current == 'register' ? 'active' : ''}"><a href="<spring:url value="/register.html" />">Register</a></li></security:authorize>
 					
 				</ul>
