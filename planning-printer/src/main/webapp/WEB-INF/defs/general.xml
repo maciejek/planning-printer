@@ -31,10 +31,10 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/login.jsp" />
 		<put-attribute name="current" value="login"></put-attribute>
 	</definition>
-	<definition name="user-workspace" extends="common">
-		<put-attribute name="title" value="User workspace" />
-		<put-attribute name="body" value="/WEB-INF/jsp/user-workspace.jsp" />
-		<put-attribute name="current" value="workspace"></put-attribute>
+	<definition name="planning" extends="common">
+		<put-attribute name="title" value="Planning" />
+		<put-attribute name="body" value="/WEB-INF/jsp/planning.jsp" />
+		<put-attribute name="current" value="planning"></put-attribute>
 	</definition>
 	<definition name="create-team" extends="common">
 		<put-attribute name="title" value="Create your team" />

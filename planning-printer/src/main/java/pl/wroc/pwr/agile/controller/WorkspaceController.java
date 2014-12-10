@@ -24,9 +24,18 @@ public class WorkspaceController {
     @Autowired
     private WorkspaceService workspaceService;
     
-    @RequestMapping("/workspace")
-    public String showWorkspace() {
-        return "user-workspace";
+    @RequestMapping("/planning")
+    public String showWorkspace(Principal principal, Model model) {
+        Workspace workspace = userService.findOne(principal.getName()).getWorkspace();
+        List<Employee> developers = workspaceService.findDevelopersInWorkspace(workspace.getId());
+        if (!developers.isEmpty()) {
+            model.addAttribute("developers", developers);
+        }
+        List<Employee> testers = workspaceService.findTestersInWorkspace(workspace.getId());
+        if (!testers.isEmpty()) {
+            model.addAttribute("testers", testers);
+        }
+        return "planning";
     }
     
     @RequestMapping("/createTeam")
