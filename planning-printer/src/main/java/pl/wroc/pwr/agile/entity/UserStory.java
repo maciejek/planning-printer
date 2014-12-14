@@ -15,13 +15,15 @@ public class UserStory {
     @Id
     @GeneratedValue
     private Integer id;
+    
+    private String number;
 
-    @Size(min = 1, message = "You must provide summary for user story!")
+	@Size(min = 1, message = "You must provide summary for user story!")
     private String summary;
 
-    private Integer storyPoints;
+	private String points;
 
-    @ManyToOne
+	@ManyToOne
     private Workspace workspace;
 
     @OneToMany(mappedBy = "userStory")
@@ -42,13 +44,13 @@ public class UserStory {
     public void setSummary(String summary) {
         this.summary = summary;
     }
-
-    public Integer getStoryPoints() {
-        return storyPoints;
+    
+    public String getPoints() {
+    	return points;
     }
-
-    public void setStoryPoints(Integer storyPoints) {
-        this.storyPoints = storyPoints;
+    
+    public void setPoints(String points) {
+    	this.points = points;
     }
 
     public Workspace getWorkspace() {
@@ -57,6 +59,14 @@ public class UserStory {
 
     public void setWorkspace(Workspace workspace) {
         this.workspace = workspace;
+    }
+    
+    public String getNumber() {
+    	return number;
+    }
+    
+    public void setNumber(String number) {
+    	this.number = number;
     }
 
     public List<Task> getTasks() {
