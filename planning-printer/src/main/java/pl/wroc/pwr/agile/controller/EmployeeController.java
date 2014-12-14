@@ -1,11 +1,8 @@
 package pl.wroc.pwr.agile.controller;
 
-import java.security.Principal;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +10,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.wroc.pwr.agile.entity.Employee;
 import pl.wroc.pwr.agile.entity.EmployeeType;
-import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.entity.Workspace;
 import pl.wroc.pwr.agile.service.EmployeeService;
 import pl.wroc.pwr.agile.service.UserService;

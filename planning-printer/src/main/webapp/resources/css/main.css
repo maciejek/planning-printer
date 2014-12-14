@@ -75,14 +75,14 @@ label.error {
 	padding: 8px 15px;
 }
 
-.add-employee {
+.add-employee, .add-story {
 	font-size: 20px;
 	color: #428bca;
 	margin-top: 5px;
 	cursor: pointer;
 }
 
-.remove-employee {
+.remove-employee, .remove-story {
 	font-size: 20px;
 	cursor: pointer;
 	color: #555;

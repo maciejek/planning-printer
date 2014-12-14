@@ -1,0 +1,109 @@
+.form-signin {
+	max-width: 330px;
+	padding: 15px;
+	margin: 0 auto;
+}
+
+.form-signin .form-signin-heading, .form-signin .checkbox {
+	margin-bottom: 10px;
+}
+
+.form-signin .checkbox {
+	font-weight: normal;
+}
+
+.form-signin .form-control {
+	position: relative;
+	height: auto;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	padding: 10px;
+	font-size: 16px;
+}
+
+.form-signin .form-control:focus {
+	z-index: 2;
+}
+
+.form-signin input[type="email"] {
+	margin-bottom: -1px;
+	border-bottom-right-radius: 0;
+	border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+	margin-bottom: 10px;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+.required-field {
+	vertical-align:sup;
+	color: #d9534f;
+}
+
+.right {
+	float: right;
+}
+
+span[id$="errors"], .error, .has-error .help-block, .has-error .radio, .has-error .checkbox, .has-error .radio-inline, .has-error .checkbox-inline, .has-error.radio label, .has-error.checkbox label, .has-error.radio-inline label, .has-error.checkbox-inline label {
+	color: #d9534f;
+}
+
+.has-success .help-block, .has-success .radio, .has-success .checkbox, .has-success .radio-inline, .has-success .checkbox-inline, .has-success.radio label, .has-success.checkbox label, .has-success.radio-inline label, .has-success.checkbox-inline label {
+	color: #5cb85c;
+}
+
+.has-error .form-control {
+	border-color: #d9534f;
+}
+
+.has-success .form-control {
+	border-color: #5cb85c;
+}
+
+.has-error .control-label, .has-success .control-label {
+	color: #333;
+}
+
+label.error {
+	font-weight: normal;
+}
+
+.table>thead>tr>th, .table>tbody>tr>th, .table>tfoot>tr>th, .table>thead>tr>td, .table>tbody>tr>td, .table>tfoot>tr>td {
+	padding: 8px 15px;
+}
+
+.add-employee {
+	font-size: 20px;
+	color: #428bca;
+	margin-top: 5px;
+	cursor: pointer;
+}
+
+.remove-employee {
+	font-size: 20px;
+	cursor: pointer;
+	color: #555;
+}
+
+.table-footer {
+	background-color: rgba(244,244,244,0.3);
+}
+
+.table-footer:hover {
+	background-color: #d9edf7;
+}
+
+.developers-hours-input, .testers-hours-input {
+	width: 50px;
+}
+
+.developers-hours td, .testers-hours td {
+	vertical-align: middle!important;
+}
+
+.hours-summary {
+	background-color: #fcf8e3;
+}
