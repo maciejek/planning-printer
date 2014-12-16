@@ -15,7 +15,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading"><strong>User Stories</strong></div>
 
-			<table class="table table-hover developers-table">
+			<table class="table table-hover story-table">
 				<thead>
 					<tr>
 						<th></th>
@@ -60,7 +60,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$('.developers-table .add-story').click(function() {
+	$('.story-table .add-story').click(function() {
 		var storyNumber = $("#storyNumber").val();
 		var storySummary = $("#storySummary").val();
 		var storyPoints = $("#storyPoints").val();
@@ -69,18 +69,18 @@ $(document).ready(function() {
 				url : "<spring:url value='/story/addStory.html' />",
 				type : "get",
 				data : {
-					name : function() {
+					number : function() {
 						return storyNumber;
 					},
-					surname : function() {
+					summary : function() {
 						return storySummary;
 					},
-					surname : function() {
+					points : function() {
 						return storyPoints;
 					},
 				},
 				success : function(id) {
-					$(".developers-table tbody").append("<tr><td></td>" +
+					$(".story-table tbody").append("<tr><td></td>" +
 							"<td>" + storyNumber + "</td><td>" + storySummary + "</td><td>" +storyPoints +"</td>" +
 							"<td><span id=" + id + " class='glyphicon glyphicon-trash remove-story' " + 
 							"aria-hidden='true'></span></td></tr>");
@@ -94,6 +94,24 @@ $(document).ready(function() {
 			});
 		}
 	});	
+	$('.story-table').on("click", ".remove-story", function() {
+		var id = $(this).attr("id");
+		$.ajax({
+			url : "<spring:url value='/story/removeStory.html' />",
+			type : "get",
+			data : {
+				id : function() {
+					return id;
+				},
+			},
+			success : function(data) {
+				$("#"+id).closest('tr').remove();
+			},
+			error : function(data) {
+				console.log("Error!");
+			}
+		});
+	});
 });
 </script>
 	
