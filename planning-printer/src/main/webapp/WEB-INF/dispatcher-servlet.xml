@@ -9,7 +9,7 @@
 
 	<mvc:annotation-driven />
 
-	<context:component-scan base-package="pl.wroc.pwr.psi.controller" />
+	<context:component-scan base-package="pl.wroc.pwr.agile.controller" />
 
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
