@@ -1,6 +1,5 @@
 package pl.wroc.pwr.agile.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,32 +25,16 @@ public class UserStoryService {
 		userStoryRepository.delete(userStoryId);
 	}
 	
-	public UserStory addTasks(Integer storyId, ArrayList<Task> tasks){
-		UserStory story = userStoryRepository.getOne(storyId);
-		story.setTasks(tasks);
-		
-		return story;
-	}
-	
-	public UserStory addTask(Integer storyId, Task task){
-		UserStory story = userStoryRepository.getOne(storyId);
-		if (story.getTasks() == null) {
-			story.setTasks(new ArrayList<Task>());
-		}
-		story.getTasks().add(task);
-		
-		return story;
-	}
-	
 	public UserStory getUserStoryById(Integer id){
 		return userStoryRepository.findById(id);
 	}
 	
-	
-	public List<Task> getTasksByUserStory(Integer userStoryId){
+	public List<Task> getTasksByUserStoryId(Integer userStoryId){
 		UserStory story = userStoryRepository.findById(userStoryId);
 		return story.getTasks();
-		
-		
+	}
+	
+	public List<UserStory> findAllUserStory(){
+		return userStoryRepository.findAll();
 	}
 }

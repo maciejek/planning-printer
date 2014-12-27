@@ -56,7 +56,7 @@ public class InitDbService {
         
         Employee employee1 = new Employee();
         employee1.setName("Dariusz");
-        employee1.setSurname("P≥awecki");
+        employee1.setSurname("P≈Çawecki");
         employee1.setType(EmployeeType.DEVELOPER);
         employee1.setWorkspace(workspace);
         employeeRepository.save(employee1);
@@ -70,7 +70,7 @@ public class InitDbService {
         
         Employee employee3 = new Employee();
         employee3.setName("Wiktoria");
-        employee3.setSurname("Poúlednicka");
+        employee3.setSurname("Po≈õlednicka");
         employee3.setType(EmployeeType.TESTER);
         employee3.setWorkspace(workspace);
         employeeRepository.save(employee3);
