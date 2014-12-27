@@ -11,10 +11,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pl.wroc.pwr.agile.controller.UserController;
 import pl.wroc.pwr.agile.entity.Employee;
 import pl.wroc.pwr.agile.entity.EmployeeType;
+import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.entity.UserStory;
+import pl.wroc.pwr.agile.entity.UserType;
 import pl.wroc.pwr.agile.entity.Workspace;
 import pl.wroc.pwr.agile.repository.WorkspaceRepository;
 
@@ -22,8 +23,11 @@ import pl.wroc.pwr.agile.repository.WorkspaceRepository;
 @Transactional
 public class WorkspaceService {
     
-	Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static Logger logger = LoggerFactory.getLogger(WorkspaceService.class);
 
+	@Autowired
+	private UserService userService;
+	
     @Autowired
     private WorkspaceRepository workspaceRepository;
     
@@ -35,9 +39,22 @@ public class WorkspaceService {
         return workspaceRepository.findAll();
     }
     
-    public List<Employee> findDevelopersInWorkspace(int workspaceId) {
+    public Workspace getCurrentWorkspace() {
+        return userService.getLoggedUser().getWorkspace();
+    }
+    
+    public void assignDeputy(User deputyUser) {
+        Workspace currentWorkspace = getCurrentWorkspace();
+        deputyUser.setPassword(userService.encryptPassword("bugi"));
+        deputyUser.setType(UserType.DEPUTY);
+        deputyUser.setWorkspace(currentWorkspace);
+        currentWorkspace.setDeputy(deputyUser);
+        save(currentWorkspace);
+    }
+    
+    public List<Employee> findDevelopersInWorkspace() {
         List<Employee> developers = new LinkedList<Employee>();
-        List<Employee> employees = workspaceRepository.findOne(workspaceId).getEmployees();
+        List<Employee> employees = getCurrentWorkspace().getEmployees();
         for (Employee employee : employees) {
             if (employee.getType() == EmployeeType.DEVELOPER) {
                 developers.add(employee);
@@ -46,9 +63,9 @@ public class WorkspaceService {
         return developers;
     }
     
-    public List<Employee> findTestersInWorkspace(int workspaceId) {
+    public List<Employee> findTestersInWorkspace() {
         List<Employee> testers = new LinkedList<Employee>();
-        List<Employee> employees = workspaceRepository.findOne(workspaceId).getEmployees();
+        List<Employee> employees = getCurrentWorkspace().getEmployees();
         for (Employee employee : employees) {
             if (employee.getType() == EmployeeType.TESTER) {
                 testers.add(employee);
@@ -57,22 +74,14 @@ public class WorkspaceService {
         return testers;
     }
     
-    
-    public List<UserStory> findAllUserStories(int workspaceId){
-    	List<UserStory> userStories = workspaceRepository.findOne(workspaceId).getUserStories();
-    	if (userStories == null) {
-			return new ArrayList<UserStory>();
-		}
-    	else{
-    		logger.warn(" ilosc taskow "+userStories.get(0).getTasks().size());
-    		return userStories;
-    	}
+    public List<UserStory> findAllUserStories() {
+        List<UserStory> userStories = getCurrentWorkspace().getUserStories();
+        if (userStories == null) {
+            return new ArrayList<UserStory>();
+        } else {
+            logger.info(" ilosc taskow " + userStories.get(0).getTasks().size());
+            return userStories;
+        }
     }
-    
-    
-    
-    
-    
-    
     
 }

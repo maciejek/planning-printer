@@ -1,10 +1,11 @@
 package pl.wroc.pwr.agile.controller;
 
-import java.security.Principal;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,78 +27,72 @@ import pl.wroc.pwr.agile.service.WorkspaceService;
 
 @Controller
 public class UserStoryController {
+    private static Logger logger = LoggerFactory.getLogger(UserStoryController.class);
 
-	@Autowired
-	private UserStoryService userStoryService; 
-	
-	@Autowired
-	private UserService userService;
-	 
-	@Autowired
-	private WorkspaceService workspaceService;
-	
-	@Autowired
-	private TaskRepository taskRepository;
-	
-	@ModelAttribute("task")
-	public Task construct() {
-	    return new Task();
-	}
-	
-	 @RequestMapping("/story")
-	 @Transactional(readOnly=true)
-	 public String showStory(Principal principal, Model model) {
-		 Workspace workspace = userService.findOne(principal.getName()).getWorkspace();
-		 List<UserStory> userStories = workspaceService.findAllUserStories(workspace.getId());
-		 
-		 System.out.println("wika" + principal.getName());
-		 System.out.println("wika" + workspace.toString());
-		 System.out.println("wika task size"+ userStories.get(0).getTasks().size());
-		 
-	List<Task> tasksByUserStory = userStoryService.getTasksByUserStoryId(userStories.get(0).getId());
-	
-	System.out.println(tasksByUserStory.size());
-	
-	for (UserStory story : userStories) {
-		System.out.println(story.getSummary());
-		
-		List<Task> tasks = story.getTasks();
-		
-		for (Task task : tasks) {
-			System.out.println(task.getSummary());
-		}
-		
-		System.out.println();
-		
-	}
-	
-		 
-	    if (!userStories.isEmpty()) {
-	    	model.addAttribute("stories",userStories);
-		}
-	    return "story";
-	 }
-	 
-	 @Autowired
-	 private UserStoryRepository repo;
-	 
+    @Autowired
+    private UserStoryRepository userStoryRepository;
 
-	@RequestMapping(method = RequestMethod.POST)
-	public String doRegister(@Valid @ModelAttribute("task") Task task,
-			BindingResult result, @RequestParam Integer storyId) {
-		if (result.hasErrors()) {
-			return "story";
-		}
+    @Autowired
+    private UserStoryService userStoryService;
 
-		UserStory userStoryById = userStoryService.getUserStoryById(storyId);
-		System.out.println(userStoryById.getSummary());
-		task.setUserStory(userStoryById);
-		taskRepository.save(task);
-		
-		
+    @Autowired
+    private UserService userService;
 
-		return "redirect:/story.html?success=true";
-	}
-	 
-	 
+    @Autowired
+    private WorkspaceService workspaceService;
+
+    @Autowired
+    private TaskRepository taskRepository;
+
+    @ModelAttribute("task")
+    public Task construct() {
+        return new Task();
+    }
+
+    @RequestMapping("/story")
+    @Transactional(readOnly = true)
+    public String showStory(Model model) {
+        Workspace workspace = workspaceService.getCurrentWorkspace();
+        List<UserStory> userStories = workspaceService.findAllUserStories();
+
+        logger.info("wika" + workspace.toString());
+        logger.info("wika task size" + userStories.get(0).getTasks().size());
+
+        List<Task> tasksByUserStory = userStoryService.getTasksByUserStoryId(userStories.get(0).getId());
+
+        logger.info("" + tasksByUserStory.size());
+
+        for (UserStory story : userStories) {
+            System.out.println(story.getSummary());
+
+            List<Task> tasks = story.getTasks();
+
+            for (Task task : tasks) {
+                System.out.println(task.getSummary());
+            }
+
+            System.out.println();
+        }
+
+        if (!userStories.isEmpty()) {
+            model.addAttribute("stories", userStories);
+        }
+        return "story";
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public String addTask(@Valid @ModelAttribute("task") Task task,
+            BindingResult result, @RequestParam Integer storyId) {
+        if (result.hasErrors()) {
+            return "story";
+        }
+
+        UserStory userStoryById = userStoryService.getUserStoryById(storyId);
+        logger.info(userStoryById.getSummary());
+        task.setUserStory(userStoryById);
+        taskRepository.save(task);
+
+        return "redirect:/story.html?success=true";
+    }
+
 }

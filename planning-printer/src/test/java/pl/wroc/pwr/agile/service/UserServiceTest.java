@@ -58,10 +58,10 @@ public class UserServiceTest {
     @Test
     public void shouldEncryptPaswordBeforeSavingNewUser() {
         User userToBeCreated = new User();
-        when(service.save(userToBeCreated)).thenReturn(userToBeCreated);
+        when(service.registerUser(userToBeCreated)).thenReturn(userToBeCreated);
         userToBeCreated.setPassword(SAMPLE_PASSWORD);
         
-        User newlySavedDeputy = service.save(userToBeCreated);
+        User newlySavedDeputy = service.registerUser(userToBeCreated);
         
         assertThat(userToBeCreated.getPassword(), not(newlySavedDeputy.getPassword()));
     }
@@ -72,7 +72,7 @@ public class UserServiceTest {
         User userMock = mock(User.class);
         when(userMock.getPassword()).thenReturn(SAMPLE_PASSWORD);
         
-        User newlySavedDeputy = service.save(userMock);
+        User newlySavedDeputy = service.registerUser(userMock);
         
         assertThat(newlySavedDeputy.getPassword(), not(SAMPLE_PASSWORD));
         verify(userRepository).save(newlySavedDeputy);

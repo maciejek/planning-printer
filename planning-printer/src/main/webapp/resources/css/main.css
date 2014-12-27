@@ -98,6 +98,8 @@ label.error {
 
 .developers-hours-input, .testers-hours-input {
 	width: 50px;
+	margin: 0 auto;
+	text-align: center;
 }
 
 .developers-hours td, .testers-hours td {

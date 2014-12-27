@@ -6,5 +6,8 @@
 		<class>pl.wroc.pwr.agile.entity.UserStory</class>
 		<class>pl.wroc.pwr.agile.entity.Task</class>
 		<class>pl.wroc.pwr.agile.entity.Employee</class>
+		<properties>
+			<property name="hibernate.connection.charSet" value="UTF-8"/>
+		</properties>
 	</persistence-unit>
 </persistence>
