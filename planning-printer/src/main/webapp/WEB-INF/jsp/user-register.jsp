@@ -14,14 +14,14 @@
 	<div class="form-group">
 		<label for="email" class="col-sm-2 control-label">Email <span class="required-field">*</span></label>
 		<div class="col-sm-10">
-			<form:input path="email" cssClass="form-control"/>
+			<form:input path="email" id="email" cssClass="form-control"/>
 			<form:errors path="email"/>
 		</div>
 	</div>
 	<div class="form-group">
 		<label for="password" class="col-sm-2 control-label">Password <span class="required-field">*</span></label>
 		<div class="col-sm-10">
-			<form:password path="password" id="password" cssClass="form-control"/>
+			<form:password path="password" id="password" name="password" cssClass="form-control"/>
 			<form:errors path="password"/>
 		</div>
 	</div>

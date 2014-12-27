@@ -23,16 +23,16 @@
 	<ul class="nav nav-pills" role="tablist">
 		<li role="presentation" class="active"><a href="#">Your
 				account</a></li>
-		<li role="presentation" class="dropdown"><a id="drop4" href="#"
+		<li id="settings" role="presentation" class="dropdown"><a id="drop4" href="#"
 			class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
 			role="button" aria-expanded="false"> Settings <span class="caret"></span>
 		</a>
 			<ul id="menu1" class="dropdown-menu" role="menu"
 				aria-labelledby="drop4">
-				<li role="presentation"><a role="menuitem" tabindex="-1"
+				<li role="presentation"><a role="menuitem" tabindex="1"
 					href="https://twitter.com/fat" data-toggle="modal"
 					data-target="#assignDeputyDialog">Assign a deputy</a></li>
-				<li role="presentation"><a role="menuitem" tabindex="-1"
+				<li role="presentation" id="changePassword"><a role="menuitem" tabindex="2"
 					href="https://twitter.com/fat" data-toggle="modal"
 					data-target="#changePasswordDialog">Change password</a></li>
 			</ul></li>
@@ -145,7 +145,7 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" value="Save" class="btn btn-primary" />
+					<input type="submit" id="save" value="Save" class="btn btn-primary" />
 				</div>
 			</form:form>
 		</div>

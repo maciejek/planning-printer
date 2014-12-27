@@ -16,6 +16,6 @@
 	<label for="inputPassword" class="sr-only">Password <span class="required-field">*</span></label>
 	<input type="password" name="j_password" id="inputPassword" class="form-control"
 		placeholder="Password" required>
-	<button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+	<input class="btn btn-lg btn-primary btn-block" type="submit" value="Sign in">
 </form>
 
