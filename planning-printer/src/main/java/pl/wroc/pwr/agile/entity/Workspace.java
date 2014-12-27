@@ -22,7 +22,7 @@ public class Workspace {
     @OneToMany(targetEntity=User.class, mappedBy="workspace", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<User> users;
 
-    @OneToMany(mappedBy="workspace")
+    @OneToMany(targetEntity=UserStory.class, mappedBy="workspace", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<UserStory> userStories;
     
     @OneToMany(mappedBy="workspace")

@@ -8,6 +8,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
+import org.hibernate.annotations.Proxy;
 import org.hibernate.validator.constraints.Email;
 
 import pl.wroc.pwr.agile.annotation.UniqueEmail;

@@ -6,4 +6,5 @@ import pl.wroc.pwr.agile.entity.UserStory;
 
 public interface UserStoryRepository extends JpaRepository<UserStory, Integer> {
 
+	UserStory findById(Integer id);
 }

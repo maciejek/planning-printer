@@ -2,10 +2,10 @@ package pl.wroc.pwr.agile.service;
 
 import java.util.List;
 
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceContextType;
 import javax.transaction.Transactional;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import pl.wroc.pwr.agile.repository.UserRepository;
 
 @Service
 @Transactional
+@PersistenceContext(type = PersistenceContextType.EXTENDED)
 public class UserService {
     
     @Autowired
