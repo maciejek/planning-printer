@@ -28,7 +28,7 @@ public class EmployeeService {
         employee.setSurname(surname);
         employee.setType(type);
         employee.setWorkspace(userService.getLoggedUser().getWorkspace());
-        employeeRepository.save(employee);
+        employee = employeeRepository.save(employee);
         
         Integer employeeId = -1;
         
