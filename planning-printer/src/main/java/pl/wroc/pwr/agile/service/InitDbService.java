@@ -50,13 +50,13 @@ public class InitDbService {
         user1.setPassword(encoder.encode("bugi"));
 
         Workspace workspace = new Workspace();
-        workspaceRepository.save(workspace);
         user1.setWorkspace(workspace);
+        workspaceRepository.save(workspace);
         userRepository.save(user1);
         
         Employee employee1 = new Employee();
         employee1.setName("Dariusz");
-        employee1.setSurname("Pï¿½awecki");
+        employee1.setSurname("P³awecki");
         employee1.setType(EmployeeType.DEVELOPER);
         employee1.setWorkspace(workspace);
         employeeRepository.save(employee1);
@@ -70,7 +70,7 @@ public class InitDbService {
         
         Employee employee3 = new Employee();
         employee3.setName("Wiktoria");
-        employee3.setSurname("Poï¿½lednicka");
+        employee3.setSurname("Poœlednicka");
         employee3.setType(EmployeeType.TESTER);
         employee3.setWorkspace(workspace);
         employeeRepository.save(employee3);
