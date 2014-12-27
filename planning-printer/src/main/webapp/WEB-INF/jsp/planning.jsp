@@ -10,15 +10,15 @@
 <br />
 
 <ul class="nav nav-tabs nav-justified">
-	<li role="presentation" class="active"><a href="#">Step 1</a></li>
-	<li role="presentation"><a href="#">Step 2</a></li>
-	<li role="presentation"><a href="#">Step 3</a></li>
+	<li role="presentation" class="nav-step active" id="step1-nav"><a href="#step1">Step 1</a></li>
+	<li role="presentation" class="nav-step" id="step2-nav"><a href="#step2">Step 2</a></li>
+	<li role="presentation" class="nav-step" id="step3-nav"><a href="#step3">Step 3</a></li>
 </ul>
 
 <br />
 
-<div class="row">
-	<div class="col-md-12" id="step1">
+<div class="planning-step col-md-12" id="step1">
+	<div class="row">
 		<p>Specify hours for members of your team.</p>
 		<br/>
 		<div class="col-md-1"></div>
@@ -86,10 +86,57 @@
 		</div>
 		<div class="col-md-1"></div>
 	</div>
+	<div class="row">
+		<nav>
+			<ul class="pager">
+				<li class="next nav-step"><a href="#step2">Next <span aria-hidden="true">&rarr;</span></a></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<div class="planning-step col-md-12" id="step2">
+	<div class="row">
+		<p>Step 2 here</p>
+		<br />
+	</div>
+	<div class="row">
+		<nav>
+			<ul class="pager">
+				<li class="previous nav-step"><a href="#step1"><span aria-hidden="true">&larr;</span>
+						Prev</a></li>
+				<li class="next nav-step"><a href="#step3">Next <span aria-hidden="true">&rarr;</span></a></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<div class="planning-step col-md-12" id="step3">
+	<div class="row">
+		<p>Step 3 here</p>
+		<br/>
+	</div>
+	<div class="row">
+		<nav>
+			<ul class="pager">
+				<li class="previous nav-step"><a href="#step2"><span aria-hidden="true">&larr;</span>
+						Prev</a></li>
+			</ul>
+		</nav>
+	</div>
 </div>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$('.planning-step').hide();
+	$('#step1').show();
+	$('.nav-step').click(function() {
+		var stepId = $(this).find('a').attr('href');
+		$('.nav-step').removeClass('active');
+		$(stepId + "-nav").addClass('active');
+		$('.planning-step').hide();
+		$(stepId).show();
+	});
 	$('.developers-hours-input').blur(function() {
 		var hours = $('.developers-hours-input');
 		var sum = 0;

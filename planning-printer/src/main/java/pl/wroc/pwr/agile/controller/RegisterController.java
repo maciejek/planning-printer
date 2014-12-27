@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.wroc.pwr.agile.entity.User;
-import pl.wroc.pwr.agile.entity.Workspace;
 import pl.wroc.pwr.agile.service.UserService;
 import pl.wroc.pwr.agile.service.WorkspaceService;
 
@@ -41,11 +40,7 @@ public class RegisterController {
         if (result.hasErrors()) {
             return "user-register";
         }
-        Workspace workspace = new Workspace();
-        user.setWorkspace(workspace);
-        workspace.setScrumMaster(user);
-        workspaceService.save(workspace);
-        userService.save(user);
+        userService.registerUser(user);
         return "redirect:/register.html?success=true";
     }
     
@@ -53,6 +48,6 @@ public class RegisterController {
     @ResponseBody
     public String available(@RequestParam String email) {
         Boolean isEmailAvailable = userService.findOne(email) == null;
-        return isEmailAvailable.toString();
+        return String.valueOf(isEmailAvailable);
     }
 }

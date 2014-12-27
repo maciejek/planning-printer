@@ -3,15 +3,12 @@ package pl.wroc.pwr.agile.controller;
 import java.security.Principal;
 import java.util.List;
 
-import javax.resource.spi.work.Work;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import pl.wroc.pwr.agile.entity.Employee;
-import pl.wroc.pwr.agile.entity.Workspace;
 import pl.wroc.pwr.agile.service.UserService;
 import pl.wroc.pwr.agile.service.WorkspaceService;
 
@@ -25,13 +22,12 @@ public class WorkspaceController {
     private WorkspaceService workspaceService;
     
     @RequestMapping("/planning")
-    public String showWorkspace(Principal principal, Model model) {
-        Workspace workspace = userService.findOne(principal.getName()).getWorkspace();
-        List<Employee> developers = workspaceService.findDevelopersInWorkspace(workspace.getId());
+    public String doPlanning(Principal principal, Model model) {
+        List<Employee> developers = workspaceService.findDevelopersInWorkspace();
         if (!developers.isEmpty()) {
             model.addAttribute("developers", developers);
         }
-        List<Employee> testers = workspaceService.findTestersInWorkspace(workspace.getId());
+        List<Employee> testers = workspaceService.findTestersInWorkspace();
         if (!testers.isEmpty()) {
             model.addAttribute("testers", testers);
         }
@@ -40,12 +36,11 @@ public class WorkspaceController {
     
     @RequestMapping("/createTeam")
     public String createTeam(Principal principal, Model model) {
-        Workspace workspace = userService.findOne(principal.getName()).getWorkspace();
-        List<Employee> developers = workspaceService.findDevelopersInWorkspace(workspace.getId());
+        List<Employee> developers = workspaceService.findDevelopersInWorkspace();
         if (!developers.isEmpty()) {
             model.addAttribute("developers", developers);
         }
-        List<Employee> testers = workspaceService.findTestersInWorkspace(workspace.getId());
+        List<Employee> testers = workspaceService.findTestersInWorkspace();
         if (!testers.isEmpty()) {
             model.addAttribute("testers", testers);
         }
