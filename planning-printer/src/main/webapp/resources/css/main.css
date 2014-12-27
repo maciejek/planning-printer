@@ -107,3 +107,11 @@ label.error {
 .hours-summary {
 	background-color: #fcf8e3;
 }
+
+.badge {
+	float: right;
+}
+
+.user-story-tr {
+	background-color: #FAF2CC;
+}

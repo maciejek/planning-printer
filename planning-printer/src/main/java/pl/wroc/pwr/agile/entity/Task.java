@@ -23,7 +23,15 @@ public class Task {
     @ManyToOne
     private UserStory userStory;
 
-    public Integer getId() {
+    public UserStory getUserStory() {
+		return userStory;
+	}
+
+	public void setUserStory(UserStory userStory) {
+		this.userStory = userStory;
+	}
+
+	public Integer getId() {
         return id;
     }
 

@@ -2,7 +2,9 @@ package pl.wroc.pwr.agile.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
@@ -26,7 +28,7 @@ public class UserStory {
 	@ManyToOne
     private Workspace workspace;
 
-    @OneToMany(mappedBy = "userStory")
+    @OneToMany(targetEntity=Task.class, mappedBy="userStory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<Task> tasks;
 
     public Integer getId() {
