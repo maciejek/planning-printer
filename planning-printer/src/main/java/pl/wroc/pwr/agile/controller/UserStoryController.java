@@ -54,7 +54,7 @@ public class UserStoryController {
 		 System.out.println("wika" + workspace.toString());
 		 System.out.println("wika task size"+ userStories.get(0).getTasks().size());
 		 
-	List<Task> tasksByUserStory = userStoryService.getTasksByUserStory(userStories.get(0).getId());
+	List<Task> tasksByUserStory = userStoryService.getTasksByUserStoryId(userStories.get(0).getId());
 	
 	System.out.println(tasksByUserStory.size());
 	

@@ -55,7 +55,8 @@ public class StoryController {
 		task.setSummary(summary);
 		task.setEstimation(estimation);
 		task.setType(type);
-		userStoryService.addTask(storyId, task);
+		
+//		userStoryService.addTask(storyId, task);
 		return "true";
 	}
 	

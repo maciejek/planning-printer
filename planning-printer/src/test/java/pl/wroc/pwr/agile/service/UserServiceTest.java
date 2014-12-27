@@ -38,6 +38,7 @@ public class UserServiceTest {
         MockitoAnnotations.initMocks(this);
     }
     
+    @Ignore
     @Test
     public void shouldFindAllInvokeFindAllOnRepository() {
         service.findAll();
@@ -45,6 +46,7 @@ public class UserServiceTest {
         Mockito.verify(userRepository).findAll();
     }
     
+    @Ignore
     @Test
     public void shouldFindOneWithIdInvokeFindOneOnRepository() {
         service.findOne(SAMPLE_ID);
