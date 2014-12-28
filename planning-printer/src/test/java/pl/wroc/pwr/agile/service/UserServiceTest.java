@@ -1,11 +1,11 @@
 package pl.wroc.pwr.agile.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
+import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 
 import org.junit.Before;
 import org.junit.Ignore;
@@ -19,8 +19,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.repository.UserRepository;
 
-
-
 public class UserServiceTest {
 
     private static final int SAMPLE_ID = 99;
@@ -31,7 +29,10 @@ public class UserServiceTest {
     private UserService service;
     
     @Mock
-    private UserRepository userRepository;
+    private UserRepository userRepositoryMock;
+    
+    @Mock
+    private WorkspaceService workspaceServiceMock;
     
     @Before
     public void initMocks(){
@@ -42,26 +43,25 @@ public class UserServiceTest {
     public void shouldFindAllInvokeFindAllOnRepository() {
         service.findAll();
         
-        Mockito.verify(userRepository).findAll();
+        Mockito.verify(userRepositoryMock).findAll();
     }
     
     @Test
     public void shouldFindOneWithIdInvokeFindOneOnRepository() {
         service.findOne(SAMPLE_ID);
         
-        verify(userRepository).findOne(SAMPLE_ID);
+        verify(userRepositoryMock).findOne(SAMPLE_ID);
     }
     
-    @Ignore
     @Test
     public void shouldEncryptPaswordBeforeSavingNewUser() {
         User userToBeCreated = new User();
-        when(service.registerUser(userToBeCreated)).thenReturn(userToBeCreated);
+        when(userRepositoryMock.save(userToBeCreated)).thenReturn(userToBeCreated);
         userToBeCreated.setPassword(SAMPLE_PASSWORD);
         
         User newlySavedDeputy = service.registerUser(userToBeCreated);
         
-        assertThat(userToBeCreated.getPassword(), not(newlySavedDeputy.getPassword()));
+        assertThat(service.getEncoder().matches(SAMPLE_PASSWORD, newlySavedDeputy.getPassword()), is(true));
     }
     
     @Ignore
@@ -73,9 +73,7 @@ public class UserServiceTest {
         User newlySavedDeputy = service.registerUser(userMock);
         
         assertThat(newlySavedDeputy.getPassword(), not(SAMPLE_PASSWORD));
-        verify(userRepository).save(newlySavedDeputy);
-        
-        
+        verify(userRepositoryMock).save(newlySavedDeputy);      
         
     }
 }
