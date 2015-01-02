@@ -79,7 +79,6 @@ public class WorkspaceService {
         if (userStories == null) {
             return new ArrayList<UserStory>();
         } else {
-            logger.info(" ilosc taskow " + userStories.get(0).getTasks().size());
             return userStories;
         }
     }

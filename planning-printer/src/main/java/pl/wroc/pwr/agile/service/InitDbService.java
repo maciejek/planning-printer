@@ -29,87 +29,100 @@ public class InitDbService {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private WorkspaceRepository workspaceRepository;
 
     @Autowired
     private EmployeeRepository employeeRepository;
-    
+
     @Autowired
     private UserStoryRepository userStoryRepository;
-    
+
     @Autowired
     private TaskRepository taskRepository;
-    
+
     @PostConstruct
     public void init() {
-        User user1 = new User();
-        user1.setEmail("bugi@pwr.edu.pl");
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user1.setPassword(encoder.encode("bugi"));
+        if (userRepository.findByEmail("bugi@pwr.edu.pl") == null) {
+            User user1 = new User();
+            user1.setEmail("bugi@pwr.edu.pl");
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user1.setPassword(encoder.encode("bugi"));
 
-        Workspace workspace = new Workspace();
-        user1.setWorkspace(workspace);
-        workspaceRepository.save(workspace);
-        userRepository.save(user1);
-        
-        Employee employee1 = new Employee();
-        employee1.setName("Dariusz");
-        employee1.setSurname("Pławecki");
-        employee1.setType(EmployeeType.DEVELOPER);
-        employee1.setWorkspace(workspace);
-        employeeRepository.save(employee1);
-        
-        Employee employee2 = new Employee();
-        employee2.setName("Maciej");
-        employee2.setSurname("Radoszko");
-        employee2.setType(EmployeeType.DEVELOPER);
-        employee2.setWorkspace(workspace);
-        employeeRepository.save(employee2);
-        
-        Employee employee3 = new Employee();
-        employee3.setName("Wiktoria");
-        employee3.setSurname("Poślednicka");
-        employee3.setType(EmployeeType.TESTER);
-        employee3.setWorkspace(workspace);
-        employeeRepository.save(employee3);
-        
-        UserStory story = new UserStory();
-        story.setNumber("US01");
-        story.setSummary("Testowy opis");
-        story.setPoints("5");
-        story.setWorkspace(workspace);
-        
-        userStoryRepository.save(story);
-     
-        ArrayList<Task> tasks = new ArrayList<Task>();
-        Task t = new Task();
-        t.setSummary("opis taska");
-        t.setType(TaskType.DEVELOPER_TASK);
-        t.setEstimation(2.0D);
-        t.setUserStory(story);
-        tasks.add(t);
-        taskRepository.save(tasks);
-        
-        UserStory story2 = new UserStory();
-        story2.setNumber("US02");
-        story2.setSummary("Jako Maciek chce..");
-        story2.setPoints("7");
-        story2.setWorkspace(workspace);
-        
-        userStoryRepository.save(story2);
-     
-        ArrayList<Task> tasks2 = new ArrayList<Task>();
-        Task t2 = new Task();
-        t2.setSummary("opis innego taska");
-        t2.setType(TaskType.TESTER_TASK);
-        t2.setEstimation(6.0D);
-        t2.setUserStory(story2);
-        tasks2.add(t2);
-        taskRepository.save(tasks2);
-        
-        
-        
+            Workspace workspace = new Workspace();
+            user1.setWorkspace(workspace);
+            workspaceRepository.save(workspace);
+            userRepository.save(user1);
+
+            Employee employee1 = new Employee();
+            employee1.setName("Dariusz");
+            employee1.setSurname("Pławecki");
+            employee1.setType(EmployeeType.DEVELOPER);
+            employee1.setWorkspace(workspace);
+            employeeRepository.save(employee1);
+
+            Employee employee2 = new Employee();
+            employee2.setName("Maciej");
+            employee2.setSurname("Radoszko");
+            employee2.setType(EmployeeType.DEVELOPER);
+            employee2.setWorkspace(workspace);
+            employeeRepository.save(employee2);
+
+            Employee employee3 = new Employee();
+            employee3.setName("Wiktoria");
+            employee3.setSurname("Poślednicka");
+            employee3.setType(EmployeeType.TESTER);
+            employee3.setWorkspace(workspace);
+            employeeRepository.save(employee3);
+
+            UserStory story = new UserStory();
+            story.setNumber("US01");
+            story.setSummary("Jako użytkownik chcę ponownie wybrać nieskończone taski.");
+            story.setPoints("5");
+            story.setWorkspace(workspace);
+
+            userStoryRepository.save(story);
+
+            // ArrayList<Task> tasks = new ArrayList<Task>();
+
+            Task t1 = new Task();
+            t1.setSummary("Widok 4 : widok wybierania nieskończonych tasków.");
+            t1.setType(TaskType.DEVELOPER_TASK);
+            t1.setEstimation(2.0D);
+            t1.setUserStory(story);
+            // tasks.add(t1);
+            taskRepository.save(t1);
+
+            Task t2 = new Task();
+            t2.setSummary("Logika dodawania tasków w kontrolerze widoku.");
+            t2.setType(TaskType.DEVELOPER_TASK);
+            t2.setEstimation(2.0D);
+            t2.setUserStory(story);
+            // tasks.add(t2);
+            taskRepository.save(t2);
+
+            // story.setTasks(tasks);
+            // userStoryRepository.save(story);
+
+            UserStory story2 = new UserStory();
+            story2.setNumber("US02");
+            story2.setSummary("Jako użytkownik chcę dodawać do user story taski wraz z estymacjami.");
+            story2.setPoints("7");
+            story2.setWorkspace(workspace);
+
+            userStoryRepository.save(story2);
+
+            // ArrayList<Task> tasks2 = new ArrayList<Task>();
+            Task t3 = new Task();
+            t3.setSummary("Rozszerzenie widoku dodawania user story o wigdety potrzebne do dodawania tasków w wybranym US.");
+            t3.setType(TaskType.TESTER_TASK);
+            t3.setEstimation(6.0D);
+            t3.setUserStory(story2);
+            // tasks2.add(t3);
+            taskRepository.save(t3);
+
+        }
+
     }
 }
