@@ -65,8 +65,7 @@ public class UserService {
     public User updatePassword(String name, String password) {
         User user = findOne(name);
         user.setPassword(encryptPassword(password));
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
     
     public String encryptPassword(String plainPassword) {
