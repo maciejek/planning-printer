@@ -1,5 +1,6 @@
 package pl.wroc.pwr.agile.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ public class UserStoryService {
 	@Autowired
 	private UserStoryRepository userStoryRepository;
 	
+	@Autowired
+	private UserService userService;
+	
 	public UserStory save(UserStory userStory){
 		return userStoryRepository.save(userStory);
 	}
@@ -26,15 +30,32 @@ public class UserStoryService {
 	}
 	
 	public UserStory getUserStoryById(Integer id){
-		return userStoryRepository.findById(id);
+		return userStoryRepository.findOne(id);
 	}
 	
 	public List<Task> getTasksByUserStoryId(Integer userStoryId){
-		UserStory story = userStoryRepository.findById(userStoryId);
+		UserStory story = userStoryRepository.findOne(userStoryId);
 		return story.getTasks();
 	}
 	
 	public List<UserStory> findAllUserStory(){
 		return userStoryRepository.findAll();
 	}
+	
+	public Integer save(String number, String points, String summary) {
+	    UserStory userStory = new UserStory();
+	    userStory.setNumber(number);
+	    userStory.setPoints(points);
+	    userStory.setSummary(summary);
+	    userStory.setTasks(new ArrayList<Task>());
+	    userStory.setWorkspace(userService.getLoggedUser().getWorkspace());
+	    userStory = userStoryRepository.save(userStory);
+	       
+	    Integer userStoryId = -1;
+	        
+	    if (userStory.getId() != null) {
+	       	userStoryId = userStory.getId();
+	    }
+	    return userStoryId;
+	 }
 }

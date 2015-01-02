@@ -1,7 +1,5 @@
 package pl.wroc.pwr.agile.service;
 
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +11,6 @@ import pl.wroc.pwr.agile.repository.EmployeeRepository;
 
 @Service
 @Transactional
-@PersistenceContext(type = PersistenceContextType.EXTENDED)
 public class EmployeeService {
 
     @Autowired

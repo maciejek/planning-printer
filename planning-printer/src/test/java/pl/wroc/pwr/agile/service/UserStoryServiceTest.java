@@ -3,11 +3,18 @@ package pl.wroc.pwr.agile.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
+import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
@@ -15,6 +22,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import pl.wroc.pwr.agile.entity.Task;
 import pl.wroc.pwr.agile.entity.TaskType;
+import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.entity.UserStory;
 import pl.wroc.pwr.agile.entity.Workspace;
 import pl.wroc.pwr.agile.repository.UserStoryRepository;
@@ -47,6 +55,12 @@ public class UserStoryServiceTest {
 	
 	@Autowired
 	private Workspace workSpace;
+	
+	@Mock
+	private UserService userService;
+	
+	@Mock
+	private User user;
 	
 	@Before
 	public void initMocks(){
@@ -115,6 +129,25 @@ public class UserStoryServiceTest {
 		List<Task> tasksByUserStoryId = userStoryService.getTasksByUserStoryId(USER_STORY_ID);
 		Assert.assertEquals(userStory.getTasks().size(), tasksByUserStoryId.size());
 		userStoryService.delete(userStory.getId());
+	}
+	
+	@Test
+	public void shouldSaveStory(){
+		 ArgumentCaptor<UserStory> storyCaptor = ArgumentCaptor.forClass(UserStory.class);
+		 when(storyRepository.save(Matchers.any(UserStory.class))).thenReturn(userStory);
+		 when(userService.getLoggedUser()).thenReturn(user);
+		 userStoryService.save(NUMBER, POINTS, SUMMARY);
+		 verify(storyRepository).save(storyCaptor.capture());
+		 
+		 assertThat(storyCaptor.getValue().getNumber(), is(NUMBER));
+	     assertThat(storyCaptor.getValue().getPoints(), is(POINTS));
+	     assertThat(storyCaptor.getValue().getSummary(),is(SUMMARY));
+	}
+	
+	@Test
+	public void shouldDeleteStory(){
+		userStoryService.delete(USER_STORY_ID);
+		verify(storyRepository).delete(USER_STORY_ID);
 	}
 	
 	
