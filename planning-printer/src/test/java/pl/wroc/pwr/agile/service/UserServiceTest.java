@@ -2,18 +2,18 @@ package pl.wroc.pwr.agile.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.hamcrest.core.IsNot.not;
-import static org.mockito.Mockito.mock;
+import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.mockito.invocation.InvocationOnMock;
+import org.mockito.stubbing.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import pl.wroc.pwr.agile.entity.User;
@@ -23,6 +23,7 @@ public class UserServiceTest {
 
     private static final int SAMPLE_ID = 99;
     private static final String SAMPLE_PASSWORD = "passwords";
+    private static final String SAMPLE_EMAIL = "email@mail.com";
     
     @InjectMocks
     @Autowired
@@ -47,6 +48,14 @@ public class UserServiceTest {
     }
     
     @Test
+    public void shouldFindOneByEmailInvokeFindByEmailOnRepository() {
+        service.findOne(SAMPLE_EMAIL);
+        
+        Mockito.verify(userRepositoryMock).findByEmail(SAMPLE_EMAIL);
+    }
+    
+    
+    @Test
     public void shouldFindOneWithIdInvokeFindOneOnRepository() {
         service.findOne(SAMPLE_ID);
         
@@ -64,16 +73,21 @@ public class UserServiceTest {
         assertThat(service.getEncoder().matches(SAMPLE_PASSWORD, newlySavedDeputy.getPassword()), is(true));
     }
     
-    @Ignore
     @Test
-    public void shouldNewlySavedDeputyHaveTheSamePasswordAsTheOneGiven() {
-        User userMock = mock(User.class);
-        when(userMock.getPassword()).thenReturn(SAMPLE_PASSWORD);
+    public void shouldChangePasswordInRepositoryWhenUpdatingPassword() {
+        User userToHaveChangedPassword = new User();
+        userToHaveChangedPassword.setPassword(SAMPLE_PASSWORD);
+        when(userRepositoryMock.findByEmail(SAMPLE_EMAIL)).thenReturn(userToHaveChangedPassword);
+        when(userRepositoryMock.save(any(User.class))).thenAnswer(new Answer<User>() {
+            @Override
+            public User answer(InvocationOnMock invocation) throws Throwable {
+                Object[] args = invocation.getArguments();
+                return (User) args[0];
+            }
+          });
         
-        User newlySavedDeputy = service.registerUser(userMock);
+        User withChangedPassword = service.updatePassword(SAMPLE_EMAIL, "newPassword");
         
-        assertThat(newlySavedDeputy.getPassword(), not(SAMPLE_PASSWORD));
-        verify(userRepositoryMock).save(newlySavedDeputy);      
-        
+        assertThat(service.getEncoder().matches(SAMPLE_PASSWORD, withChangedPassword.getPassword()), is(false));
     }
 }
