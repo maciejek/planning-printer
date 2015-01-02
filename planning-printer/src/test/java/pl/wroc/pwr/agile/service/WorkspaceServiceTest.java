@@ -54,6 +54,13 @@ public class WorkspaceServiceTest {
     }
     
     @Test
+    public void shouldFindAllInvokeFindAllOnRepository() {
+        workspaceService.findAll();
+        
+        Mockito.verify(workspaceRepositoryMock).findAll();
+    }
+    
+    @Test
     public void shouldAssignDeputyToCurrentWorkspace() {
         ArgumentCaptor<Workspace> workspaceCaptor = ArgumentCaptor.forClass(Workspace.class);
         
@@ -103,6 +110,13 @@ public class WorkspaceServiceTest {
         employees.add(employee3);
         
         return employees;
+    }
+    
+    @Test
+    public void shouldReturnEmptyListIfNoUserStoriesAssigned() {
+        List<UserStory> userStories = workspaceService.findAllUserStories();
+        
+        assertThat(userStories.size(), is(0));
     }
     
     @Test
