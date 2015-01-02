@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -23,6 +24,7 @@ import pl.wroc.pwr.agile.repository.UserStoryRepository;
  * @author wposlednicka
  *
  */
+@Ignore
 public class UserStoryServiceTest {
 	
  	private static final int USER_STORY_ID = 99;

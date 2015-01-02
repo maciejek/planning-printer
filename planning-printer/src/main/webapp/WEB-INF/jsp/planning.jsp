@@ -19,6 +19,56 @@
 
 <div class="planning-step col-md-12" id="step1">
 	<div class="row">
+		<p>Step 1 here</p>
+		<br />
+		<div class="col-md-1"></div>
+		<div class="col-md-10">
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>All user stories</strong>
+					</div>
+					<table class="table table-hover user-stories">
+						<tbody>
+							<c:forEach items="${userStories}" var="userStory">
+								<tr>
+									<td>${userStory.number}</td>
+									<td>${userStory.summary}</td>
+									<td class="text-center"><span class="badge">${userStory.points}</span></td>
+								</tr>
+								
+								<c:forEach items="${userStory.tasks}" var="task">
+									<tr>
+										<td colspan="3">${task.summary}</td>
+									</tr>
+								</c:forEach>
+							</c:forEach>
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<strong>Current sprint</strong>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+		<div class="col-md-1"></div>
+	</div>
+	<div class="row">
+		<nav>
+			<ul class="pager">
+				<li class="next nav-step"><a href="#step2">Next <span aria-hidden="true">&rarr;</span></a></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<div class="planning-step col-md-12" id="step2">
+	<div class="row">
 		<p>Specify hours for members of your team.</p>
 		<br/>
 		<div class="col-md-1"></div>
@@ -85,20 +135,6 @@
 			</div>
 		</div>
 		<div class="col-md-1"></div>
-	</div>
-	<div class="row">
-		<nav>
-			<ul class="pager">
-				<li class="next nav-step"><a href="#step2">Next <span aria-hidden="true">&rarr;</span></a></li>
-			</ul>
-		</nav>
-	</div>
-</div>
-
-<div class="planning-step col-md-12" id="step2">
-	<div class="row">
-		<p>Step 2 here</p>
-		<br />
 	</div>
 	<div class="row">
 		<nav>
