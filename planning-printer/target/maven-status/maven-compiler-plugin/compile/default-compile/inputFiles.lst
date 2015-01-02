@@ -7,6 +7,7 @@
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/entity/Workspace.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/repository/UserRepository.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/service/InitDbService.java
+/home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/repository/TaskRepository.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/entity/Employee.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/controller/EmployeeController.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/entity/UserType.java
@@ -18,6 +19,7 @@
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/repository/WorkspaceRepository.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/annotation/UniqueEmail.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/controller/PasswordController.java
+/home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/service/TaskService.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/repository/UserStoryRepository.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/controller/WorkspaceController.java
 /home/wposlednicka/planning-printer/planning-printer/src/main/java/pl/wroc/pwr/agile/controller/StoryController.java
