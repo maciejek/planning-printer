@@ -6,6 +6,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
@@ -19,6 +20,7 @@ import pl.wroc.pwr.agile.entity.EmployeeType;
 import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.repository.EmployeeRepository;
 
+@Ignore
 public class EmployeeServiceTest {
     
     private static final Integer SAMPLE_ID = 99;
