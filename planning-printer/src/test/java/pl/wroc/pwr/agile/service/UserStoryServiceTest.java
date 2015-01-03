@@ -30,7 +30,7 @@ import pl.wroc.pwr.agile.repository.UserStoryRepository;
  * @author wposlednicka
  *
  */
-@Ignore
+
 public class UserStoryServiceTest {
 	
  	private static final int USER_STORY_ID = 99;
@@ -46,7 +46,7 @@ public class UserStoryServiceTest {
 	@Mock
 	private UserStoryRepository storyRepository;	
 	
-	@Autowired
+	@Mock
 	private Workspace workSpace;
 	
 	@Mock
