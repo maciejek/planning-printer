@@ -1,12 +1,16 @@
 package pl.wroc.pwr.agile.entity;
 
+import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
@@ -29,7 +33,7 @@ public class UserStory {
     private Workspace workspace;
 
     @OneToMany(targetEntity=Task.class, mappedBy="userStory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<Task> tasks;
+    private Set<Task> tasks;
 
     public Integer getId() {
         return id;
@@ -71,11 +75,11 @@ public class UserStory {
     	this.number = number;
     }
 
-    public List<Task> getTasks() {
+    public Set<Task> getTasks() {
         return tasks;
     }
 
-    public void setTasks(List<Task> tasks) {
+    public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
 

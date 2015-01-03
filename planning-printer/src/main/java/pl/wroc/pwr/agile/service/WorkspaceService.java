@@ -1,6 +1,7 @@
 package pl.wroc.pwr.agile.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -74,8 +75,8 @@ public class WorkspaceService {
         return testers;
     }
     
-    public List<UserStory> findAllUserStories() {
-        List<UserStory> userStories = getCurrentWorkspace().getUserStories();
+    public Collection<UserStory> findAllUserStories() {
+        Collection<UserStory> userStories = getCurrentWorkspace().getUserStories();
         if (userStories == null) {
             return new ArrayList<UserStory>();
         } else {

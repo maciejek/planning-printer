@@ -5,6 +5,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import java.util.Collection;
 import java.util.List;
 
 import org.junit.Assert;
@@ -83,7 +84,7 @@ public class UserStoryServiceTest {
 	@Test
 	public void shouldFindTasksByUserStoryId(){
 		userStoryService.save(userStory);
-		List<Task> tasksByUserStoryId = userStoryService.getTasksByUserStoryId(USER_STORY_ID);
+		Collection<Task> tasksByUserStoryId = userStoryService.getTasksByUserStoryId(USER_STORY_ID);
 		Assert.assertEquals(userStory.getTasks().size(), tasksByUserStoryId.size());
 		userStoryService.delete(userStory.getId());
 	}

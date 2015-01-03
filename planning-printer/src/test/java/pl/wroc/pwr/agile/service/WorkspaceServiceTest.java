@@ -7,7 +7,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -114,7 +117,7 @@ public class WorkspaceServiceTest {
     
     @Test
     public void shouldReturnEmptyListIfNoUserStoriesAssigned() {
-        List<UserStory> userStories = workspaceService.findAllUserStories();
+        Collection<UserStory> userStories = workspaceService.findAllUserStories();
         
         assertThat(userStories.size(), is(0));
     }
@@ -123,13 +126,13 @@ public class WorkspaceServiceTest {
     public void shouldFindAllUserStoriesAssignedToCurrentWorkspace() {
         workspace.setUserStories(getDummyUserStories());
         
-        List<UserStory> userStories = workspaceService.findAllUserStories();
+        Collection<UserStory> userStories = workspaceService.findAllUserStories();
         
         assertThat(userStories.size(), is(2));
     }
     
-    private List<UserStory> getDummyUserStories() {
-        List<UserStory> userStories = new ArrayList<UserStory>();
+    private Set<UserStory> getDummyUserStories() {
+        Set<UserStory> userStories = new HashSet<UserStory>();
         
         UserStory userStory1 = Mockito.mock(UserStory.class);
         userStories.add(userStory1);
