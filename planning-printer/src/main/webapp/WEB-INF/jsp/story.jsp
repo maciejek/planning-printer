@@ -34,7 +34,7 @@
 							<td>${story.summary}</td>
 							<td>${story.points}</td>
 							<td><span id="${story.id}" class="glyphicon glyphicon-trash remove-story" aria-hidden="true"></span></td>
-							<td><span  class="glyphicon glyphicon-plus-sign" data-toggle="modal" data-target="#popupAddTask_${task.id}" aria-hidden="true"></span></td>
+							<td><span  class="glyphicon glyphicon-plus-sign" data-toggle="modal" data-target="#popupAddTask_${story.id}" aria-hidden="true"></span></td>
 						</tr>
 									<c:forEach items="${story.tasks}" var="task">
 										<tr class="task-tr">
@@ -53,7 +53,7 @@
 							<td class="text-center"><span id="testers-hours-sum"></span></td>
 						</tr>
 
-						<div class="modal fade" id="popupAddTask_${task.id}" tabindex="-1"
+						<div class="modal fade" id="popupAddTask_${story.id}" tabindex="-1"
 							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 							<div class="modal-dialog">
 								<div class="modal-content">
