@@ -1,22 +1,18 @@
 package pl.wroc.pwr.agile.entity;
 
-import java.io.Serializable;
-import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.Size;
 
 @Entity
-public class UserStory {
+public class UserStory implements Comparable<UserStory>{
 
     @Id
     @GeneratedValue
@@ -82,5 +78,10 @@ public class UserStory {
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
     }
+
+	@Override
+	public int compareTo(UserStory o) {
+		  return (this.id).compareTo(o.id);
+	}
 
 }

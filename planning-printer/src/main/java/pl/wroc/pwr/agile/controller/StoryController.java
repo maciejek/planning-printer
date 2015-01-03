@@ -1,6 +1,5 @@
 package pl.wroc.pwr.agile.controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import pl.wroc.pwr.agile.entity.Task;
 import pl.wroc.pwr.agile.entity.TaskType;
 import pl.wroc.pwr.agile.entity.UserStory;
+import pl.wroc.pwr.agile.service.TaskService;
 import pl.wroc.pwr.agile.service.UserService;
 import pl.wroc.pwr.agile.service.UserStoryService;
 
@@ -24,6 +24,9 @@ public class StoryController {
 	
 	@Autowired
 	private UserStoryService userStoryService;
+	
+	@Autowired
+	private TaskService taskService;
 	
 	
     @RequestMapping("/addStory")
@@ -61,5 +64,15 @@ public class StoryController {
 		userStoryService.delete(id);
 		return "true";
 	}
+	
+
+	@RequestMapping("/removeTask")
+	@ResponseBody
+	public String removeTask(@RequestParam Integer id){
+		taskService.deleteTaskById(id);
+		return "true";
+	}
+	
+	
 	
 }

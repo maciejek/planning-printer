@@ -84,26 +84,22 @@ public class InitDbService {
 
             userStoryRepository.save(story);
 
-            // ArrayList<Task> tasks = new ArrayList<Task>();
-
             Task t1 = new Task();
+            t1.setNumber("T1");
             t1.setSummary("Widok 4 : widok wybierania nieskończonych tasków.");
             t1.setType(TaskType.DEVELOPER_TASK);
             t1.setEstimation(2.0D);
             t1.setUserStory(story);
-            // tasks.add(t1);
             taskRepository.save(t1);
 
             Task t2 = new Task();
+            t2.setNumber("T2");
             t2.setSummary("Logika dodawania tasków w kontrolerze widoku.");
             t2.setType(TaskType.DEVELOPER_TASK);
             t2.setEstimation(2.0D);
             t2.setUserStory(story);
-            // tasks.add(t2);
             taskRepository.save(t2);
 
-            // story.setTasks(tasks);
-            // userStoryRepository.save(story);
 
             UserStory story2 = new UserStory();
             story2.setNumber("US02");
@@ -113,13 +109,12 @@ public class InitDbService {
 
             userStoryRepository.save(story2);
 
-            // ArrayList<Task> tasks2 = new ArrayList<Task>();
             Task t3 = new Task();
+            t3.setNumber("T3");
             t3.setSummary("Rozszerzenie widoku dodawania user story o wigdety potrzebne do dodawania tasków w wybranym US.");
             t3.setType(TaskType.TESTER_TASK);
             t3.setEstimation(6.0D);
             t3.setUserStory(story2);
-            // tasks2.add(t3);
             taskRepository.save(t3);
 
         }
