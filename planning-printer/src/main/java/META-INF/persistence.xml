@@ -8,6 +8,7 @@
 		<class>pl.wroc.pwr.agile.entity.Employee</class>
 		<properties>
 			<property name="hibernate.connection.charSet" value="UTF-8"/>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
 		</properties>
 	</persistence-unit>
 </persistence>
