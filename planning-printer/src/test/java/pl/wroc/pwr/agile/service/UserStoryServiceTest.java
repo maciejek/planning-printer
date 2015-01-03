@@ -38,6 +38,8 @@ public class UserStoryServiceTest {
 	private static final String NUMBER = "US01-test";
 	private static final String POINTS = "5";
 	private static final String SUMMARY = "Testowy opis user story";
+	
+	@Mock
 	private UserStory userStory;
 	
 	@InjectMocks
@@ -76,15 +78,17 @@ public class UserStoryServiceTest {
 	@Test
 	public void shouldFindUserStoryById(){
 		userStoryService.save(userStory);
-		UserStory userStoryById = userStoryService.getUserStoryById(USER_STORY_ID);
-		Assert.assertEquals(userStory, userStoryById);
+		when(storyRepository.findOne(userStory.getId())).thenReturn(userStory);
+		UserStory userStoryById = userStoryService.getUserStoryById(userStory.getId());
+		Assert.assertEquals(userStory.getId(), userStoryById.getId());
 		userStoryService.delete(userStory.getId());
 	}
 	
 	@Test
 	public void shouldFindTasksByUserStoryId(){
 		userStoryService.save(userStory);
-		Collection<Task> tasksByUserStoryId = userStoryService.getTasksByUserStoryId(USER_STORY_ID);
+		when(storyRepository.findOne(userStory.getId())).thenReturn(userStory);
+		Collection<Task> tasksByUserStoryId = userStoryService.getTasksByUserStoryId(userStory.getId());
 		Assert.assertEquals(userStory.getTasks().size(), tasksByUserStoryId.size());
 		userStoryService.delete(userStory.getId());
 	}
