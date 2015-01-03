@@ -1,8 +1,10 @@
 package pl.wroc.pwr.agile.service;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
+import org.hsqldb.lib.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,7 +35,7 @@ public class UserStoryService {
 		return userStoryRepository.findOne(id);
 	}
 	
-	public List<Task> getTasksByUserStoryId(Integer userStoryId){
+	public Collection<Task> getTasksByUserStoryId(Integer userStoryId){
 		UserStory story = userStoryRepository.findOne(userStoryId);
 		return story.getTasks();
 	}
@@ -47,7 +49,7 @@ public class UserStoryService {
 	    userStory.setNumber(number);
 	    userStory.setPoints(points);
 	    userStory.setSummary(summary);
-	    userStory.setTasks(new ArrayList<Task>());
+	    userStory.setTasks(new java.util.HashSet<Task>());
 	    userStory.setWorkspace(userService.getLoggedUser().getWorkspace());
 	    userStory = userStoryRepository.save(userStory);
 	       

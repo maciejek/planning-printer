@@ -1,6 +1,7 @@
 package pl.wroc.pwr.agile.controller;
 
 import java.security.Principal;
+import java.util.Collection;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -36,7 +37,7 @@ public class WorkspaceController {
         if (!testers.isEmpty()) {
             model.addAttribute("testers", testers);
         }
-        List<UserStory> userStories = workspaceService.findAllUserStories();
+        Collection<UserStory> userStories = workspaceService.findAllUserStories();
         logger.info("USER STORIES " + userStories.size());
         if (!userStories.isEmpty()) {
             model.addAttribute("userStories", userStories);

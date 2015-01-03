@@ -2,6 +2,7 @@ package pl.wroc.pwr.agile.entity;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -23,7 +24,7 @@ public class Workspace {
     private List<User> users;
 
     @OneToMany(targetEntity=UserStory.class, mappedBy="workspace", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    private List<UserStory> userStories;
+    private Set<UserStory> userStories;
     
     @OneToMany(mappedBy="workspace")
     private List<Employee> employees;
@@ -88,11 +89,11 @@ public class Workspace {
         this.employees = employees;
     }
 
-    public List<UserStory> getUserStories() {
+    public Set<UserStory> getUserStories() {
         return userStories;
     }
 
-    public void setUserStories(List<UserStory> userStories) {
+    public void setUserStories(Set<UserStory> userStories) {
         this.userStories = userStories;
     }
 

@@ -1,6 +1,7 @@
 package pl.wroc.pwr.agile.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,7 +36,7 @@ public class StoryController {
         story.setSummary(summary);
         story.setPoints(points);
         story.setWorkspace(userService.getLoggedUser().getWorkspace());
-        story.setTasks(new ArrayList<Task>());
+        story.setTasks(new HashSet<Task>());
 
         userStoryService.save(story);
 

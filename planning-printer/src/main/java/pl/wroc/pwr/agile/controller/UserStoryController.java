@@ -1,5 +1,6 @@
 package pl.wroc.pwr.agile.controller;
 
+import java.util.Collection;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -52,20 +53,16 @@ public class UserStoryController {
     @RequestMapping("/story")
     @Transactional(readOnly = true)
     public String showStory(Model model) {
+    	
         Workspace workspace = workspaceService.getCurrentWorkspace();
-        List<UserStory> userStories = workspaceService.findAllUserStories();
+        Collection<UserStory> userStories = workspace.getUserStories();
 
         logger.info("wika" + workspace.toString());
-        logger.info("wika task size" + userStories.get(0).getTasks().size());
-
-        List<Task> tasksByUserStory = userStoryService.getTasksByUserStoryId(userStories.get(0).getId());
-
-        logger.info("" + tasksByUserStory.size());
 
         for (UserStory story : userStories) {
             System.out.println(story.getSummary());
 
-            List<Task> tasks = story.getTasks();
+            Collection<Task> tasks = story.getTasks();
 
             for (Task task : tasks) {
                 System.out.println(task.getSummary());
@@ -73,6 +70,8 @@ public class UserStoryController {
 
             System.out.println();
         }
+        
+        //TODO posortować userStories
 
         if (!userStories.isEmpty()) {
             model.addAttribute("stories", userStories);
