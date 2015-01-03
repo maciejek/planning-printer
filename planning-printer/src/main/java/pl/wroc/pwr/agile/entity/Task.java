@@ -1,10 +1,7 @@
 package pl.wroc.pwr.agile.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
@@ -16,7 +13,9 @@ public class Task {
     @GeneratedValue
     private Integer id;
     
-    @Size(min = 1, message = "You must provide task summary!")
+    private String number;
+    
+	@Size(min = 1, message = "You must provide task summary!")
     private String summary;
     
     private Double estimation;
@@ -65,5 +64,13 @@ public class Task {
     public void setType(TaskType type) {
         this.type = type;
     }
+    
+    public String getNumber() {
+		return number;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
 
 }

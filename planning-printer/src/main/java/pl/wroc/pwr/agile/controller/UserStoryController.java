@@ -1,6 +1,8 @@
 package pl.wroc.pwr.agile.controller;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -20,8 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import pl.wroc.pwr.agile.entity.Task;
 import pl.wroc.pwr.agile.entity.UserStory;
 import pl.wroc.pwr.agile.entity.Workspace;
-import pl.wroc.pwr.agile.repository.TaskRepository;
-import pl.wroc.pwr.agile.repository.UserStoryRepository;
+import pl.wroc.pwr.agile.service.TaskService;
 import pl.wroc.pwr.agile.service.UserService;
 import pl.wroc.pwr.agile.service.UserStoryService;
 import pl.wroc.pwr.agile.service.WorkspaceService;
@@ -29,9 +30,6 @@ import pl.wroc.pwr.agile.service.WorkspaceService;
 @Controller
 public class UserStoryController {
     private static Logger logger = LoggerFactory.getLogger(UserStoryController.class);
-
-    @Autowired
-    private UserStoryRepository userStoryRepository;
 
     @Autowired
     private UserStoryService userStoryService;
@@ -43,21 +41,20 @@ public class UserStoryController {
     private WorkspaceService workspaceService;
 
     @Autowired
-    private TaskRepository taskRepository;
+    private TaskService taskService;
 
     @ModelAttribute("task")
     public Task construct() {
         return new Task();
     }
+    
 
     @RequestMapping("/story")
     @Transactional(readOnly = true)
     public String showStory(Model model) {
     	
         Workspace workspace = workspaceService.getCurrentWorkspace();
-        Collection<UserStory> userStories = workspace.getUserStories();
-
-        logger.info("wika" + workspace.toString());
+        List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
 
         for (UserStory story : userStories) {
             System.out.println(story.getSummary());
@@ -65,15 +62,12 @@ public class UserStoryController {
             Collection<Task> tasks = story.getTasks();
 
             for (Task task : tasks) {
-                System.out.println(task.getSummary());
+                System.out.println( task.getNumber() +" "+ task.getSummary());
             }
-
-            System.out.println();
         }
         
-        //TODO posortować userStories
-
         if (!userStories.isEmpty()) {
+        	Collections.sort(userStories);
             model.addAttribute("stories", userStories);
         }
         return "story";
@@ -89,7 +83,7 @@ public class UserStoryController {
         UserStory userStoryById = userStoryService.getUserStoryById(storyId);
         logger.info(userStoryById.getSummary());
         task.setUserStory(userStoryById);
-        taskRepository.save(task);
+        taskService.saveTask(task);
 
         return "redirect:/story.html?success=true";
     }

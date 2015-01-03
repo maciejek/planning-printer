@@ -24,33 +24,38 @@
 						<th>Story points</th>
 						<th></th>
 						<th></th>
+						
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${stories}" var="story">
 						<tr class="user-story-tr">
 							<td></td>
-							<td>${story.number}</td>
-							<td>${story.summary}</td>
-							<td>${story.points}</td>
+							<td style="width:60px;">${story.number} </td>
+							<td style="padding-left:20px;">${story.summary}</td>
+							<td style="width:60px;">${story.points}</td>
 							<td><span id="${story.id}" class="glyphicon glyphicon-trash remove-story" aria-hidden="true"></span></td>
 							<td><span  class="glyphicon glyphicon-plus-sign" data-toggle="modal" data-target="#popupAddTask_${story.id}" aria-hidden="true"></span></td>
 						</tr>
 									<c:forEach items="${story.tasks}" var="task">
 										<tr class="task-tr">
-											<td></td>
-											<td colspan="4">
-												<span class="badge">${task.estimation}</span>
-												${task.summary} 
+											<td style="padding-left: 20px;" colspan="5">
+												<span style="padding-left: 80px; padding-right: 20px ;" >${task.number}</span>
+												<span style="padding-left: 20px;" class="badge">${task.estimation}</span>
+												<span style="padding-right: 10px;" > ${task.summary} </span> 
 												<span class="label label-primary">${task.type}</span>
 											</td>
-											<td><span id="${task.id}" class="glyphicon glyphicon-trash remove-task"aria-hidden="true"></span></td>
+											<td><span id="${task.id}" class="glyphicon glyphicon-minus remove-task" aria-hidden="true"></span></td>
 										</tr>
 									</c:forEach>
 
 						<tr class="hours-summary">
-							<td><strong>Summary:</strong></td>
-							<td class="text-center"><span id="testers-hours-sum"></span></td>
+						<td><strong></strong></td>
+						<td><strong></strong></td>
+						<td><strong></strong></td>
+							<td style="padding-left: 120px;"><strong>Summary:</strong></td>
+							<td class="text-center" style="padding-left: 20px;"><span id="task-hours"></span></td>
+						<td><strong></strong></td>
 						</tr>
 
 						<div class="modal fade" id="popupAddTask_${story.id}" tabindex="-1"
@@ -66,6 +71,7 @@
 									<form:form commandName="task"
 										cssClass="form-horizontal add-task" action="addTask.html">
 										<div class="modal-body">
+										
 											<div class="form-group">
 												<label for="summary" class="col-sm-4 control-label">Summary
 													<span class="required-field">*</span>
@@ -237,8 +243,28 @@ $(document).ready(function() {
 		});
 	});
 	
-	$('.testers-hours-input').blur(function() {
-		var hours = $('.testers-hours-input');
+	$('.story-table').on("click", ".remove-task", function() {
+		var id = $(this).attr("id");
+		$.ajax({
+			url : "<spring:url value='/story/removeTask.html' />",
+			type : "get",
+			data : {
+				id : function() {
+					return id;
+				},
+			},
+			success : function(data) {
+				$("#"+id).closest('tr').remove();
+			},
+			error : function(data) {
+				console.log("Error!");
+			}
+		});
+	});
+	
+	
+	$('.task-hours').blur(function() {
+		var hours = $(task.estimation);
 		var sum = 0;
 		for (i = 0; i < hours.length; i++) {
 			var number = parseInt(hours.eq(i).val());
@@ -248,7 +274,7 @@ $(document).ready(function() {
 				sum += 0;
 			}
 		}
-		$('#testers-hours-sum').text(sum);
+		$('#task-hours').text(sum);
 	});
 });
 </script>
