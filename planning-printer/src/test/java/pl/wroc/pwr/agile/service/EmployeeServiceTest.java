@@ -20,7 +20,7 @@ import pl.wroc.pwr.agile.entity.EmployeeType;
 import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.repository.EmployeeRepository;
 
-@Ignore
+
 public class EmployeeServiceTest {
     
     private static final Integer SAMPLE_ID = 99;

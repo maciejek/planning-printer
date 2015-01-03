@@ -2,11 +2,16 @@ package pl.wroc.pwr.agile.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import pl.wroc.pwr.agile.entity.Task;
 import pl.wroc.pwr.agile.repository.TaskRepository;
 
+@Service
+@Transactional
 public class TaskService {
 
 	
@@ -21,7 +26,7 @@ public class TaskService {
 		return taskRepository.findOne(id);
 	}
 	
-	public void addTask(Task task){
+	public void saveTask(Task task){
 		taskRepository.save(task);
 	}
 	
