@@ -91,6 +91,8 @@
 		</table>
 	</div>
 	
+	
+	
 	<div class="modal fade" id="popupAddTask" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
@@ -148,6 +150,11 @@
 		</div>
 	</div>
 </div>
+
+<div align="center">
+        <h1>Spring MVC PDF View Demo (using iText library)</h1>
+        <h3><a href="/planning/downloadPDF">Download PDF Document</a></h3>
+    </div>
 
 <script type="text/javascript">
 $(document).ready(function() {
