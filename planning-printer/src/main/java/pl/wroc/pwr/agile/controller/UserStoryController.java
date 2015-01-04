@@ -1,25 +1,24 @@
 package pl.wroc.pwr.agile.controller;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 
-import javax.validation.Valid;
-
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.wroc.pwr.agile.entity.Task;
+import pl.wroc.pwr.agile.entity.TaskType;
 import pl.wroc.pwr.agile.entity.UserStory;
 import pl.wroc.pwr.agile.entity.Workspace;
 import pl.wroc.pwr.agile.service.TaskService;
@@ -28,6 +27,7 @@ import pl.wroc.pwr.agile.service.UserStoryService;
 import pl.wroc.pwr.agile.service.WorkspaceService;
 
 @Controller
+@RequestMapping("/story")
 public class UserStoryController {
     private static Logger logger = LoggerFactory.getLogger(UserStoryController.class);
 
@@ -42,50 +42,67 @@ public class UserStoryController {
 
     @Autowired
     private TaskService taskService;
-
-    @ModelAttribute("task")
-    public Task construct() {
-        return new Task();
+    
+    @RequestMapping(value="/loadStep2", method = RequestMethod.POST, produces = "text/html")
+    public String loadStep2(Model model) {
+        try {
+            Workspace workspace = workspaceService.getCurrentWorkspace();
+            List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
+            if (!userStories.isEmpty()) {
+                Collections.sort(userStories);
+                model.addAttribute("userStories", userStories);
+            }
+            return "step2";
+        } catch(Exception e) {
+            return "false";
+        }
     }
     
-
-    @RequestMapping("/story")
-    @Transactional(readOnly = true)
-    public String showStory(Model model) {
-    	
-        Workspace workspace = workspaceService.getCurrentWorkspace();
-        List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
-
-        for (UserStory story : userStories) {
-            System.out.println(story.getSummary());
-
-            Collection<Task> tasks = story.getTasks();
-
-            for (Task task : tasks) {
-                System.out.println( task.getNumber() +" "+ task.getSummary());
-            }
-        }
+    @RequestMapping(value = "/addStory", produces = "text/html")
+    public String addStory(@RequestParam String number,
+            @RequestParam String summary, @RequestParam String points, Model model) {
         
-        if (!userStories.isEmpty()) {
-        	Collections.sort(userStories);
-            model.addAttribute("stories", userStories);
+        try {
+            UserStory story = new UserStory();
+            story.setNumber(number);
+            story.setSummary(summary);
+            story.setPoints(points);
+            story.setWorkspace(userService.getLoggedUser().getWorkspace());
+            story.setTasks(new HashSet<Task>());
+    
+            userStoryService.save(story);
+            
+            Workspace workspace = workspaceService.getCurrentWorkspace();
+            List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
+            if (!userStories.isEmpty()) {
+                Collections.sort(userStories);
+                model.addAttribute("stories", userStories);
+            }
+    
+            return "step3";
+        } catch(Exception e) {
+            e.printStackTrace();
+            return "false";
         }
-        return "story";
     }
-
-    @RequestMapping(method = RequestMethod.POST)
-    public String addTask(@Valid @ModelAttribute("task") Task task,
-            BindingResult result, @RequestParam Integer storyId) {
-        if (result.hasErrors()) {
-            return "story";
+    
+    @RequestMapping(value = "/removeStory", produces = "text/html")
+    public String removeStory(@RequestParam Integer id, Model model) {
+        try {
+            userStoryService.delete(id);
+            
+            Workspace workspace = workspaceService.getCurrentWorkspace();
+            List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
+            if (!userStories.isEmpty()) {
+                Collections.sort(userStories);
+                model.addAttribute("stories", userStories);
+            }
+    
+            return "step3";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "false";
         }
-
-        UserStory userStoryById = userStoryService.getUserStoryById(storyId);
-        logger.info(userStoryById.getSummary());
-        task.setUserStory(userStoryById);
-        taskService.saveTask(task);
-
-        return "redirect:/story.html?success=true";
     }
 
 }

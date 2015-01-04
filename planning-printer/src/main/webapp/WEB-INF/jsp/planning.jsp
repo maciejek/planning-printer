@@ -26,56 +26,6 @@
 			<div class="col-md-6">
 				<div class="panel panel-default">
 					<div class="panel-heading">
-						<strong>All user stories</strong>
-					</div>
-					<table class="table table-hover user-stories">
-						<tbody>
-							<c:forEach items="${userStories}" var="userStory">
-								<tr>
-									<td>${userStory.number}</td>
-									<td>${userStory.summary}</td>
-									<td class="text-center"><span class="badge">${userStory.points}</span></td>
-								</tr>
-								
-								<c:forEach items="${userStory.tasks}" var="task">
-									<tr>
-										<td colspan="3">${task.summary}</td>
-									</tr>
-								</c:forEach>
-							</c:forEach>
-						</tbody>
-					</table>
-				</div>
-			</div>
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<strong>Current sprint</strong>
-					</div>
-				
-				</div>
-			</div>
-		</div>
-		<div class="col-md-1"></div>
-	</div>
-	<div class="row">
-		<nav>
-			<ul class="pager">
-				<li class="next nav-step"><a href="#step2">Next <span aria-hidden="true">&rarr;</span></a></li>
-			</ul>
-		</nav>
-	</div>
-</div>
-
-<div class="planning-step col-md-12" id="step2">
-	<div class="row">
-		<p>Specify hours for members of your team.</p>
-		<br/>
-		<div class="col-md-1"></div>
-		<div class="col-md-10">
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
 						<strong>Developers</strong>
 					</div>
 
@@ -97,7 +47,7 @@
 						<tfoot>
 							<tr class="hours-summary">
 								<td><strong>Summary:</strong></td>
-								<td class="text-center"><span id="developers-hours-sum"></span></td>
+								<td class="text-center"><span id="developers-hours-sum">0</span></td>
 							</tr>
 						</tfoot>
 					</table>
@@ -127,7 +77,7 @@
 						<tfoot>
 							<tr class="hours-summary">
 								<td><strong>Summary:</strong></td>
-								<td class="text-center"><span id="testers-hours-sum"></span></td>
+								<td class="text-center"><span id="testers-hours-sum">0</span></td>
 							</tr>
 						</tfoot>
 					</table>
@@ -135,7 +85,19 @@
 			</div>
 		</div>
 		<div class="col-md-1"></div>
+
 	</div>
+	<div class="row">
+		<nav>
+			<ul class="pager">
+				<li class="next nav-step"><a href="#step2">Next <span aria-hidden="true">&rarr;</span></a></li>
+			</ul>
+		</nav>
+	</div>
+</div>
+
+<div class="planning-step col-md-12" id="step2">
+	<div class="step-content"></div>
 	<div class="row">
 		<nav>
 			<ul class="pager">
@@ -148,10 +110,7 @@
 </div>
 
 <div class="planning-step col-md-12" id="step3">
-	<div class="row">
-		<p>Step 3 here</p>
-		<br/>
-	</div>
+	<div class="step-content"></div>
 	<div class="row">
 		<nav>
 			<ul class="pager">
@@ -168,36 +127,66 @@ $(document).ready(function() {
 	$('#step1').show();
 	$('.nav-step').click(function() {
 		var stepId = $(this).find('a').attr('href');
+		if (stepId == "#step3") {
+			$.ajax({
+				url : "<spring:url value='/task.html' />",
+				type : "post",
+				data : {
+					tasksJSONObject : get_finished_tasks_as_json_object()
+				},
+				success : function(data) {
+					go_to_step(stepId);
+					$(stepId).find('.step-content').html(data);
+				}
+			});
+		} else if (stepId == "#step2") {
+			$.ajax({
+				url : "<spring:url value='/story/loadStep2.html' />",
+				type : "post",
+				success : function(data) {
+					go_to_step(stepId);
+					$(stepId).find('.step-content').html(data);
+				}
+			});
+		} else {
+			go_to_step(stepId);
+		}
+	});
+	function get_finished_tasks_as_json_object() {
+		var tasks = $('.user-stories .task:not(.selected)');
+		var json_object = "{ finished_tasks: [";
+		for (i = 0; i < tasks.length; i++) {
+			json_object += "{id : " + tasks.eq(i).data("id") + ", story_id : " + tasks.eq(i).data("story-id") + "}";
+			json_object += i < tasks.length - 1 ? "," : "";
+		}
+		json_object += "] }";
+		return json_object;
+	}
+	function go_to_step(stepId) {
 		$('.nav-step').removeClass('active');
-		$(stepId + "-nav").addClass('active');
+		$(stepId + '-nav').addClass('active');
 		$('.planning-step').hide();
 		$(stepId).show();
-	});
+	}
 	$('.developers-hours-input').blur(function() {
 		var hours = $('.developers-hours-input');
-		var sum = 0;
-		for (i = 0; i < hours.length; i++) {
-			var number = parseInt(hours.eq(i).val());
-			if (!isNaN(number)) {
-				sum += number
-			} else {
-				sum += 0;
-			}
-		}
-		$('#developers-hours-sum').text(sum);
+		$('#developers-hours-sum').text(sum_input_values(hours));
 	});
 	$('.testers-hours-input').blur(function() {
 		var hours = $('.testers-hours-input');
+		$('#testers-hours-sum').text(sum_input_values(hours));
+	});
+	function sum_input_values(inputs) {
 		var sum = 0;
-		for (i = 0; i < hours.length; i++) {
-			var number = parseInt(hours.eq(i).val());
+		for (i = 0; i < inputs.length; i++) {
+			var number = parseInt(inputs.eq(i).val());
 			if (!isNaN(number)) {
 				sum += number
 			} else {
 				sum += 0;
 			}
 		}
-		$('#testers-hours-sum').text(sum);
-	});
+		return sum;
+	}
 });
 </script>

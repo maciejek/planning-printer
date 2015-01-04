@@ -20,10 +20,10 @@ public class Workspace {
     @GeneratedValue
     private Integer id;
     
-    @OneToMany(targetEntity=User.class, mappedBy="workspace", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity=User.class, mappedBy="workspace", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private List<User> users;
 
-    @OneToMany(targetEntity=UserStory.class, mappedBy="workspace", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity=UserStory.class, mappedBy="workspace", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<UserStory> userStories;
     
     @OneToMany(mappedBy="workspace")
