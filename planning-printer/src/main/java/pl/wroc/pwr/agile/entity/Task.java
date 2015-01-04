@@ -24,8 +24,8 @@ public class Task {
     
     @ManyToOne
     private UserStory userStory;
-
-    public UserStory getUserStory() {
+    
+	public UserStory getUserStory() {
 		return userStory;
 	}
 
