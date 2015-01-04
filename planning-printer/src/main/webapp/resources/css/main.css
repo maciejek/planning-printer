@@ -82,7 +82,7 @@ label.error {
 	cursor: pointer;
 }
 
-.remove-employee, .remove-story {
+.remove-employee, .remove-story, .add-task, .remove-task {
 	font-size: 20px;
 	cursor: pointer;
 	color: #555;
@@ -118,3 +118,26 @@ label.error {
 	background-color: #FAF2CC;
 }
 
+.user-stories tr:hover {
+	cursor: pointer;
+}
+
+.user-stories tr.selected .badge {
+	color: #337ab7;
+	background-color: #fff;
+}
+
+.user-stories tr.story.selected {
+	color: #fff;
+	background-color: #337ab7;
+	border-color: #337ab7;
+}
+
+.user-stories tr.task.selected {
+	color: #31708f;
+	background-color: #c4e3f3;
+}
+
+.user-story-tr .story-number { width:100px; }
+.user-story-tr .story-summary { padding-left:20px; }
+.user-story-tr .story-points { width:100px; }

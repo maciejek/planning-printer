@@ -39,11 +39,8 @@
 	<definition name="create-team" extends="common">
 		<put-attribute name="title" value="Create your team" />
 		<put-attribute name="body" value="/WEB-INF/jsp/create-team.jsp" />
-		<put-attribute name="current" value="create-team"></put-attribute>
+		<put-attribute name="current" value="team"></put-attribute>
 	</definition>
-	<definition name="story" extends="common">
-		<put-attribute name="title" value="Create your user story" />
-		<put-attribute name="body" value="/WEB-INF/jsp/story.jsp" />
-		<put-attribute name="current" value="story"></put-attribute>
-	</definition>
+	<definition name="step2" template="/WEB-INF/jsp/planning_step2.jsp"/>
+	<definition name="step3" template="/WEB-INF/jsp/story.jsp"/>
 </tiles-definitions>

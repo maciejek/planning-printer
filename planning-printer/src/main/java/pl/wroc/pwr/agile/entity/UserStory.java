@@ -28,7 +28,7 @@ public class UserStory implements Comparable<UserStory>{
 	@ManyToOne
     private Workspace workspace;
 
-    @OneToMany(targetEntity=Task.class, mappedBy="userStory", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(targetEntity=Task.class, mappedBy="userStory", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<Task> tasks;
 
     public Integer getId() {
