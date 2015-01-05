@@ -31,7 +31,7 @@ public class PDFBuilder extends AbstractITextPdfView {
             PdfWriter writer, HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         // get data model which is passed by the Spring container
-        List<Task> listBooks = (List<Task>) model.get("listTasks");
+        List<Task> listBooks = (List<Task>) model.get("listBooks");
          
         doc.add(new Paragraph("Recommended books for Spring framework"));
          
