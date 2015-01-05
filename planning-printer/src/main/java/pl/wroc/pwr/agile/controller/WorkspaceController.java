@@ -68,7 +68,7 @@ public class WorkspaceController {
         return "create-team";
     }
     
-    @RequestMapping(value = "/planning/downloadPDF", method = RequestMethod.GET)
+    @RequestMapping(value = "/planning/downloadPDF")
     public ModelAndView downloadExcel() {
         // create some sample data
     	
