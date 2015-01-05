@@ -153,7 +153,7 @@
 
 <div align="center">
         <h1>Spring MVC PDF View Demo (using iText library)</h1>
-        <h3><a href="/planning/downloadPDF">Download PDF Document</a></h3>
+        <h3><a href="./planning/downloadPDF.pdf">Download PDF Document</a></h3>
     </div>
 
 <script type="text/javascript">
