@@ -47,6 +47,7 @@
     <url-pattern>*.htm</url-pattern>
     <url-pattern>*.xml</url-pattern>
     <url-pattern>*.json</url-pattern>
+     <url-pattern>*.pdf</url-pattern>
   </servlet-mapping>
   <context-param>
     <param-name>spring.profiles.default</param-name>
