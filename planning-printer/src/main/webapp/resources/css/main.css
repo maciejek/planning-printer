@@ -141,3 +141,6 @@ label.error {
 .user-story-tr .story-number { width:100px; }
 .user-story-tr .story-summary { padding-left:20px; }
 .user-story-tr .story-points { width:100px; }
+
+.hours-state .hours { font-weight: bold; }
+.hours-state .hours.error { color: red }

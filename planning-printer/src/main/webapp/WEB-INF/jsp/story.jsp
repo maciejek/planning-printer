@@ -15,9 +15,9 @@
 				<thead>
 					<tr>
 						<th></th>
-						<th>Number</th>
-						<th>Description</th>
-						<th>SP</th>
+						<th style="text-align: center">Number</th>
+						<th style="text-align: center">Description</th>
+						<th style="text-align: center">SP</th>
 						<th></th>
 						<th></th>
 						
@@ -27,22 +27,23 @@
 					<c:forEach items="${stories}" var="story">
 						<tr class="user-story-tr" data-id="${story.id}">
 							<td></td>
-							<td class="story-number">${story.number} </td>
+							<td class="story-number" style="text-align: center">${story.number} </td>
 							<td class="story-summary">${story.summary}</td>
-							<td class="story-points">${story.points}</td>
-							<td><span class="glyphicon glyphicon-trash remove-story" aria-hidden="true"></span></td>
-							<td><span class="glyphicon glyphicon-plus-sign add-task" data-toggle="modal" data-target="#popupAddTask" aria-hidden="true"></span></td>
+							<td class="story-points" style="text-align: center">${story.points}</td>
+							<td style="text-align: center"><span class="glyphicon glyphicon-plus-sign add-task" data-toggle="modal" data-target="#popupAddTask" aria-hidden="true"></span></td>
+							<td style="text-align: center"><span class="glyphicon glyphicon-trash remove-story" aria-hidden="true"></span></td>
 						</tr>
 						
 						<c:forEach items="${story.tasks}" var="task">
-							<tr class="task-tr" data-story-id="${story.id}">
-								<td style="padding-left: 20px;" colspan="5">
-									<span style="padding-left: 80px; padding-right: 20px ;" >${task.number}</span>
+							<tr class="task-tr" data-story-id="${story.id}" data-type="${task.type}" data-est="${task.estimation}">
+								<td></td>
+								<td style="text-align: right">${task.number}</td>
+								<td colspan="3">
 									<span style="padding-left: 20px;" class="badge">${task.estimation}</span>
-									<span style="padding-right: 10px;" > ${task.summary} </span> 
-									<span class="label label-primary">${task.type}</span>
+									<span class="label label-primary task-type">${task.type == "DEVELOPER_TASK" ? "DEV" : "TEST"}</span>
+									<span style="padding-left: 10px;" > ${task.summary} </span> 
 								</td>
-								<td><span id="${task.id}" class="glyphicon glyphicon-minus-sign remove-task" aria-hidden="true"></span></td>
+								<td style="text-align: center"><span id="${task.id}" class="glyphicon glyphicon-trash remove-task" aria-hidden="true"></span></td>
 							</tr>
 						</c:forEach>
 					</c:forEach>
@@ -62,7 +63,7 @@
 	</div>
 	<div class="col-md-1"></div>
 	
-	<div class="panel panel-default" style="position:fixed; bottom: 10px; right: 40px">
+	<div class="panel panel-default hours-state" style="position:fixed; bottom: 10px; right: 40px">
 		<table class="table">
 			<tr>
 				<td style="text-align:right">
@@ -70,10 +71,10 @@
 					Developers hours:<br/>
 					Summary:
 				</td>
-				<td>
-					<span class="dev-total-hours">0</span><br/>
-					<span class="dev-team-hours">0</span><br/>
-					<span class="dev-summary">0</span>
+				<td style="text-align:center">
+					<span class="hours dev-total-hours">0</span><br/>
+					<span class="hours dev-team-hours">0</span><br/>
+					<span class="hours dev-summary">0</span>
 				</td>
 			</tr>
 			<tr>
@@ -82,16 +83,14 @@
 					Testers hours:<br/>
 					Summary:
 				</td>
-				<td>
-					<span class="test-total-hours">0</span><br/>
-					<span class="test-team-hours">0</span><br/>
-					<span class="test-summary">0</span>
+				<td style="text-align:center">
+					<span class="hours test-total-hours">0</span><br/>
+					<span class="hours test-team-hours">0</span><br/>
+					<span class="hours test-summary">0</span>
 				</td>
 			</tr>
 		</table>
 	</div>
-	
-	
 	
 	<div class="modal fade" id="popupAddTask" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -107,40 +106,50 @@
 					<div class="modal-body">
 					
 						<div class="form-group">
-							<label for="summary" class="col-sm-4 control-label">Summary
+							<label for="number" class="col-sm-3 control-label">Number
 								<span class="required-field">*</span>
 							</label>
-							<div class="col-sm-8">
+							<div class="col-sm-9">
+								<input type="text" name="number" id="number" class="form-control" />
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="summary" class="col-sm-3 control-label">Summary
+								<span class="required-field">*</span>
+							</label>
+							<div class="col-sm-9">
 								<input type="text" name="summary" id="summary" class="form-control" />
 							</div>
 						</div>
 						<div class="form-group">
-							<label for="estimation" class="col-sm-4 control-label">
+							<label for="estimation" class="col-sm-3 control-label">
 								Estimation <span class="required-field">*</span>
 							</label>
-							<div class="col-sm-8">
+							<div class="col-sm-9">
 								<input type="text" name="estimation" id="estimation" class="form-control" />
 							</div>
 						</div>
 
 						<div class="form-group">
 
-							<label for="estimation" class="col-sm-4 control-label">
+							<label for="estimation" class="col-sm-3 control-label">
 								Type <span class="required-field">*</span>
 							</label>
-							<div class="col-sm-8">
+							<div class="col-sm-9">
 								<div class="radio">
-									<label><input type="radio" checked="checked"
-										name="optradio">Developer</label>
+									<label><input type="radio" value="DEV" checked="checked"
+										name="optradio" class="task-type-radio">Developer</label>
 								</div>
 								<div class="radio">
-									<label><input type="radio" name="optradio">Tester</label>
+									<label><input type="radio" value="TEST" name="optradio" 
+									class="task-type-radio">Tester</label>
 								</div>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
 						<input type="hidden" name="storyId" value="" id="task-story-id" />
+						<input type="hidden" name="taskType" value="DEV" id="task-type-hidden" />
 						<button type="button" id="closeAddTask" class="btn btn-default"
 							data-dismiss="modal">Close</button>
 						<input type="submit" id="save" value="Save" class="btn btn-primary" />
@@ -158,6 +167,32 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	sum_task_hours();
+	function sum_task_hours() {
+		var dev_task = 0;
+		var test_task = 0;
+		$('.task-tr').each(function() {
+			if ($(this).data('type') == "DEVELOPER_TASK") {
+				dev_task += parseFloat($(this).data('est'));
+			} else {
+				test_task += parseFloat($(this).data('est'));
+			}
+		});
+		var dev_team_hours = $('#developers-hours-sum').text();
+		var test_team_hours = $('#testers-hours-sum').text();
+		$('.dev-total-hours').text(dev_task);
+		$('.dev-team-hours').text(dev_team_hours);
+		$('.dev-summary').text(dev_team_hours - dev_task);
+		if (dev_team_hours - dev_task < 0) {
+			$('.dev-summary').addClass('error');
+		}
+		$('.test-total-hours').text(test_task);
+		$('.test-team-hours').text(test_team_hours);
+		$('.test-summary').text(test_team_hours - test_task);
+		if (test_team_hours - test_task < 0) {
+			$('.test-summary').addClass('error');
+		}
+	}
 	$('.story-table .add-story').click(function() {
 		var storyNumber = $("#storyNumber").val();
 		var storySummary = $("#storySummary").val();
@@ -232,9 +267,11 @@ $(document).ready(function() {
 		$('#task-story-id').val($(this).closest('tr').data('id'));
 	});	
 	$('#addTaskForm').submit(function(e) {
+		var number = $('#number').val();
 		var story_id = $('#task-story-id').val();
 		var summary = $('#summary').val();
 		var estimation = $('#estimation').val();
+		var task_type = $('#task-type-hidden').val();
 		$.ajax({
 			url : "<spring:url value='/task/addTask.html' />",
 			type : "post",
@@ -248,6 +285,12 @@ $(document).ready(function() {
 				storyId : function() {
 					return story_id;
 				},
+				taskType : function() {
+					return task_type;
+				},
+				number : function() {
+					return number;
+				}
 			},
 			success : function(html) {
 				$('#closeAddTask').click();
@@ -261,18 +304,30 @@ $(document).ready(function() {
 		});
 		return false;
 	});
-	$('.task-hours').blur(function() {
-		var hours = $(task.estimation);
-		var sum = 0;
-		for (i = 0; i < hours.length; i++) {
-			var number = parseInt(hours.eq(i).val());
-			if (!isNaN(number)) {
-				sum += number
-			} else {
-				sum += 0;
+	$(".task-type-radio").on("click", function() {
+		$("#task-type-hidden").val($(this).attr("value"));
+	});
+	$("#addTaskForm").validate({
+		rules : {
+			number : {
+				required : true
+			},
+			summary : {
+				required : true
+			},
+			estimation : {
+				required : true
+			},
+			taskType : {
+				required : true
 			}
+		},
+		highlight: function(element) {
+			$(element).closest(".form-group").removeClass('has-success').addClass('has-error').addClass('has-feedback');
+		},
+		unhighlight: function(element) {
+			$(element).closest(".form-group").removeClass('has-error').addClass('has-success').addClass('has-feedback');
 		}
-		$('#task-hours').text(sum);
 	});
 });
 </script>
