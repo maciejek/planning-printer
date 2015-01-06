@@ -69,16 +69,21 @@ public class TaskController {
     
     @RequestMapping(value="/addTask", method=RequestMethod.POST, produces = "text/html")
     public String addTask(@RequestParam String summary, @RequestParam String estimation,
-            @RequestParam String storyId, Model model) {
-        
+            @RequestParam String storyId, @RequestParam String taskType, @RequestParam String number, 
+            Model model) {
         try {
             Task task = new Task();
             
             UserStory userStoryById = userStoryService.getUserStoryById(Integer.parseInt(storyId));
+            task.setNumber(number);
             task.setUserStory(userStoryById);
             task.setEstimation(Double.parseDouble(estimation));
             task.setSummary(summary);
-            task.setType(TaskType.DEVELOPER_TASK);
+            if (taskType.equals("DEV")) {
+                task.setType(TaskType.DEVELOPER_TASK);
+            } else {
+                task.setType(TaskType.TESTER_TASK);
+            }
             taskService.saveTask(task);
             
             Workspace workspace = workspaceService.getCurrentWorkspace();
