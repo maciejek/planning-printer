@@ -160,9 +160,8 @@
 	</div>
 </div>
 
-<div align="center">
-        <h1>Spring MVC PDF View Demo (using iText library)</h1>
-        <h3><a href="./planning/downloadPDF.pdf">Download PDF Document</a></h3>
+    <div align="center">
+		<a href="./planning/downloadPDF.pdf" class="btn btn-primary btn-default">Generuj PDF <span class="glyphicon glyphicon-file"></span></a>
     </div>
 
 <script type="text/javascript">
