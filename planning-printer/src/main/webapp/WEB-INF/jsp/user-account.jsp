@@ -50,13 +50,23 @@
 <div class="row">
 <div class="col-md-6">
 	<div class="panel panel-default">
-		<div class="panel-heading">Your workspace</div>
+		<div class="panel-heading">Connect Planning Printer with Jira</div>
 		<div class="panel-body">
-			<p>Here is a summary of your workspace.</p>
-			<ul>
-				<li>Your team contains <span class="label label-primary">6 developers</span> and <span class="label label-primary">4 testers</span>.</li>
-				<li>You have defined <span class="label label-primary">10 user stories</span>.</li>
-			</ul>
+			<p>Enter your Jira cridentials</p>
+			<div class="alert alert-warning" role="alert">
+      			<strong>Warning!</strong> You may need to login through Jira website first.
+      		</div>
+      		<form:form action="setupJira.html">
+				<input type="text" name="jiraUrl" id="jiraUrl" class="form-control" placeholder="Jira server URL"
+					required value="${user.jiraUrl}"> 
+				<input type="text" name="jiraLogin" id="jiraLogin" class="form-control" placeholder="Jira login"
+					required value="${user.jiraLogin}"> 
+				<input type="password" name="jiraPassword" id="jiraPassword" class="form-control"
+					placeholder="Jira password" required value="${user.jiraPassword}">
+				<p class="text-right">
+					<input class="btn btn-primary" type="submit" value="Connect">
+				</p>
+			</form:form>
 		</div>
 	</div>
 </div>
@@ -95,14 +105,14 @@
 					<div class="form-group">
 						<label for="email" class="col-sm-4 control-label">Your deputy email:</label>
 						<div class="col-sm-8">
-							<form:input path="email" cssClass="form-control" />
+							<form:input path="email" name="deputyEmail" cssClass="form-control" />
 						</div>
 					</div>
 				</c:if>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" value="Save" class="btn btn-primary" />
+					<input type="submit" id="saveDeputy" value="Save" class="btn btn-primary" />
 				</div>
 			</form:form>
 		</div>

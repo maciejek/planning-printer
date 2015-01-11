@@ -9,7 +9,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.Proxy;
 import org.hibernate.validator.constraints.Email;
 
 import pl.wroc.pwr.agile.annotation.UniqueEmail;
@@ -30,6 +29,13 @@ public class User {
     
     @Size(min = 4, message = "Password must be at least 4 characters!")
     private String password;
+    
+    @Column
+    private String jiraLogin;
+    @Column
+    private String jiraPassword;
+    @Column
+    private String jiraUrl;
     
     @ManyToOne
     @JoinColumn(name="workspace_id")
@@ -76,6 +82,30 @@ public class User {
 
     public void setType(UserType type) {
         this.type = type;
+    }
+    
+    public String getJiraLogin() {
+        return jiraLogin;
+    }
+
+    public void setJiraLogin(String jiraLogin) {
+        this.jiraLogin = jiraLogin;
+    }
+
+    public String getJiraPassword() {
+        return jiraPassword;
+    }
+
+    public void setJiraPassword(String jiraPassword) {
+        this.jiraPassword = jiraPassword;
+    }
+
+    public String getJiraUrl() {
+        return jiraUrl;
+    }
+
+    public void setJiraUrl(String jiraUrl) {
+        this.jiraUrl = jiraUrl;
     }
 
     public String toString() {
