@@ -13,8 +13,11 @@ import pl.wroc.pwr.agile.entity.UserStory;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -40,7 +43,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 		for (UserStory story : listStories) {
 			PdfPTable userStoryTable = createUserStoryTable(story);
 			doc.add(userStoryTable);
-			doc.add(new LineSeparator());
+//			doc.add(new LineSeparator());
 
 			Set<Task> userStoryTasks = story.getTasks();
 
@@ -49,7 +52,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 				for (Task task : userStoryTasks) {
 					PdfPTable taskTable = createTaskTable(task);
 					doc.add(taskTable);
-					doc.add(new LineSeparator());
+//					doc.add(new LineSeparator());
 				}
 			}
 		}
@@ -59,10 +62,12 @@ public class PDFBuilder extends AbstractITextPdfView {
 	private PdfPTable createTaskTable(Task task) throws DocumentException {
 
 		PdfPTable table = new PdfPTable(10);
-		table.setWidthPercentage(100.0f);
-		table.setWidths(new float[] { 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f });
+		table.setWidthPercentage(50.0f);
+		table.setWidths(new float[] { 5.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f, 3.0f });
 		table.setSpacingBefore(10);
-
+		
+		Font smallFont = FontFactory.getFont("Arial", 8);
+		   
 		PdfPCell cellTask;
 		cellTask = new PdfPCell();
 		cellTask.setColspan(10);
@@ -74,7 +79,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(2);
-		cellTask.setPhrase(new Phrase("Odpowiedzialny:"));
+		cellTask.setPhrase(new Phrase("Odpowiedzialny:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		cellTask.setColspan(8);
@@ -84,7 +89,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(2);
-		cellTask.setPhrase(new Phrase("Estymacja:"));
+		cellTask.setPhrase(new Phrase("Estymacja:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		cellTask.setColspan(8);
@@ -94,7 +99,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(2);
-		cellTask.setPhrase(new Phrase("Spędzono:"));
+		cellTask.setPhrase(new Phrase("Spedzono:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		cellTask.setColspan(8);
@@ -105,14 +110,14 @@ public class PDFBuilder extends AbstractITextPdfView {
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(1);
-		cellTask.setPhrase(new Phrase("Dzień:"));
+		cellTask.setPhrase(new Phrase("Dzien:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		table.completeRow();
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(1);
-		cellTask.setPhrase(new Phrase("Czas:"));
+		cellTask.setPhrase(new Phrase("Czas:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		table.completeRow();

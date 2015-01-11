@@ -20,6 +20,7 @@
 						<th style="text-align: center">SP</th>
 						<th></th>
 						<th></th>
+						<th></th>
 						
 					</tr>
 				</thead>
@@ -30,8 +31,9 @@
 							<td class="story-number" style="text-align: center">${story.number} </td>
 							<td class="story-summary">${story.summary}</td>
 							<td class="story-points" style="text-align: center">${story.points}</td>
-							<td style="text-align: center"><span class="glyphicon glyphicon-plus-sign add-task" data-toggle="modal" data-target="#popupAddTask" aria-hidden="true"></span></td>
+							<td style="text-align: center"><span class="glyphicon glyphicon-pencil edit-story" aria-hidden="true"></span></td>
 							<td style="text-align: center"><span class="glyphicon glyphicon-trash remove-story" aria-hidden="true"></span></td>
+							<td style="text-align: center"><span class="glyphicon glyphicon-plus-sign add-task" data-toggle="modal" data-target="#popupAddTask" aria-hidden="true"></span></td>
 						</tr>
 						
 						<c:forEach items="${story.tasks}" var="task">
@@ -44,7 +46,6 @@
 									<span style="padding-left: 10px;" > ${task.summary} </span> 
 								</td>
 								<td style="text-align: center"><span id="${task.id}" class="glyphicon glyphicon-trash remove-task" aria-hidden="true"></span></td>
-							</tr>
 						</c:forEach>
 					</c:forEach>
 				</tbody>
@@ -55,6 +56,7 @@
 						<td><input type="text" id="storySummary" name="storySummary" class="form-control"></td>
 						<td><input type="text" id="storyPoints" name="storyPoints" class="form-control"></td>
 						<td><span class="glyphicon glyphicon-plus-sign add-story"aria-hidden="true"></span></td>
+						<td></td>
 						<td></td>	
 					</tr>
 				</tfoot>
@@ -262,6 +264,56 @@ $(document).ready(function() {
 			}
 		});
 	});
+	
+	$('.story-table').on("click", ".edit-story", function() {
+		$('#story-id').val($(this).closest('tr').data('id'));
+	});	
+	
+	$('#editStoryForm').submit(function(e) {
+		var number = $('#number').val();
+		var story_id = $('#task-story-id').val();
+		var summary = $('#summary').val();
+		var estimation = $('#estimation').val();
+		var task_type = $('#task-type-hidden').val();
+		$.ajax({
+			url : "<spring:url value='/task/addTask.html' />",
+			type : "post",
+			data : {
+				summary : function() {
+					return summary;
+				},
+				estimation : function() {
+					return estimation;
+				},
+				storyId : function() {
+					return story_id;
+				},
+				taskType : function() {
+					return task_type;
+				},
+				number : function() {
+					return number;
+				}
+			},
+			success : function(html) {
+				$('#closeAddTask').click();
+				if (html != "false") {
+					$('#story-step-content').parent().html(html);
+				}
+			},
+			error : function(data) {
+				console.log("Error!");
+			}
+		});
+		return false;
+	});
+	$(".task-type-radio").on("click", function() {
+		$("#task-type-hidden").val($(this).attr("value"));
+	});
+	
+	
+	
+	
 	$('.story-table').on("click", ".add-task", function() {
 		$('#task-story-id').val($(this).closest('tr').data('id'));
 	});	
