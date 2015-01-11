@@ -68,6 +68,14 @@ public class UserService {
         return userRepository.save(user);
     }
     
+    public User saveJiraCredentials(String jiraUrl, String jiraLogin, String jiraPassword) {
+        User loggedUser = getLoggedUser();
+        loggedUser.setJiraLogin(jiraLogin);
+        loggedUser.setJiraPassword(jiraPassword);
+        loggedUser.setJiraUrl(jiraUrl);
+        return userRepository.save(loggedUser);       
+    }
+    
     public String encryptPassword(String plainPassword) {
         return getEncoder().encode(plainPassword);
     }
