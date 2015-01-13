@@ -82,7 +82,7 @@ label.error {
 	cursor: pointer;
 }
 
-.remove-employee, .remove-story, .add-task, .remove-task {
+.remove-employee, .remove-story, .add-task, .remove-task, .edit-story, .edit-task {
 	font-size: 20px;
 	cursor: pointer;
 	color: #555;

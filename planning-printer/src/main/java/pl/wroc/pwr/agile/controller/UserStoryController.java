@@ -5,20 +5,14 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.wroc.pwr.agile.entity.Task;
-import pl.wroc.pwr.agile.entity.TaskType;
 import pl.wroc.pwr.agile.entity.UserStory;
 import pl.wroc.pwr.agile.entity.Workspace;
 import pl.wroc.pwr.agile.service.TaskService;
@@ -29,7 +23,6 @@ import pl.wroc.pwr.agile.service.WorkspaceService;
 @Controller
 @RequestMapping("/story")
 public class UserStoryController {
-    private static Logger logger = LoggerFactory.getLogger(UserStoryController.class);
 
     @Autowired
     private UserStoryService userStoryService;
@@ -103,6 +96,30 @@ public class UserStoryController {
             e.printStackTrace();
             return "false";
         }
+    }
+    
+    @RequestMapping(value="/editStory", method=RequestMethod.POST, produces = "text/html")
+    public String editStory(@RequestParam Integer id, @RequestParam String number, @RequestParam String summary, @RequestParam String points, Model model){
+    	try{
+    		UserStory storyToEdit = userStoryService.getUserStoryById(id);
+    		storyToEdit.setNumber(number);
+    		storyToEdit.setPoints(points);
+    		storyToEdit.setSummary(summary);
+    		userStoryService.save(storyToEdit);
+    		
+    		Workspace workspace = workspaceService.getCurrentWorkspace();
+            List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
+            if (!userStories.isEmpty()) {
+                Collections.sort(userStories);
+                model.addAttribute("stories", userStories);
+            }
+    		return "step3";
+    	}
+    	
+    	catch(Exception e){
+    		e.printStackTrace();
+    		return "false";
+    	}
     }
 
 }
