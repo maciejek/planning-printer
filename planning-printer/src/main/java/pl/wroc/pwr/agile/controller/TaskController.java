@@ -1,29 +1,22 @@
 package pl.wroc.pwr.agile.controller;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
-import javax.validation.Valid;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.wroc.pwr.agile.entity.Task;
 import pl.wroc.pwr.agile.entity.TaskType;
 import pl.wroc.pwr.agile.entity.UserStory;
 import pl.wroc.pwr.agile.entity.Workspace;
-import pl.wroc.pwr.agile.repository.TaskRepository;
 import pl.wroc.pwr.agile.service.TaskService;
 import pl.wroc.pwr.agile.service.UserStoryService;
 import pl.wroc.pwr.agile.service.WorkspaceService;
@@ -118,5 +111,37 @@ public class TaskController {
             return "false";
         }
     }
+    
+    @RequestMapping(value="/editTask", method=RequestMethod.POST, produces = "text/html")
+    public String editTask(@RequestParam String summary, @RequestParam String estimation,
+            @RequestParam String taskId, @RequestParam String taskType, @RequestParam String number, 
+            Model model) {
+    	
+    	  try {
+              
+    		  Task taskToEdit = taskService.getTaskById(Integer.parseInt(taskId));
+    		  taskToEdit.setNumber(number);
+    		  taskToEdit.setEstimation(Double.parseDouble(estimation));
+    		  taskToEdit.setSummary(summary);
+              if (taskType.equals("DEV")) {
+            	  taskToEdit.setType(TaskType.DEVELOPER_TASK);
+              } else {
+            	  taskToEdit.setType(TaskType.TESTER_TASK);
+              }
+              taskService.saveTask(taskToEdit);
+              
+              Workspace workspace = workspaceService.getCurrentWorkspace();
+              List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
+              if (!userStories.isEmpty()) {
+                  Collections.sort(userStories);
+                  model.addAttribute("stories", userStories);
+              }
+      
+              return "step3";
+          } catch (Exception e) {
+              e.printStackTrace();
+              return "false";
+          }
+      }
     
 }
