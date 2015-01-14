@@ -24,6 +24,18 @@
 <div class="row">
 	<p>Select tasks that are not done and should appear in this sprint.</p>
 	<br/>
+
+	<c:if test="${importSucceed eq true}">
+		<div class="alert alert-success" role="alert">
+ 			<strong>Import succeed.</strong> Choose now which tasks you would plan.
+  		</div>
+	</c:if>
+	<c:if test="${importFailure eq true}"> 
+		<div class="alert alert-danger" role="alert">
+ 			<strong>Import did not succeed.</strong> You may want to check the connection on My Account page.
+  		</div>
+	</c:if>
+	
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
 		<div class="panel panel-default">
@@ -144,9 +156,9 @@ function add_all_from_jira() {
 		data : {
 		},
 		success : function(data) {
-			if (data == "true") {
-				window.alert("sometext");
-			}
+
+			$('#jiraModal').parent().html(data)
+			
 		}
 	});
 

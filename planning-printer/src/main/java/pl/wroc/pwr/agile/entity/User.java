@@ -36,6 +36,8 @@ public class User {
     private String jiraPassword;
     @Column
     private String jiraUrl;
+    @Column
+    private String jiraProject;
     
     @ManyToOne
     @JoinColumn(name="workspace_id")
@@ -111,6 +113,13 @@ public class User {
     public String toString() {
         return email + ", " + password + ", " + workspace;
     }
-    
-    
+
+    public void setJiraProject(String projectName) {
+        this.jiraProject = projectName;
+    }
+
+    public String getJiraProject() {
+        return jiraProject;
+    }
+
 }
