@@ -1,10 +1,8 @@
 package pl.wroc.pwr.agile.service;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.hsqldb.lib.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -60,6 +58,10 @@ public class UserStoryService {
 	    }
 	    return userStoryId;
 	 }
+	
+	UserStory findById(int id) {
+	    return userStoryRepository.findOne(id);
+	}
 	
 	public UserStory editUserStory(Integer id, String number, String points, String summary) {
 	    return new UserStory();

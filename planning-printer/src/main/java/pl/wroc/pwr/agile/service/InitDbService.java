@@ -49,6 +49,9 @@ public class InitDbService {
             user1.setEmail("bugi@pwr.edu.pl");
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user1.setPassword(encoder.encode("bugi"));
+            user1.setJiraLogin("tajemnica");
+            user1.setJiraPassword("top secret");
+            user1.setJiraUrl("http://176.119.37.132:9013");
 
             Workspace workspace = new Workspace();
             user1.setWorkspace(workspace);

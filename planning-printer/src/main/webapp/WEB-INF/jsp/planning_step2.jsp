@@ -3,8 +3,26 @@
 
 <%@ include file="../layout/taglib.jsp"%>
 
+<div class="modal fade bs-example-modal-sm" id="jiraModal" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Data from Jira available</h4>
+      </div>
+      <div class="modal-body">
+        <p>Do you want to import user stories and tasks from your Jira project to this planning?&hellip;</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-primary" onclick="add_all_from_jira()" >Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <div class="row">
-	<p>Select tasks that are not finished.</p>
+	<p>Select tasks that are not done and should appear in this sprint.</p>
 	<br/>
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
@@ -34,6 +52,7 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$('#jiraModal').modal('show') 
 	$('.user-stories tr.task').each(function() {
 		var task = $(this);
 		console.log(task.data("complete"));
@@ -115,5 +134,21 @@ $(document).ready(function() {
 			story.removeClass('selected');
 		}
 	}
+	
+
 });
+function add_all_from_jira() {
+	$.ajax({
+		url : "<spring:url value='/importFromJira.html' />",
+		type : "post",
+		data : {
+		},
+		success : function(data) {
+			if (data == "true") {
+				window.alert("sometext");
+			}
+		}
+	});
+
+}
 </script>

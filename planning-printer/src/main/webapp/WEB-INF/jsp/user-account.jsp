@@ -54,9 +54,11 @@
 		<div class="panel-heading">Connect Planning Printer with Jira</div>
 		<div class="panel-body">
 			<p>Enter your Jira cridentials</p>
-			<div class="alert alert-warning" role="alert">
-      			<strong>Warning!</strong> You may need to login through Jira website first.
-      		</div>
+			<c:if test="${connectionSuccessful eq false}">
+				<div class="alert alert-warning" role="alert">
+	      			<strong>Warning!</strong> Make sure if these cridentials are correct. You may also need to login through Jira website first.
+	      		</div>
+	      	</c:if>
       		<form:form action="setupJira.html">
 				<input type="text" name="jiraUrl" id="jiraUrl" class="form-control" placeholder="Jira server URL"
 					required value="${user.jiraUrl}"> 
@@ -68,6 +70,15 @@
 					<input class="btn btn-primary" type="submit" value="Connect">
 				</p>
 			</form:form>
+			<c:if test="${not empty projects}">
+			<div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">Select a project<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            	<c:forEach items="${projects}" var="project">
+                	<li><a href="#">${project}</a></li>    			
+				</c:forEach>
+            </ul>
+        	</div>
+        	</c:if>
 		</div>
 	</div>
 </div>
@@ -204,4 +215,9 @@ $(document).ready(function() {
 		}
 	);
 });
+
+$(".dropdown-menu li a").click(function(){
+	  var selText = $(this).text();
+	  $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
+	});
 </script>
