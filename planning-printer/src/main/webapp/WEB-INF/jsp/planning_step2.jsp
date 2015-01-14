@@ -19,9 +19,10 @@
 						</tr>
 						
 						<c:forEach items="${userStory.tasks}" var="task">
-							<tr class="task" data-id="${task.id}" data-story-id="${userStory.id}">
+							<tr class="task" data-id="${task.id}" data-story-id="${userStory.id}" data-complete="${task.complete}">
 								<td colspan="3">${task.summary}</td>
 							</tr>
+							
 						</c:forEach>
 					</c:forEach>
 				</tbody>
@@ -33,17 +34,78 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$('.user-stories tr.task').each(function() {
+		var task = $(this);
+		console.log(task.data("complete"));
+		if (task.data("complete") == false) {
+			task.addClass("selected");
+			select_or_deselect_user_story(task.data('story-id'));
+		}
+	});
 	$('.user-stories tr.task').click(function() {
 		var task = $(this);
-		var story_id = task.data('story-id');
-		var story = $('.user-stories .story[data-id="' + story_id + '"]').eq(0);
-		var all_tasks = $('.user-stories .task[data-story-id="' + story_id + '"]');
 		
 		if (task.hasClass('selected')) {
-			task.removeClass('selected');
+			unselect_task(task);
 		} else {
-			task.addClass('selected');
+			select_task(task);
 		}
+	});
+	$('.user-stories tr.story').click(function() {
+		var story = $(this);
+		var story_id = story.data('id');
+		
+		var tasks = $('.user-stories .task[data-story-id="' + story_id + '"]');
+		
+		if (story.hasClass('selected')) {
+			story.removeClass('selected');
+			tasks.each(function() {
+				unselect_task($(this));
+			});
+		} else {
+			story.addClass('selected');
+			tasks.each(function() {
+				select_task($(this));
+			});
+		}
+	});
+	function select_task(task) {
+		$.ajax({
+			url : "<spring:url value='task/setTaskIncomplete.html' />",
+			type : "post",
+			data : {
+				taskId : function() {
+					return task.data("id");
+				}
+			},
+			success : function(data) {
+				if (data == "true") {
+					task.addClass('selected');
+					select_or_deselect_user_story(task.data('story-id'));
+				}
+			}
+		});
+	}
+	function unselect_task(task) {
+		$.ajax({
+			url : "<spring:url value='task/setTaskComplete.html' />",
+			type : "post",
+			data : {
+				taskId : function() {
+					return task.data("id");
+				}
+			},
+			success : function(data) {
+				if (data == "true") {
+					task.removeClass('selected');
+					select_or_deselect_user_story(task.data('story-id'));
+				}
+			}
+		});
+	}
+	function select_or_deselect_user_story(story_id) {
+		var story = $('.user-stories .story[data-id="' + story_id + '"]').eq(0);
+		var all_tasks = $('.user-stories .task[data-story-id="' + story_id + '"]');
 		
 		var selected_tasks = $('.user-stories .selected.task[data-story-id="' + story_id + '"]');
 		
@@ -52,23 +114,6 @@ $(document).ready(function() {
 		} else {
 			story.removeClass('selected');
 		}
-	});
-	$('.user-stories tr.story').click(function() {
-		var story = $(this);
-		var story_id = story.data('id');
-		var tasks = $('.user-stories .task[data-story-id="' + story_id + '"]');
-		console.log(tasks);
-		if (story.hasClass('selected')) {
-			story.removeClass('selected');
-			tasks.each(function() {
-				$(this).removeClass('selected');
-			});
-		} else {
-			story.addClass('selected');
-			tasks.each(function() {
-				$(this).addClass('selected');
-			});
-		}
-	});
+	}
 });
 </script>

@@ -30,6 +30,11 @@ public class UserController {
     @Autowired
     private WorkspaceService workspaceService;
     
+    @ModelAttribute("deputy")
+    public User construct() {
+        return new User();
+    }
+    
     @RequestMapping(value="/createDeputy", method=RequestMethod.POST)
     public String submitCreateDeputy(Model model, @ModelAttribute("user") User deputyUser) {
         workspaceService.assignDeputy(deputyUser);
@@ -57,9 +62,9 @@ public class UserController {
     public String account(Model model) {
         User currentUser = userService.getLoggedUser();
         model.addAttribute("user", currentUser);
-        logger.info(currentUser.toString());
-        if (currentUser.getWorkspace().getDeputy() != null && currentUser.getWorkspace() != null) {
-            model.addAttribute("deputy", currentUser.getWorkspace().getDeputy());
+        if (currentUser.getWorkspace().getDeputy() != null) {
+            logger.info(currentUser.getWorkspace().getDeputy().toString());
+            model.addAttribute("mydeputy", currentUser.getWorkspace().getDeputy());
         }
         return "user-account";
     }

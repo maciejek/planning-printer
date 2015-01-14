@@ -36,6 +36,11 @@
 		<put-attribute name="body" value="/WEB-INF/jsp/planning.jsp" />
 		<put-attribute name="current" value="planning"></put-attribute>
 	</definition>
+	<definition name="replanning" extends="common">
+		<put-attribute name="title" value="Replanning" />
+		<put-attribute name="body" value="/WEB-INF/jsp/replanning.jsp" />
+		<put-attribute name="current" value="planning"></put-attribute>
+	</definition>
 	<definition name="create-team" extends="common">
 		<put-attribute name="title" value="Create your team" />
 		<put-attribute name="body" value="/WEB-INF/jsp/create-team.jsp" />

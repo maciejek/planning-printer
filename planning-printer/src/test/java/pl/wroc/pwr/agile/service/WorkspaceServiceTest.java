@@ -117,7 +117,7 @@ public class WorkspaceServiceTest {
     
     @Test
     public void shouldReturnEmptyListIfNoUserStoriesAssigned() {
-        Collection<UserStory> userStories = workspaceService.findAllUserStories();
+        Collection<UserStory> userStories = workspaceService.findUserStoriesInWorkspace();
         
         assertThat(userStories.size(), is(0));
     }
@@ -126,7 +126,7 @@ public class WorkspaceServiceTest {
     public void shouldFindAllUserStoriesAssignedToCurrentWorkspace() {
         workspace.setUserStories(getDummyUserStories());
         
-        Collection<UserStory> userStories = workspaceService.findAllUserStories();
+        Collection<UserStory> userStories = workspaceService.findUserStoriesInWorkspace();
         
         assertThat(userStories.size(), is(2));
     }

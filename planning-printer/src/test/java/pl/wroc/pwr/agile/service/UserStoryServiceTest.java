@@ -2,6 +2,7 @@ package pl.wroc.pwr.agile.service;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -37,6 +38,7 @@ public class UserStoryServiceTest {
  	private static final int USER_STORY_ID = 99;
 	private static final String NUMBER = "US01-test";
 	private static final String POINTS = "5";
+    private static final String POINTS_EDITED = "8";
 	private static final String SUMMARY = "Testowy opis user story";
 	
 	@Mock
@@ -111,6 +113,21 @@ public class UserStoryServiceTest {
 	public void shouldDeleteStory(){
 		userStoryService.delete(USER_STORY_ID);
 		verify(storyRepository).delete(USER_STORY_ID);
+	}
+	
+	@Test
+	public void shouldEditUserStory() {
+	    UserStory userStory = new UserStory();
+	    userStory.setNumber(NUMBER);
+	    userStory.setSummary(SUMMARY);
+	    userStory.setPoints(POINTS);
+	    
+	    when(storyRepository.findOne(Matchers.any(Integer.class))).thenReturn(userStory);
+	    
+	    UserStory usEdited = userStoryService.editUserStory(USER_STORY_ID, NUMBER, POINTS_EDITED, SUMMARY);
+	    
+	    assertThat(usEdited.getPoints(), is(POINTS_EDITED));
+	    assertThat(usEdited.getPoints(), not(is(POINTS)));
 	}
 	
 	

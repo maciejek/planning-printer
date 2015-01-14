@@ -57,7 +57,7 @@ public class InitDbService {
 
             Employee employee1 = new Employee();
             employee1.setName("Dariusz");
-            employee1.setSurname("PÅ‚awecki");
+            employee1.setSurname("P³awecki");
             employee1.setType(EmployeeType.DEVELOPER);
             employee1.setWorkspace(workspace);
             employeeRepository.save(employee1);
@@ -71,14 +71,14 @@ public class InitDbService {
 
             Employee employee3 = new Employee();
             employee3.setName("Wiktoria");
-            employee3.setSurname("PoÅ›lednicka");
+            employee3.setSurname("Poœlednicka");
             employee3.setType(EmployeeType.TESTER);
             employee3.setWorkspace(workspace);
             employeeRepository.save(employee3);
 
             UserStory story = new UserStory();
             story.setNumber("US01");
-            story.setSummary("Jako uÅ¼ytkownik chcÄ™ ponownie wybraÄ‡ nieskoÅ„czone taski.");
+            story.setSummary("Jako u¿ytkownik chcê ponownie wybraæ nieskoñczone taski.");
             story.setPoints("5");
             story.setWorkspace(workspace);
 
@@ -86,7 +86,7 @@ public class InitDbService {
 
             Task t1 = new Task();
             t1.setNumber("T1");
-            t1.setSummary("Widok 4 : widok wybierania nieskoÅ„czonych taskÃ³w.");
+            t1.setSummary("Widok 4 : widok wybierania nieskoñczonych tasków.");
             t1.setType(TaskType.DEVELOPER_TASK);
             t1.setEstimation(2.0D);
             t1.setUserStory(story);
@@ -94,7 +94,7 @@ public class InitDbService {
 
             Task t2 = new Task();
             t2.setNumber("T2");
-            t2.setSummary("Logika dodawania taskÃ³w w kontrolerze widoku.");
+            t2.setSummary("Logika dodawania tasków w kontrolerze widoku.");
             t2.setType(TaskType.DEVELOPER_TASK);
             t2.setEstimation(2.0D);
             t2.setUserStory(story);
@@ -103,7 +103,7 @@ public class InitDbService {
 
             UserStory story2 = new UserStory();
             story2.setNumber("US02");
-            story2.setSummary("Jako uÅ¼ytkownik chcÄ™ dodawaÄ‡ do user story taski wraz z estymacjami.");
+            story2.setSummary("Jako u¿ytkownik chcê dodawaæ do user story taski wraz z estymacjami.");
             story2.setPoints("7");
             story2.setWorkspace(workspace);
 
@@ -111,7 +111,7 @@ public class InitDbService {
 
             Task t3 = new Task();
             t3.setNumber("T3");
-            t3.setSummary("Rozszerzenie widoku dodawania user story o wigdety potrzebne do dodawania taskÃ³w w wybranym US.");
+            t3.setSummary("Rozszerzenie widoku dodawania user story o wigdety potrzebne do dodawania tasków w wybranym US.");
             t3.setType(TaskType.TESTER_TASK);
             t3.setEstimation(6.0D);
             t3.setUserStory(story2);
