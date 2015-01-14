@@ -54,11 +54,6 @@
 		<div class="panel-heading">Connect Planning Printer with Jira</div>
 		<div class="panel-body">
 			<p>Enter your Jira cridentials</p>
-			<c:if test="${connectionSuccessful eq false}">
-				<div class="alert alert-warning" role="alert">
-	      			<strong>Warning!</strong> Make sure if these cridentials are correct. You may also need to login through Jira website first.
-	      		</div>
-	      	</c:if>
       		<form:form action="setupJira.html">
 				<input type="text" name="jiraUrl" id="jiraUrl" class="form-control" placeholder="Jira server URL"
 					required value="${user.jiraUrl}"> 
@@ -70,12 +65,25 @@
 					<input class="btn btn-primary" type="submit" value="Connect">
 				</p>
 			</form:form>
+			<br/>
+			<c:if test="${connectionFailed eq true}">
+				<div class="alert alert-danger" role="alert">
+	      			<strong>Connection did not succeed.</strong> Make sure if these cridentials are correct. You may also need to login through Jira website first.
+	      		</div>
+	      	</c:if>
+	      	<c:if test="${connectionSuccessful eq true}">
+				<div class="alert alert-success" role="alert">
+	      			<strong>Connection succeeded.</strong> Choose a project from the list below to pair it with your Planning Printer workspace.
+	      		</div>
+	      	</c:if>
 			<c:if test="${not empty projects}">
 			<div class="btn-group"> <a class="btn btn-default dropdown-toggle btn-select2" data-toggle="dropdown" href="#">Select a project<span class="caret"></span></a>
             <ul class="dropdown-menu">
+            <form:form action="setupJira.html">
             	<c:forEach items="${projects}" var="project">
-                	<li><a href="#">${project}</a></li>    			
+                	<li><a class="jiraProjectName" href="#">${project}</a></li>    			
 				</c:forEach>
+			</form:form>
             </ul>
         	</div>
         	</c:if>
@@ -214,10 +222,32 @@ $(document).ready(function() {
 			}
 		}
 	);
+	
+	$('.jiraProjectName').click(function() {
+		var task = $(this).text();
+		project_selected(task);
+	});
 });
 
 $(".dropdown-menu li a").click(function(){
 	  var selText = $(this).text();
 	  $(this).parents('.btn-group').find('.dropdown-toggle').html(selText+' <span class="caret"></span>');
 	});
+	
+function project_selected(projectName) {
+	$.ajax({
+		url : "<spring:url value='/projectSelected.html' />",
+		type : "post",
+		data : {
+			projectNameParam : function() {
+				return projectName;
+			}
+		},
+		success : function(data) {
+			if (data == "true") {
+				//window.alert("2");
+			}
+		}
+	});
+}
 </script>

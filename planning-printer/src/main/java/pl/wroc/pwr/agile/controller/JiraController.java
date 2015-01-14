@@ -1,11 +1,11 @@
 package pl.wroc.pwr.agile.controller;
 
 import java.security.Principal;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Set;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,24 +15,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.common.collect.Sets;
-
 import pl.wroc.pwr.agile.connector.JiraConnector;
-import pl.wroc.pwr.agile.entity.Task;
 import pl.wroc.pwr.agile.entity.User;
-import pl.wroc.pwr.agile.jiraExt.JiraRetreiver;
+import pl.wroc.pwr.agile.entity.UserStory;
 import pl.wroc.pwr.agile.service.JiraService;
-import pl.wroc.pwr.agile.service.UserService;
+import pl.wroc.pwr.agile.service.WorkspaceService;
 
 @Controller
 public class JiraController {
-    private static Logger logger = LoggerFactory.getLogger(JiraController.class);
     
     @Autowired
     private JiraService jiraService;
     
     @Autowired
     private JiraConnector jiraConnector;
+    
+    @Autowired
+    private WorkspaceService workspaceService;
     
     @ModelAttribute("deputy")
     public User construct() {
@@ -50,15 +49,38 @@ public class JiraController {
             User result = jiraService.saveJiraCredentials(jiraUrl, jiraLogin, jiraPassword);
             model.addAttribute("user", result);
             model.addAttribute("projects", projects);
+            model.addAttribute("connectionSuccessful", true);
         }
-        model.addAttribute("connectionSuccessful", !projects.isEmpty());
-        model.addAttribute("mydeputy", null);
+        else {
+            model.addAttribute("connectionFailed", true);
+        }
         return "user-account";
     }
     
-    @RequestMapping(value="/importFromJira", method=RequestMethod.POST)
+    @RequestMapping(value="/importFromJira", method=RequestMethod.POST, produces = "text/html" )
+    public String importFromJira(Model model) {
+        if(jiraService.importDataFromJira()) {
+            model.addAttribute("importSucceed", true);
+        }
+        else {
+            model.addAttribute("importFailure", true);
+        }
+        List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findUserStoriesInWorkspace());
+        if (!userStories.isEmpty()) {
+            Collections.sort(userStories);
+            model.addAttribute("userStories", userStories);
+        }
+        return "step2";
+    }
+    
+    @RequestMapping(value="/projectSelected", method=RequestMethod.POST)
     @ResponseBody
-    public String importFromJira() {
-        return String.valueOf(jiraService.importDataFromJira());
+    public String setTaskIncomplete(@RequestParam String projectNameParam) {
+        try {
+            jiraService.saveJiraProject(projectNameParam);
+            return "true";
+        } catch (Exception e) {
+            return "false";
+        }
     }
 }
