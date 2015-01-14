@@ -5,6 +5,21 @@
 	<artifactId>planning-printer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
+	<repositories>
+		<repository>
+			  <id>atlassian-public</id>
+		      <url>https://maven.atlassian.com/repository/public</url>
+		      <snapshots>
+				<enabled>true</enabled>
+				<updatePolicy>never</updatePolicy>
+		        <checksumPolicy>warn</checksumPolicy>
+		      </snapshots>
+		       <releases>
+		         <enabled>true</enabled>
+		         <checksumPolicy>warn</checksumPolicy>
+		      </releases>
+		</repository>
+ 	</repositories>
 
 	<properties>
 		<org.springframework.version>4.1.2.RELEASE</org.springframework.version>
@@ -237,7 +252,14 @@
 			<artifactId>itextpdf</artifactId>
 			<version>5.4.2</version>
 		</dependency>
-
+		
+        <dependency>
+            <groupId>jiram</groupId>
+            <artifactId>jiram</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/jiram.jar</systemPath>
+        </dependency>
 
 	</dependencies>
 
