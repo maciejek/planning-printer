@@ -4,8 +4,6 @@
 <%@ include file="../layout/taglib.jsp"%>
 
 <div class="row" id="story-step-content">
-	<p>Add new user stories and tasks here.</p>
-	<br/>
 	<div class="col-md-1"></div>
 	<div class="col-md-10">
 		<div class="panel panel-default">
@@ -21,7 +19,6 @@
 						<th></th>
 						<th></th>
 						<th></th>
-						
 					</tr>
 				</thead>
 				<tbody>
@@ -47,6 +44,7 @@
 								</td>
 								<td style="text-align: center"><span id="${task}"  class="glyphicon glyphicon-pencil edit-task" data-toggle="modal" aria-hidden="true"  data-target="#popupEditTask"></span></td>
 								<td style="text-align: center"><span id="${task.id}" class="glyphicon glyphicon-trash remove-task" aria-hidden="true"></span></td>
+								<td></td>
 						</c:forEach>
 					</c:forEach>
 				</tbody>
@@ -283,10 +281,11 @@
 	
 	</c:forEach>
 </div>
-
+<div class="row">
     <div align="center">
 		<a href="./planning/downloadPDF.pdf" class="btn btn-primary btn-default">Generuj PDF <span class="glyphicon glyphicon-file"></span></a>
     </div>
+</div>
 
 <script type="text/javascript">
 $(document).ready(function() {

@@ -2,8 +2,11 @@ package pl.wroc.pwr.agile.service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -14,10 +17,12 @@ import org.springframework.stereotype.Service;
 
 import pl.wroc.pwr.agile.entity.Employee;
 import pl.wroc.pwr.agile.entity.EmployeeType;
+import pl.wroc.pwr.agile.entity.Task;
 import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.entity.UserStory;
 import pl.wroc.pwr.agile.entity.UserType;
 import pl.wroc.pwr.agile.entity.Workspace;
+import pl.wroc.pwr.agile.repository.UserRepository;
 import pl.wroc.pwr.agile.repository.WorkspaceRepository;
 
 @Service
@@ -28,6 +33,9 @@ public class WorkspaceService {
 
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+    private UserRepository userRepository;
 	
     @Autowired
     private WorkspaceRepository workspaceRepository;
@@ -50,6 +58,7 @@ public class WorkspaceService {
         deputyUser.setType(UserType.DEPUTY);
         deputyUser.setWorkspace(currentWorkspace);
         currentWorkspace.setDeputy(deputyUser);
+        userRepository.save(deputyUser);
         save(currentWorkspace);
     }
     
@@ -75,7 +84,7 @@ public class WorkspaceService {
         return testers;
     }
     
-    public Collection<UserStory> findAllUserStories() {
+    public Collection<UserStory> findUserStoriesInWorkspace() {
         Collection<UserStory> userStories = getCurrentWorkspace().getUserStories();
         if (userStories == null) {
             return new ArrayList<UserStory>();
@@ -84,4 +93,26 @@ public class WorkspaceService {
         }
     }
     
+    public Collection<UserStory> findIncompleteUserStories() {
+        Collection<UserStory> userStories = new ArrayList<UserStory>();
+        for (UserStory userStory : findUserStoriesInWorkspace()) {
+            Set<Task> tasks = findIncompleteTasksInUserStory(userStory);
+            if (tasks.size() > 0) {
+                userStory.setTasks(tasks);
+                userStories.add(userStory);
+            }
+            userStory.setTasks(tasks);
+        }
+        return userStories;
+    }
+    
+    public Set<Task> findIncompleteTasksInUserStory(UserStory userStory) {
+        Set<Task> incompleteTasks = new HashSet<Task>();
+        for (Task task : userStory.getTasks()) {
+            if (!task.getComplete()) {
+                incompleteTasks.add(task);
+            }
+        }
+        return incompleteTasks;
+    }
 }

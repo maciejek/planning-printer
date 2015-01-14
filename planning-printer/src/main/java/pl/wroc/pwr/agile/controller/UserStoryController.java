@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -23,6 +25,7 @@ import pl.wroc.pwr.agile.service.WorkspaceService;
 @Controller
 @RequestMapping("/story")
 public class UserStoryController {
+    private static Logger logger = LoggerFactory.getLogger(UserStoryController.class);
 
     @Autowired
     private UserStoryService userStoryService;
@@ -38,64 +41,47 @@ public class UserStoryController {
     
     @RequestMapping(value="/loadStep2", method = RequestMethod.POST, produces = "text/html")
     public String loadStep2(Model model) {
-        try {
-            Workspace workspace = workspaceService.getCurrentWorkspace();
-            List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
-            if (!userStories.isEmpty()) {
-                Collections.sort(userStories);
-                model.addAttribute("userStories", userStories);
-            }
-            return "step2";
-        } catch(Exception e) {
-            return "false";
+        List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findUserStoriesInWorkspace());
+        if (!userStories.isEmpty()) {
+            Collections.sort(userStories);
+            model.addAttribute("userStories", userStories);
         }
+        return "step2";
     }
     
     @RequestMapping(value = "/addStory", produces = "text/html")
     public String addStory(@RequestParam String number,
             @RequestParam String summary, @RequestParam String points, Model model) {
         
-        try {
-            UserStory story = new UserStory();
-            story.setNumber(number);
-            story.setSummary(summary);
-            story.setPoints(points);
-            story.setWorkspace(userService.getLoggedUser().getWorkspace());
-            story.setTasks(new HashSet<Task>());
-    
-            userStoryService.save(story);
-            
-            Workspace workspace = workspaceService.getCurrentWorkspace();
-            List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
-            if (!userStories.isEmpty()) {
-                Collections.sort(userStories);
-                model.addAttribute("stories", userStories);
-            }
-    
-            return "step3";
-        } catch(Exception e) {
-            e.printStackTrace();
-            return "false";
+        UserStory story = new UserStory();
+        story.setNumber(number);
+        story.setSummary(summary);
+        story.setPoints(points);
+        story.setWorkspace(userService.getLoggedUser().getWorkspace());
+        story.setTasks(new HashSet<Task>());
+
+        userStoryService.save(story);
+        
+        List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findIncompleteUserStories());
+        if (!userStories.isEmpty()) {
+            Collections.sort(userStories);
+            model.addAttribute("stories", userStories);
         }
+
+        return "step3";
     }
     
     @RequestMapping(value = "/removeStory", produces = "text/html")
     public String removeStory(@RequestParam Integer id, Model model) {
-        try {
-            userStoryService.delete(id);
-            
-            Workspace workspace = workspaceService.getCurrentWorkspace();
-            List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
-            if (!userStories.isEmpty()) {
-                Collections.sort(userStories);
-                model.addAttribute("stories", userStories);
-            }
-    
-            return "step3";
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "false";
+        userStoryService.delete(id);
+        
+        List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findIncompleteUserStories());
+        if (!userStories.isEmpty()) {
+            Collections.sort(userStories);
+            model.addAttribute("stories", userStories);
         }
+
+        return "step3";
     }
     
     @RequestMapping(value="/editStory", method=RequestMethod.POST, produces = "text/html")

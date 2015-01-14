@@ -25,7 +25,17 @@ public class Task {
     @ManyToOne
     private UserStory userStory;
     
-	public UserStory getUserStory() {
+    private Boolean complete = false; 
+    
+	public Boolean getComplete() {
+        return complete;
+    }
+
+    public void setComplete(Boolean finished) {
+        this.complete = finished;
+    }
+
+    public UserStory getUserStory() {
 		return userStory;
 	}
 
@@ -73,4 +83,20 @@ public class Task {
 		this.number = number;
 	}
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Task other = (Task) obj;
+        if (id == null) {
+            if (other.id != null)
+                return false;
+        } else if (!id.equals(other.id))
+            return false;
+        return true;
+    }
 }

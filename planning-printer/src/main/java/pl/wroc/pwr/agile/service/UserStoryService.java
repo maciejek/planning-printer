@@ -60,4 +60,8 @@ public class UserStoryService {
 	    }
 	    return userStoryId;
 	 }
+	
+	public UserStory editUserStory(Integer id, String number, String points, String summary) {
+	    return new UserStory();
+	}
 }

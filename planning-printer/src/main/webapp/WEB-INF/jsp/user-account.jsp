@@ -35,7 +35,8 @@
 				<li role="presentation" id="changePassword"><a role="menuitem" tabindex="2"
 					href="https://twitter.com/fat" data-toggle="modal"
 					data-target="#changePasswordDialog">Change password</a></li>
-			</ul></li>
+			</ul>
+		</li>
 	</ul>
 	<!-- /pills -->
 </div>
@@ -95,20 +96,20 @@
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Assign a deputy</h4>
 			</div>
-			<form:form commandName="user" cssClass="form-horizontal"
+			<form:form commandName="deputy" cssClass="form-horizontal"
 				action="createDeputy.html">
 				<div class="modal-body">
-				<c:if test="${not empty deputy}">
-					<p>${deputy.email}</p>
-				</c:if>
-				<c:if test="${empty deputy}">
 					<div class="form-group">
 						<label for="email" class="col-sm-4 control-label">Your deputy email:</label>
 						<div class="col-sm-8">
-							<form:input path="email" name="deputyEmail" cssClass="form-control" />
+							<c:if test="${not empty mydeputy}">
+								${mydeputy.email}
+							</c:if>
+							<c:if test="${empty mydeputy}">
+								<form:input path="email" name="deputyEmail" cssClass="form-control" />
+							</c:if>
 						</div>
 					</div>
-				</c:if>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

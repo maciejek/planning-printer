@@ -110,6 +110,10 @@
 </div>
 
 <div class="planning-step col-md-12" id="step3">
+	<div class="row">
+		<p class="description">Add new user stories and tasks here.</p>
+		<br/>
+	</div>
 	<div class="step-content"></div>
 	<div class="row">
 		<nav>
@@ -131,9 +135,6 @@ $(document).ready(function() {
 			$.ajax({
 				url : "<spring:url value='/task.html' />",
 				type : "post",
-				data : {
-					tasksJSONObject : get_finished_tasks_as_json_object()
-				},
 				success : function(data) {
 					go_to_step(stepId);
 					$(stepId).find('.step-content').html(data);
@@ -152,16 +153,6 @@ $(document).ready(function() {
 			go_to_step(stepId);
 		}
 	});
-	function get_finished_tasks_as_json_object() {
-		var tasks = $('.user-stories .task:not(.selected)');
-		var json_object = "{ finished_tasks: [";
-		for (i = 0; i < tasks.length; i++) {
-			json_object += "{id : " + tasks.eq(i).data("id") + ", story_id : " + tasks.eq(i).data("story-id") + "}";
-			json_object += i < tasks.length - 1 ? "," : "";
-		}
-		json_object += "] }";
-		return json_object;
-	}
 	function go_to_step(stepId) {
 		$('.nav-step').removeClass('active');
 		$(stepId + '-nav').addClass('active');

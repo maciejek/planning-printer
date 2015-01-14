@@ -3,6 +3,7 @@ package pl.wroc.pwr.agile.controller;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,11 +14,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import pl.wroc.pwr.agile.entity.Employee;
 import pl.wroc.pwr.agile.entity.Task;
+import pl.wroc.pwr.agile.entity.TaskType;
 import pl.wroc.pwr.agile.entity.UserStory;
+import pl.wroc.pwr.agile.entity.Workspace;
 import pl.wroc.pwr.agile.service.UserService;
 import pl.wroc.pwr.agile.service.WorkspaceService;
 
@@ -37,10 +41,8 @@ public class WorkspaceController {
         return new Task();
     }
     
-    
-    
     @RequestMapping("/planning")
-    public String doPlanning(Principal principal, Model model) {
+    public String doPlanning(Model model) {
         List<Employee> developers = workspaceService.findDevelopersInWorkspace();
         if (!developers.isEmpty()) {
             model.addAttribute("developers", developers);
@@ -49,12 +51,12 @@ public class WorkspaceController {
         if (!testers.isEmpty()) {
             model.addAttribute("testers", testers);
         }
-        Collection<UserStory> userStories = workspaceService.findAllUserStories();
-        logger.info("USER STORIES " + userStories.size());
-        if (!userStories.isEmpty()) {
-            model.addAttribute("userStories", userStories);
-        }
         return "planning";
+    }
+    
+    @RequestMapping("/replanning")
+    public String doReplanning() {
+        return "replanning";
     }
     
     @RequestMapping("/createTeam")

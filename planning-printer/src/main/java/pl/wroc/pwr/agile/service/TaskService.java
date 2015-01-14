@@ -34,5 +34,8 @@ public class TaskService {
 		taskRepository.delete(id);
 	}
 	
+	public void saveTasks(List<Task> tasks) {
+	    taskRepository.save(tasks);
+	}
 	
 }
