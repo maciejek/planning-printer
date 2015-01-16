@@ -17,112 +17,123 @@
 
 <br />
 
-<div class="planning-step col-md-12" id="step1">
-	<div class="row">
-		<p>Step 1 here</p>
-		<br />
-		<div class="col-md-1"></div>
-		<div class="col-md-10">
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<strong>Developers</strong>
-					</div>
 
-					<table class="table table-hover developers-hours">
-						<thead>
-							<tr>
-								<th class="text-center">Developer</th>
-								<th class="text-center">Hours</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${developers}" var="developer">
+<div class="tab-content white-overlay">
+	<div class="products-ajax-loader">
+		<span class="loader"></span>
+	</div>
+	<div class="planning-step col-md-12" id="step1">
+		<div class="row">
+			<p>Step 1 here</p>
+			<br />
+			<div class="col-md-1"></div>
+			<div class="col-md-10">
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<strong>Developers</strong>
+						</div>
+
+						<table class="table table-hover developers-hours">
+							<thead>
 								<tr>
-									<td>${developer.name} ${developer.surname}</td>
-									<td class="text-center"><input type="text" class="developers-hours-input form-control"></td>
+									<th class="text-center">Developer</th>
+									<th class="text-center">Hours</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-						<tfoot>
-							<tr class="hours-summary">
-								<td><strong>Summary:</strong></td>
-								<td class="text-center"><span id="developers-hours-sum">0</span></td>
-							</tr>
-						</tfoot>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach items="${developers}" var="developer">
+									<tr>
+										<td>${developer.name}${developer.surname}</td>
+										<td class="text-center"><input type="text"
+											class="developers-hours-input form-control"></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+							<tfoot>
+								<tr class="hours-summary">
+									<td><strong>Summary:</strong></td>
+									<td class="text-center"><span id="developers-hours-sum">0</span></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<strong>Testers</strong>
+						</div>
+
+						<table class="table table-hover testers-hours">
+							<thead>
+								<tr>
+									<th class="text-center">Tester</th>
+									<th class="text-center">Hours</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:forEach items="${testers}" var="tester">
+									<tr>
+										<td>${tester.name}${tester.surname}</td>
+										<td class="text-center"><input type="text"
+											class="testers-hours-input form-control"></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+							<tfoot>
+								<tr class="hours-summary">
+									<td><strong>Summary:</strong></td>
+									<td class="text-center"><span id="testers-hours-sum">0</span></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
 				</div>
 			</div>
-			<div class="col-md-6">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<strong>Testers</strong>
-					</div>
+			<div class="col-md-1"></div>
 
-					<table class="table table-hover testers-hours">
-						<thead>
-							<tr>
-								<th class="text-center">Tester</th>
-								<th class="text-center">Hours</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach items="${testers}" var="tester">
-								<tr>
-									<td>${tester.name} ${tester.surname}</td>
-									<td class="text-center"><input type="text" class="testers-hours-input form-control"></td>
-								</tr>
-							</c:forEach>
-						</tbody>
-						<tfoot>
-							<tr class="hours-summary">
-								<td><strong>Summary:</strong></td>
-								<td class="text-center"><span id="testers-hours-sum">0</span></td>
-							</tr>
-						</tfoot>
-					</table>
-				</div>
-			</div>
 		</div>
-		<div class="col-md-1"></div>
+		<div class="row">
+			<nav>
+				<ul class="pager">
+					<li class="next nav-step"><a href="#step2">Next <span
+							aria-hidden="true">&rarr;</span></a></li>
+				</ul>
+			</nav>
+		</div>
+	</div>
 
+	<div class="planning-step col-md-12" id="step2">
+		<div class="step-content"></div>
+		<div class="row">
+			<nav>
+				<ul class="pager">
+					<li class="previous nav-step"><a href="#step1"><span
+							aria-hidden="true">&larr;</span> Prev</a></li>
+					<li class="next nav-step"><a href="#step3">Next <span
+							aria-hidden="true">&rarr;</span></a></li>
+				</ul>
+			</nav>
+		</div>
 	</div>
-	<div class="row">
-		<nav>
-			<ul class="pager">
-				<li class="next nav-step"><a href="#step2">Next <span aria-hidden="true">&rarr;</span></a></li>
-			</ul>
-		</nav>
-	</div>
-</div>
 
-<div class="planning-step col-md-12" id="step2">
-	<div class="step-content"></div>
-	<div class="row">
-		<nav>
-			<ul class="pager">
-				<li class="previous nav-step"><a href="#step1"><span aria-hidden="true">&larr;</span>
-						Prev</a></li>
-				<li class="next nav-step"><a href="#step3">Next <span aria-hidden="true">&rarr;</span></a></li>
-			</ul>
-		</nav>
+	<div class="planning-step col-md-12" id="step3">
+		<div class="row">
+			<p class="description">Add new user stories and tasks here.</p>
+			<br />
+		</div>
+		<div class="step-content"></div>
+		<div class="row">
+			<nav>
+				<ul class="pager">
+					<li class="previous nav-step"><a href="#step2"><span
+							aria-hidden="true">&larr;</span> Prev</a></li>
+				</ul>
+			</nav>
+		</div>
 	</div>
-</div>
 
-<div class="planning-step col-md-12" id="step3">
-	<div class="row">
-		<p class="description">Add new user stories and tasks here.</p>
-		<br/>
-	</div>
-	<div class="step-content"></div>
-	<div class="row">
-		<nav>
-			<ul class="pager">
-				<li class="previous nav-step"><a href="#step2"><span aria-hidden="true">&larr;</span>
-						Prev</a></li>
-			</ul>
-		</nav>
-	</div>
 </div>
 
 <script type="text/javascript">

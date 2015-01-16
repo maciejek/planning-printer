@@ -65,19 +65,11 @@
 <script type="text/javascript">
 $(document).ready(function() {
 	$('#jiraModal').modal('show') 
-	$('.user-stories tr.task').each(function() {
-		var task = $(this);
-		console.log(task.data("complete"));
-		if (task.data("complete") == false) {
-			task.addClass("selected");
-			select_or_deselect_user_story(task.data('story-id'));
-		}
-	});
 	$('.user-stories tr.task').click(function() {
 		var task = $(this);
 		
 		if (task.hasClass('selected')) {
-			unselect_task(task);
+			deselect_task(task);
 		} else {
 			select_task(task);
 		}
@@ -91,7 +83,7 @@ $(document).ready(function() {
 		if (story.hasClass('selected')) {
 			story.removeClass('selected');
 			tasks.each(function() {
-				unselect_task($(this));
+				deselect_task($(this));
 			});
 		} else {
 			story.addClass('selected');
@@ -117,7 +109,7 @@ $(document).ready(function() {
 			}
 		});
 	}
-	function unselect_task(task) {
+	function deselect_task(task) {
 		$.ajax({
 			url : "<spring:url value='task/setTaskComplete.html' />",
 			type : "post",
@@ -146,8 +138,6 @@ $(document).ready(function() {
 			story.removeClass('selected');
 		}
 	}
-	
-
 });
 function add_all_from_jira() {
 	$.ajax({

@@ -27,6 +27,7 @@ import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.entity.UserStory;
 import pl.wroc.pwr.agile.entity.UserType;
 import pl.wroc.pwr.agile.entity.Workspace;
+import pl.wroc.pwr.agile.repository.UserRepository;
 import pl.wroc.pwr.agile.repository.WorkspaceRepository;
 
 public class WorkspaceServiceTest {
@@ -39,6 +40,9 @@ public class WorkspaceServiceTest {
     
     @Mock
     private WorkspaceRepository workspaceRepositoryMock;
+
+    @Mock
+    private UserRepository userRepositoryMock;
     
     @Mock
     private User userMock;

@@ -85,27 +85,20 @@ public class UserStoryController {
     }
     
     @RequestMapping(value="/editStory", method=RequestMethod.POST, produces = "text/html")
-    public String editStory(@RequestParam Integer id, @RequestParam String number, @RequestParam String summary, @RequestParam String points, Model model){
-    	try{
-    		UserStory storyToEdit = userStoryService.getUserStoryById(id);
-    		storyToEdit.setNumber(number);
-    		storyToEdit.setPoints(points);
-    		storyToEdit.setSummary(summary);
-    		userStoryService.save(storyToEdit);
-    		
-    		Workspace workspace = workspaceService.getCurrentWorkspace();
-            List<UserStory> userStories = new ArrayList<UserStory>(workspace.getUserStories());
-            if (!userStories.isEmpty()) {
-                Collections.sort(userStories);
-                model.addAttribute("stories", userStories);
-            }
-    		return "step3";
-    	}
-    	
-    	catch(Exception e){
-    		e.printStackTrace();
-    		return "false";
-    	}
+    public String editStory(@RequestParam String storyId, @RequestParam String number, @RequestParam String summary, @RequestParam String points, Model model){
+		
+        UserStory storyToEdit = userStoryService.getUserStoryById(Integer.valueOf(storyId));
+		storyToEdit.setNumber(number);
+		storyToEdit.setPoints(points);
+		storyToEdit.setSummary(summary);
+		userStoryService.save(storyToEdit);
+		
+        List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findIncompleteUserStories());
+        if (!userStories.isEmpty()) {
+            Collections.sort(userStories);
+            model.addAttribute("stories", userStories);
+        }
+		return "step3";
     }
 
 }
