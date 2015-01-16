@@ -17,9 +17,8 @@
 
 <br />
 
-
-<div class="tab-content white-overlay">
-	<div class="products-ajax-loader">
+<div class="tab-content">
+	<div style="display: none" class="ajax-loader">
 		<span class="loader"></span>
 	</div>
 	<div class="planning-step col-md-12" id="step1">
@@ -146,7 +145,11 @@ $(document).ready(function() {
 			$.ajax({
 				url : "<spring:url value='/task.html' />",
 				type : "post",
+				beforeSend : function() {
+					display_loader();
+				},
 				success : function(data) {
+					hide_loader();
 					go_to_step(stepId);
 					$(stepId).find('.step-content').html(data);
 				}
@@ -155,7 +158,11 @@ $(document).ready(function() {
 			$.ajax({
 				url : "<spring:url value='/story/loadStep2.html' />",
 				type : "post",
+				beforeSend : function() {
+					display_loader();
+				},
 				success : function(data) {
+					hide_loader();
 					go_to_step(stepId);
 					$(stepId).find('.step-content').html(data);
 				}

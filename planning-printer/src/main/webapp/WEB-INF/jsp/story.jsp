@@ -341,7 +341,11 @@ $(document).ready(function() {
 						return storyPoints;
 					},
 				},
+				beforeSend : function() {
+					display_loader();
+				},
 				success : function(html) {
+					hide_loader();
 					$('#story-step-content').parent().html(html);
 				}
 			});
@@ -357,7 +361,11 @@ $(document).ready(function() {
 					return id;
 				},
 			},
+			beforeSend : function() {
+				display_loader();
+			},
 			success : function(html) {
+				hide_loader();
 				$('#story-step-content').parent().html(html);
 			}
 		});
@@ -372,7 +380,11 @@ $(document).ready(function() {
 					return id;
 				},
 			},
+			beforeSend : function() {
+				display_loader();
+			},
 			success : function(html) {
+				hide_loader();
 				$('#story-step-content').parent().html(html);
 			}
 		});
@@ -408,7 +420,11 @@ $(document).ready(function() {
 					return number;
 				}
 			},
+			beforeSend : function() {
+				display_loader();
+			},
 			success : function(html) {
+				hide_loader();
 				$('#closeEditStory').click();
 				$('#story-step-content').parent().html(html);
 			}
@@ -444,7 +460,11 @@ $(document).ready(function() {
 					return number;
 				}
 			},
+			beforeSend : function() {
+				display_loader();
+			},
 			success : function(html) {
+				hide_loader();
 				$('#closeAddTask').click();
 				$('#story-step-content').parent().html(html);
 			}
@@ -489,7 +509,11 @@ $(document).ready(function() {
 					return number;
 				}
 			},
+			beforeSend : function() {
+				display_loader();
+			},
 			success : function(html) {
+				hide_loader();
 				$('#closeEditTask').click();
 				$('#story-step-content').parent().html(html);
 			}
@@ -511,7 +535,8 @@ $(document).ready(function() {
 				required : true
 			},
 			estimation : {
-				required : true
+				required : true,
+				number: true
 			}
 		},
 		highlight: function(element) {
@@ -532,7 +557,8 @@ $(document).ready(function() {
 				required : true
 			},
 			points : {
-				required : true
+				required : true,
+				number: true
 			}
 		},
 		highlight: function(element) {
