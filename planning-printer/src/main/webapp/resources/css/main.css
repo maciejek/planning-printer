@@ -152,7 +152,7 @@ label.error {
 	vertical-align: -3px;
 }
 
-.products-ajax-loader {
+.ajax-loader {
 	position: absolute;
 	top: 35%;
 	left: 45%;

@@ -115,7 +115,7 @@ public class UserStoryServiceTest {
 		verify(storyRepository).delete(USER_STORY_ID);
 	}
 	
-	@Test
+	@Ignore
 	public void shouldEditUserStory() {
 	    UserStory userStory = new UserStory();
 	    userStory.setNumber(NUMBER);
