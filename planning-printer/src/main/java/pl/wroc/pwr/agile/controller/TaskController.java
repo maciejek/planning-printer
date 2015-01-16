@@ -95,6 +95,31 @@ public class TaskController {
         return "step3";
     }
     
+    @RequestMapping(value="/editTask", method=RequestMethod.POST, produces = "text/html")
+    public String editTask(@RequestParam String summary, @RequestParam String estimation,
+            @RequestParam String taskId, @RequestParam String taskType, @RequestParam String number, 
+            Model model) {
+        Task task = taskService.getTaskById(Integer.parseInt(taskId));
+        
+        task.setNumber(number);
+        task.setEstimation(Double.parseDouble(estimation));
+        task.setSummary(summary);
+        if (taskType.equals("DEV")) {
+            task.setType(TaskType.DEVELOPER_TASK);
+        } else {
+            task.setType(TaskType.TESTER_TASK);
+        }
+        taskService.saveTask(task);
+        
+        List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findIncompleteUserStories());
+        if (!userStories.isEmpty()) {
+            Collections.sort(userStories);
+            model.addAttribute("stories", userStories);
+        }
+
+        return "step3";
+    }
+    
     @RequestMapping(value = "/removeTask", produces = "text/html")
     public String removeTask(@RequestParam Integer id, Model model) {
         taskService.deleteTaskById(id);

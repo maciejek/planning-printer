@@ -5,9 +5,10 @@
 
 <form class="form-signin" role="form" method="POST" action="${pageContext.request.contextPath}/j_spring_security_check">
 	<c:if test="${not empty SPRING_SECURITY_LAST_EXCEPTION}">
-	<div class="alert alert-danger">
-		Can not login: <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
-	</div>
+		<div class="alert alert-danger alert-dismissible fade in" role="alert">
+	     	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+	     	Can not login: <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.
+	    </div>
 	</c:if>
 	<h2 class="form-signin-heading">Please sign in</h2>
 	<label for="inputEmail" class="sr-only">Email address <span class="required-field">*</span></label> 

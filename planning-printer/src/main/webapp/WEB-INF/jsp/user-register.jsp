@@ -7,9 +7,10 @@
 <div class="col-md-2"></div>
 <form:form commandName="user" cssClass="form-horizontal registration-form col-md-8">
 	<c:if test="${param.success eq true}">
-	<div class="alert alert-success">
-		Registration successful!
-	</div>
+		<div class="alert alert-success alert-dismissible fade in" role="alert">
+	     	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+	     	Registration successful!
+	    </div>
 	</c:if>
 	<div class="form-group">
 		<label for="email" class="col-sm-2 control-label">Email <span class="required-field">*</span></label>

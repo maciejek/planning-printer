@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import pl.wroc.pwr.agile.entity.User;
 import pl.wroc.pwr.agile.entity.Workspace;
@@ -41,7 +42,20 @@ public class UserController {
     public String submitCreateDeputy(Model model, @ModelAttribute("user") User deputyUser) {
         workspaceService.assignDeputy(deputyUser);
         model.addAttribute("deputyCreated", true);
+        User currentUser = userService.getLoggedUser();
+        model.addAttribute("user", currentUser);
+        if (currentUser.getWorkspace().getDeputy() != null) {
+            logger.info(currentUser.getWorkspace().getDeputy().toString());
+            model.addAttribute("mydeputy", currentUser.getWorkspace().getDeputy());
+        }
         return "user-account";
+    }
+    
+    @RequestMapping(value="/removeDeputy", method=RequestMethod.POST)
+    @ResponseBody
+    public String removeDeputy() {
+        workspaceService.removeDeputy();
+        return "true";
     }
     
     @RequestMapping("/users")
@@ -65,7 +79,6 @@ public class UserController {
         User currentUser = userService.getLoggedUser();
         model.addAttribute("user", currentUser);
         if (currentUser.getWorkspace().getDeputy() != null) {
-            logger.info(currentUser.getWorkspace().getDeputy().toString());
             model.addAttribute("mydeputy", currentUser.getWorkspace().getDeputy());
         }
         return "user-account";

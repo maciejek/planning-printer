@@ -4,19 +4,22 @@
 <%@ include file="../layout/taglib.jsp"%>
 
 <c:if test="${passwordNotChanged eq true}">
-	<div class="alert alert-danger">
-		Cannot change password!
-	</div>
+	<div class="alert alert-danger alert-dismissible fade in" role="alert">
+     	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+     	Cannot change password!
+    </div>
 </c:if>
 <c:if test="${passwordChanged eq true}">
-	<div class="alert alert-success">
-		Your password has been changed successfuly!
-	</div>
+	<div class="alert alert-success alert-dismissible fade in" role="alert">
+     	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+     	Your password has been changed successfuly!
+    </div>
 </c:if>
 <c:if test="${deputyCreated eq true}">
-	<div class="alert alert-success">
-		Your deputy account has been created!
-	</div>
+	<div class="alert alert-success alert-dismissible fade in" role="alert">
+     	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+     	Your deputy account has been created!
+    </div>
 </c:if>
 
 <div class="bs-example">
@@ -120,12 +123,16 @@
 				<div class="modal-body">
 					<div class="form-group">
 						<label for="email" class="col-sm-4 control-label">Your deputy email:</label>
-						<div class="col-sm-8">
+						<div class="col-sm-8 deputy-field">
 							<c:if test="${not empty mydeputy}">
-								${mydeputy.email}
+								<div class="deputy-assigned" style="padding-top:6px">
+									${mydeputy.email}
+									<span class="glyphicon glyphicon-remove remove-deputy" data-toggle="tooltip" data-placement="right" title="Remove deputy"></span>
+								</div>
+								<form:input path="email" name="deputyEmail" cssClass="form-control deputy-email-input" style="display:none"/>
 							</c:if>
 							<c:if test="${empty mydeputy}">
-								<form:input path="email" name="deputyEmail" cssClass="form-control" />
+								<form:input path="email" name="deputyEmail" cssClass="form-control deputy-email-input" />
 							</c:if>
 						</div>
 					</div>
@@ -184,6 +191,18 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
+	$(".remove-deputy").click(function() {
+		$.ajax({
+			url : "<spring:url value='/removeDeputy.html' />",
+			type : "post",
+			success : function(data) {
+				if (data == "true") {
+					$('.deputy-assigned').hide();
+					$('.deputy-email-input').show();
+				}
+			}
+		});
+	});
 	$(".change-password-form").validate(
 		{
 			rules : {

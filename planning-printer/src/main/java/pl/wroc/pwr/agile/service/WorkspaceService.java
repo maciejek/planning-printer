@@ -62,6 +62,12 @@ public class WorkspaceService {
         save(currentWorkspace);
     }
     
+    public void removeDeputy() {
+        Workspace currentWorkspace = getCurrentWorkspace();
+        User deputy = currentWorkspace.getDeputy();
+        userRepository.delete(deputy);
+    }
+    
     public List<Employee> findDevelopersInWorkspace() {
         List<Employee> developers = new LinkedList<Employee>();
         List<Employee> employees = getCurrentWorkspace().getEmployees();
@@ -97,11 +103,8 @@ public class WorkspaceService {
         Collection<UserStory> userStories = new ArrayList<UserStory>();
         for (UserStory userStory : findUserStoriesInWorkspace()) {
             Set<Task> tasks = findIncompleteTasksInUserStory(userStory);
-            if (tasks.size() > 0) {
-                userStory.setTasks(tasks);
-                userStories.add(userStory);
-            }
             userStory.setTasks(tasks);
+            userStories.add(userStory);
         }
         return userStories;
     }
