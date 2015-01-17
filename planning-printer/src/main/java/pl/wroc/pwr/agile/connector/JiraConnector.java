@@ -5,6 +5,8 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.stereotype.Component;
 
 import pl.wroc.pwr.agile.jiraExt.JiraRetreiver;
@@ -14,8 +16,13 @@ import com.google.api.client.util.Maps;
 @Component
 public class JiraConnector {
 
-    JiraRetreiver retreiver = new JiraRetreiver();
-
+    JiraRetreiver retreiver;
+    
+    @PostConstruct
+    private void initJiraRetreiver() {
+        retreiver = new JiraRetreiver();
+    }
+    
     public Set<String> getProjects(String jiraUrl, String jiraLogin, String jiraPassword) {
         Set<String> result = new HashSet<String>();
         try {
@@ -36,7 +43,6 @@ public class JiraConnector {
         catch(Exception e) {
             return result;
         }
-        
     }
     
     private String getProjectIdForProjectName(String projectName) throws InterruptedException, ExecutionException {

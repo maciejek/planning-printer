@@ -51,10 +51,16 @@
 						<c:forEach items="${userStory.tasks}" var="task">
 							<tr class="task" data-id="${task.id}" data-story-id="${userStory.id}" data-complete="${task.complete}">
 								<td colspan="3">${task.summary}</td>
-							</tr>
-							
+							</tr>	
 						</c:forEach>
 					</c:forEach>
+					<c:if test="${jiraExists eq true}"> 
+						<tr class="jira">
+							<td></td>
+							<td class="text-center"><strong>Add more user stories from Jira...</strong></td>
+							<td></td>
+						</tr>
+					</c:if>
 				</tbody>
 			</table>
 		</div>
@@ -64,7 +70,9 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$('#jiraModal').modal('show') 
+	$('.user-stories tr.jira').click(function() {
+		$('#jiraModal').modal('show')
+	});
 	$('.user-stories tr.task').click(function() {
 		var task = $(this);
 		

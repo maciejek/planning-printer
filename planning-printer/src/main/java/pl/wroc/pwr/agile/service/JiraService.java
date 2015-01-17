@@ -15,50 +15,54 @@ public class JiraService {
 
     @Autowired
     private UserRepository userRepository;
-    
+
     @Autowired
     private UserService userService;
-    
+
     @Autowired
     private UserStoryService userStoryService;
-    
+
     @Autowired
     private TaskService taskService;
-    
+
     @Autowired
     private JiraConnector jiraConnector;
-    
-    public User saveJiraCredentials(String jiraUrl, String jiraLogin, String jiraPassword) {
+
+    public User saveJiraCredentials(String jiraUrl, String jiraLogin,
+            String jiraPassword) {
         User loggedUser = userService.getLoggedUser();
         loggedUser.setJiraLogin(jiraLogin);
         loggedUser.setJiraPassword(jiraPassword);
         loggedUser.setJiraUrl(jiraUrl);
-        return userRepository.save(loggedUser);       
+        return userRepository.save(loggedUser);
     }
-    
+
     public User saveJiraProject(String projectName) {
         User loggedUser = userService.getLoggedUser();
         loggedUser.setJiraProject(projectName);
         return userRepository.save(loggedUser);
     }
-    
+
     public boolean importDataFromJira() {
-        try {
-            User loggedUser = userService.getLoggedUser();
-            transformJiraRawDataToUsAndTasks(jiraConnector.getUserStoriesWithTasks(loggedUser.getJiraUrl(), loggedUser.getJiraLogin(), loggedUser.getJiraPassword(), loggedUser.getJiraProject()));
-            return true;
-        }
-        catch(Exception e) {
-            System.out.println(e);
+        User loggedUser = userService.getLoggedUser();
+        Map<String, Iterable<String>> rawJiraData = jiraConnector
+                .getUserStoriesWithTasks(loggedUser.getJiraUrl(),
+                        loggedUser.getJiraLogin(),
+                        loggedUser.getJiraPassword(),
+                        loggedUser.getJiraProject());
+        if (rawJiraData.isEmpty()) {
             return false;
         }
-        
+        transformJiraRawDataToUsAndTasks(rawJiraData);
+        return true;
+
     }
-    
-    private void transformJiraRawDataToUsAndTasks(Map<String, Iterable<String>> rawJiraData) {
-        for(String us : rawJiraData.keySet()) {
+
+    private void transformJiraRawDataToUsAndTasks(
+            Map<String, Iterable<String>> rawJiraData) {
+        for (String us : rawJiraData.keySet()) {
             int usId = userStoryService.save("", "?", us);
-            for(String taskSummary : rawJiraData.get(us)) {
+            for (String taskSummary : rawJiraData.get(us)) {
                 Task task = new Task();
                 task.setSummary(taskSummary);
                 task.setUserStory(userStoryService.findById(usId));

@@ -83,6 +83,7 @@ public class WorkspaceController {
             Collections.sort(userStories);
             model.addAttribute("userStories", userStories);
         }
+        model.addAttribute("jiraExists", userService.getLoggedUser().getJiraUrl()!=null);
         return "step2";
     }
     
