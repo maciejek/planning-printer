@@ -34,101 +34,131 @@ import pl.wroc.pwr.agile.repository.UserStoryRepository;
  */
 
 public class UserStoryServiceTest {
-	
- 	private static final int USER_STORY_ID = 99;
-	private static final String NUMBER = "US01-test";
-	private static final String POINTS = "5";
-    private static final String POINTS_EDITED = "8";
-	private static final String SUMMARY = "Testowy opis user story";
-	
-	@Mock
-	private UserStory userStory;
-	
-	@InjectMocks
-	@Autowired
-	private UserStoryService userStoryService;
-	
-	@Mock
-	private UserStoryRepository storyRepository;	
-	
-	@Mock
-	private Workspace workSpace;
-	
-	@Mock
-	private UserService userService;
-	
-	@Mock
-	private User user;
-	
-	@Before
-	public void initMocks(){
-		MockitoAnnotations.initMocks(this);
-	}
 
-	@Test
-	public void shouldFindAllInvokeFindAllOnRepository(){
-		userStoryService.findAllUserStory();
-		Mockito.verify(storyRepository).findAll();
-	}
-	
-	@Test
-	public void shouldFindOneWithIdInvokeFindAllOnRepository(){
-		userStoryService.getUserStoryById(USER_STORY_ID);
-		Mockito.verify(storyRepository).findOne(USER_STORY_ID);
-	}
-	 
-	@Test
-	public void shouldFindUserStoryById(){
-		userStoryService.save(userStory);
-		when(storyRepository.findOne(userStory.getId())).thenReturn(userStory);
-		UserStory userStoryById = userStoryService.getUserStoryById(userStory.getId());
-		Assert.assertEquals(userStory.getId(), userStoryById.getId());
-		userStoryService.delete(userStory.getId());
-	}
-	
-	@Test
-	public void shouldFindTasksByUserStoryId(){
-		userStoryService.save(userStory);
-		when(storyRepository.findOne(userStory.getId())).thenReturn(userStory);
-		Collection<Task> tasksByUserStoryId = userStoryService.getTasksByUserStoryId(userStory.getId());
-		Assert.assertEquals(userStory.getTasks().size(), tasksByUserStoryId.size());
-		userStoryService.delete(userStory.getId());
-	}
-	
-	@Test
-	public void shouldSaveStory(){
-		 ArgumentCaptor<UserStory> storyCaptor = ArgumentCaptor.forClass(UserStory.class);
-		 when(storyRepository.save(Matchers.any(UserStory.class))).thenReturn(userStory);
-		 when(userService.getLoggedUser()).thenReturn(user);
-		 userStoryService.save(NUMBER, POINTS, SUMMARY);
-		 
-		 verify(storyRepository).save(storyCaptor.capture());
-		 
-		 assertThat(storyCaptor.getValue().getNumber(), is(NUMBER));
-	     assertThat(storyCaptor.getValue().getPoints(), is(POINTS));
-	     assertThat(storyCaptor.getValue().getSummary(),is(SUMMARY));
-	}
-	
-	@Test
-	public void shouldDeleteStory(){
-		userStoryService.delete(USER_STORY_ID);
-		verify(storyRepository).delete(USER_STORY_ID);
-	}
-	
-	@Ignore
-	public void shouldEditUserStory() {
-	    UserStory userStory = new UserStory();
-	    userStory.setNumber(NUMBER);
-	    userStory.setSummary(SUMMARY);
-	    userStory.setPoints(POINTS);
-	    
-	    when(storyRepository.findOne(Matchers.any(Integer.class))).thenReturn(userStory);
-	    
-	    UserStory usEdited = userStoryService.editUserStory(USER_STORY_ID, NUMBER, POINTS_EDITED, SUMMARY);
-	    
-	    assertThat(usEdited.getPoints(), is(POINTS_EDITED));
-	    assertThat(usEdited.getPoints(), not(is(POINTS)));
-	}
-	
-	
+    private static final int USER_STORY_ID = 99;
+    private static final String NUMBER = "US01-test";
+    private static final String POINTS = "5";
+    private static final String POINTS_EDITED = "8";
+    private static final String SUMMARY = "Testowy opis user story";
+
+    @Mock
+    private UserStory userStory;
+
+    @InjectMocks
+    @Autowired
+    private UserStoryService userStoryService;
+
+    @Mock
+    private UserStoryRepository storyRepository;
+
+    @Mock
+    private Workspace workSpace;
+
+    @Mock
+    private UserService userService;
+
+    @Mock
+    private User user;
+
+    @Before
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
+
+    @Test
+    public void shouldFindAllInvokeFindAllOnRepository() {
+        userStoryService.findAllUserStory();
+        Mockito.verify(storyRepository).findAll();
+    }
+
+    @Test
+    public void shouldFindOneWithIdInvokeFindAllOnRepository() {
+        userStoryService.getUserStoryById(USER_STORY_ID);
+        Mockito.verify(storyRepository).findOne(USER_STORY_ID);
+    }
+
+    @Test
+    public void shouldFindUserStoryById() {
+        userStoryService.save(userStory);
+        when(storyRepository.findOne(userStory.getId())).thenReturn(userStory);
+        UserStory userStoryById = userStoryService.getUserStoryById(userStory
+                .getId());
+        Assert.assertEquals(userStory.getId(), userStoryById.getId());
+        userStoryService.delete(userStory.getId());
+    }
+
+    @Test
+    public void shouldFindTasksByUserStoryId() {
+        userStoryService.save(userStory);
+        when(storyRepository.findOne(userStory.getId())).thenReturn(userStory);
+        Collection<Task> tasksByUserStoryId = userStoryService
+                .getTasksByUserStoryId(userStory.getId());
+        Assert.assertEquals(userStory.getTasks().size(),
+                tasksByUserStoryId.size());
+        userStoryService.delete(userStory.getId());
+    }
+
+    @Test
+    public void shouldSaveStory() {
+        ArgumentCaptor<UserStory> storyCaptor = ArgumentCaptor
+                .forClass(UserStory.class);
+        UserStory userStory = getDummyUserStory();
+        userStory.setId(USER_STORY_ID);
+        when(storyRepository.save(Matchers.any(UserStory.class))).thenReturn(
+                userStory);
+        when(userService.getLoggedUser()).thenReturn(user);
+        Integer storyId = userStoryService.save(NUMBER, POINTS, SUMMARY);
+
+        verify(storyRepository).save(storyCaptor.capture());
+
+        assertThat(storyId, is(USER_STORY_ID));
+        assertThat(storyCaptor.getValue().getNumber(), is(NUMBER));
+        assertThat(storyCaptor.getValue().getPoints(), is(POINTS));
+        assertThat(storyCaptor.getValue().getSummary(), is(SUMMARY));
+    }
+
+    @Test
+    public void shouldReturnMinusWhenUserStoryNotSaved() {
+        UserStory userStory = getDummyUserStory();
+        when(storyRepository.save(Matchers.any(UserStory.class))).thenReturn(
+                userStory);
+        when(userService.getLoggedUser()).thenReturn(user);
+        Integer storyId = userStoryService.save(NUMBER, POINTS, SUMMARY);
+
+        assertThat(storyId, is(-1));
+    }
+
+    @Test
+    public void shouldDeleteStory() {
+        userStoryService.delete(USER_STORY_ID);
+        verify(storyRepository).delete(USER_STORY_ID);
+    }
+    
+    @Test
+    public void shouldEditUserStory() {
+        ArgumentCaptor<UserStory> storyCaptor = ArgumentCaptor
+                .forClass(UserStory.class);
+        
+        UserStory userStory = new UserStory();
+        userStory.setNumber(NUMBER);
+        userStory.setSummary(SUMMARY);
+        userStory.setPoints(POINTS);
+        
+        when(storyRepository.findOne(Matchers.any(Integer.class))).thenReturn(userStory);
+        
+        userStoryService.edit(USER_STORY_ID, NUMBER, POINTS_EDITED, SUMMARY);
+        
+        verify(storyRepository).save(storyCaptor.capture());
+        assertThat(storyCaptor.getValue().getPoints(), is(POINTS_EDITED));
+        assertThat(storyCaptor.getValue().getPoints(), not(is(POINTS)));
+    }
+
+    private UserStory getDummyUserStory() {
+        UserStory userStory = new UserStory();
+        userStory.setNumber(NUMBER);
+        userStory.setPoints(POINTS);
+        userStory.setSummary(SUMMARY);
+        return userStory;
+    }
+
 }

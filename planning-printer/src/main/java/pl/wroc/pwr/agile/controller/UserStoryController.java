@@ -44,15 +44,7 @@ public class UserStoryController {
             @RequestParam String summary, @RequestParam String points, Model model, 
             @RequestParam Boolean planning) {
         
-        UserStory story = new UserStory();
-        story.setNumber(number);
-        story.setSummary(summary);
-        story.setPoints(points);
-        story.setComplete(false);
-        story.setWorkspace(userService.getLoggedUser().getWorkspace());
-        story.setTasks(new HashSet<Task>());
-
-        userStoryService.save(story);
+        userStoryService.save(number, points, summary);
         
         List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findIncompleteUserStories());
         if (!userStories.isEmpty()) {
@@ -81,13 +73,9 @@ public class UserStoryController {
     @RequestMapping(value="/editStory", method=RequestMethod.POST, produces = "text/html")
     public String editStory(@RequestParam String storyId, @RequestParam String number, 
             @RequestParam String summary, @RequestParam String points, Model model, 
-            @RequestParam Boolean planning){
-		
-        UserStory storyToEdit = userStoryService.getUserStoryById(Integer.valueOf(storyId));
-		storyToEdit.setNumber(number);
-		storyToEdit.setPoints(points);
-		storyToEdit.setSummary(summary);
-		userStoryService.save(storyToEdit);
+            @RequestParam Boolean planning) {
+        
+		userStoryService.edit(Integer.parseInt(storyId), number, points, summary);
 		
         List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findIncompleteUserStories());
         if (!userStories.isEmpty()) {
