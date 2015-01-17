@@ -24,6 +24,8 @@ public class UserStory implements Comparable<UserStory>{
     private String summary;
 
 	private String points;
+	
+	private Boolean complete = true;
 
 	@ManyToOne
     private Workspace workspace;
@@ -77,6 +79,14 @@ public class UserStory implements Comparable<UserStory>{
 
     public void setTasks(Set<Task> tasks) {
         this.tasks = tasks;
+    }
+    
+    public Boolean getComplete() {
+        return complete;
+    }
+
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
     }
 
 	@Override

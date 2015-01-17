@@ -14,7 +14,7 @@
         <p>Do you want to import user stories and tasks from your Jira project to this planning?&hellip;</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+        <button type="button" class="btn btn-default jira-no-button" data-dismiss="modal">No</button>
         <button type="button" class="btn btn-primary" onclick="add_all_from_jira()" >Yes</button>
       </div>
     </div>
@@ -93,38 +93,12 @@ $(document).ready(function() {
 		}
 	});
 	function select_task(task) {
-		$.ajax({
-			url : "<spring:url value='task/setTaskIncomplete.html' />",
-			type : "post",
-			data : {
-				taskId : function() {
-					return task.data("id");
-				}
-			},
-			success : function(data) {
-				if (data == "true") {
-					task.addClass('selected');
-					select_or_deselect_user_story(task.data('story-id'));
-				}
-			}
-		});
+		task.addClass('selected');
+		select_or_deselect_user_story(task.data('story-id'));
 	}
 	function deselect_task(task) {
-		$.ajax({
-			url : "<spring:url value='task/setTaskComplete.html' />",
-			type : "post",
-			data : {
-				taskId : function() {
-					return task.data("id");
-				}
-			},
-			success : function(data) {
-				if (data == "true") {
-					task.removeClass('selected');
-					select_or_deselect_user_story(task.data('story-id'));
-				}
-			}
-		});
+		task.removeClass('selected');
+		select_or_deselect_user_story(task.data('story-id'));
 	}
 	function select_or_deselect_user_story(story_id) {
 		var story = $('.user-stories .story[data-id="' + story_id + '"]').eq(0);

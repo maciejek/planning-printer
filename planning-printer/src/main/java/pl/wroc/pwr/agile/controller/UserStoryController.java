@@ -39,24 +39,16 @@ public class UserStoryController {
     @Autowired
     private TaskService taskService;
     
-    @RequestMapping(value="/loadStep2", method = RequestMethod.POST, produces = "text/html")
-    public String loadStep2(Model model) {
-        List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findUserStoriesInWorkspace());
-        if (!userStories.isEmpty()) {
-            Collections.sort(userStories);
-            model.addAttribute("userStories", userStories);
-        }
-        return "step2";
-    }
-    
     @RequestMapping(value = "/addStory", produces = "text/html")
     public String addStory(@RequestParam String number,
-            @RequestParam String summary, @RequestParam String points, Model model) {
+            @RequestParam String summary, @RequestParam String points, Model model, 
+            @RequestParam Boolean planning) {
         
         UserStory story = new UserStory();
         story.setNumber(number);
         story.setSummary(summary);
         story.setPoints(points);
+        story.setComplete(false);
         story.setWorkspace(userService.getLoggedUser().getWorkspace());
         story.setTasks(new HashSet<Task>());
 
@@ -68,11 +60,12 @@ public class UserStoryController {
             model.addAttribute("stories", userStories);
         }
 
+        model.addAttribute("planning", planning);
         return "step3";
     }
     
     @RequestMapping(value = "/removeStory", produces = "text/html")
-    public String removeStory(@RequestParam Integer id, Model model) {
+    public String removeStory(@RequestParam Integer id, Model model, @RequestParam Boolean planning) {
         userStoryService.delete(id);
         
         List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findIncompleteUserStories());
@@ -81,11 +74,14 @@ public class UserStoryController {
             model.addAttribute("stories", userStories);
         }
 
+        model.addAttribute("planning", planning);
         return "step3";
     }
     
     @RequestMapping(value="/editStory", method=RequestMethod.POST, produces = "text/html")
-    public String editStory(@RequestParam String storyId, @RequestParam String number, @RequestParam String summary, @RequestParam String points, Model model){
+    public String editStory(@RequestParam String storyId, @RequestParam String number, 
+            @RequestParam String summary, @RequestParam String points, Model model, 
+            @RequestParam Boolean planning){
 		
         UserStory storyToEdit = userStoryService.getUserStoryById(Integer.valueOf(storyId));
 		storyToEdit.setNumber(number);
@@ -98,6 +94,8 @@ public class UserStoryController {
             Collections.sort(userStories);
             model.addAttribute("stories", userStories);
         }
+        
+        model.addAttribute("planning", planning);
 		return "step3";
     }
 

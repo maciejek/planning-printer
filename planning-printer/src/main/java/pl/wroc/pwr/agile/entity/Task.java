@@ -7,7 +7,7 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Size;
 
 @Entity
-public class Task {
+public class Task implements Comparable<Task> {
     
     @Id
     @GeneratedValue
@@ -25,14 +25,14 @@ public class Task {
     @ManyToOne
     private UserStory userStory;
     
-    private Boolean complete = false; 
+    private Boolean complete = true; 
     
 	public Boolean getComplete() {
         return complete;
     }
 
-    public void setComplete(Boolean finished) {
-        this.complete = finished;
+    public void setComplete(Boolean complete) {
+        this.complete = complete;
     }
 
     public UserStory getUserStory() {
@@ -98,5 +98,10 @@ public class Task {
         } else if (!id.equals(other.id))
             return false;
         return true;
+    }
+
+    @Override
+    public int compareTo(Task task) {
+        return (this.id).compareTo(task.id);
     }
 }

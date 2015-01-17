@@ -23,7 +23,7 @@
 	</div>
 	<div class="planning-step col-md-12" id="step1">
 		<div class="row">
-			<p>Step 1 here</p>
+			<p>Specify hours for each member of your team.</p>
 			<br />
 			<div class="col-md-1"></div>
 			<div class="col-md-10">
@@ -43,7 +43,7 @@
 							<tbody>
 								<c:forEach items="${developers}" var="developer">
 									<tr>
-										<td>${developer.name}${developer.surname}</td>
+										<td>${developer.name} ${developer.surname}</td>
 										<td class="text-center"><input type="text"
 											class="developers-hours-input form-control"></td>
 									</tr>
@@ -74,7 +74,7 @@
 							<tbody>
 								<c:forEach items="${testers}" var="tester">
 									<tr>
-										<td>${tester.name}${tester.surname}</td>
+										<td>${tester.name} ${tester.surname}</td>
 										<td class="text-center"><input type="text"
 											class="testers-hours-input form-control"></td>
 									</tr>
@@ -132,7 +132,6 @@
 			</nav>
 		</div>
 	</div>
-
 </div>
 
 <script type="text/javascript">
@@ -145,6 +144,10 @@ $(document).ready(function() {
 			$.ajax({
 				url : "<spring:url value='/task.html' />",
 				type : "post",
+				data : {
+					tasksJSONObject : get_incomplete_tasks_and_stories_as_json_object(),
+					planning : true
+				},
 				beforeSend : function() {
 					display_loader();
 				},
@@ -156,7 +159,7 @@ $(document).ready(function() {
 			});
 		} else if (stepId == "#step2") {
 			$.ajax({
-				url : "<spring:url value='/story/loadStep2.html' />",
+				url : "<spring:url value='/planning/loadStep2.html' />",
 				type : "post",
 				beforeSend : function() {
 					display_loader();
@@ -171,12 +174,6 @@ $(document).ready(function() {
 			go_to_step(stepId);
 		}
 	});
-	function go_to_step(stepId) {
-		$('.nav-step').removeClass('active');
-		$(stepId + '-nav').addClass('active');
-		$('.planning-step').hide();
-		$(stepId).show();
-	}
 	$('.developers-hours-input').blur(function() {
 		var hours = $('.developers-hours-input');
 		$('#developers-hours-sum').text(sum_input_values(hours));
