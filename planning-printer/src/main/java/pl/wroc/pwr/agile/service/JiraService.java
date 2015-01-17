@@ -65,7 +65,7 @@ public class JiraService {
             for (String taskSummary : rawJiraData.get(us)) {
                 Task task = new Task();
                 task.setSummary(taskSummary);
-                task.setUserStory(userStoryService.findById(usId));
+                task.setUserStory(userStoryService.getUserStoryById(usId));
                 taskService.saveTask(task);
             }
         }
