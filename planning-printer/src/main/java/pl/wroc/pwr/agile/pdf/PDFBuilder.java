@@ -1,4 +1,4 @@
-package pl.wroc.pwr.agile.annotation;
+package pl.wroc.pwr.agile.pdf;
 
 import java.util.List;
 import java.util.Map;
@@ -17,17 +17,13 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
-import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.text.pdf.draw.LineSeparator;
 
 /**
- * This view class generates a PDF document 'on the fly' based on the data
- * contained in the model.
  * 
- * @author www.codejava.net
+ * @author wposlednicka
  *
  */
 public class PDFBuilder extends AbstractITextPdfView {
@@ -35,7 +31,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 	@Override
 	protected void buildPdfDocument(Map<String, Object> model, Document doc, PdfWriter writer, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		// get data model which is passed by the Spring container
+		
 		List<UserStory> listStories = (List<UserStory>) model.get("listStories");
 
 		doc.add(new Paragraph("User stories:"));
@@ -43,20 +39,21 @@ public class PDFBuilder extends AbstractITextPdfView {
 		for (UserStory story : listStories) {
 			PdfPTable userStoryTable = createUserStoryTable(story);
 			doc.add(userStoryTable);
-//			doc.add(new LineSeparator());
-
-			Set<Task> userStoryTasks = story.getTasks();
-
-			if (userStoryTasks != null) {
-
-				for (Task task : userStoryTasks) {
-					PdfPTable taskTable = createTaskTable(task);
-					doc.add(taskTable);
-//					doc.add(new LineSeparator());
-				}
-			}
+			addStoryTasksToPDF(doc, story);
 		}
 		
+	}
+
+	private void addStoryTasksToPDF(Document doc, UserStory story) throws DocumentException {
+		Set<Task> userStoryTasks = story.getTasks();
+
+		if (userStoryTasks != null) {
+
+			for (Task task : userStoryTasks) {
+				PdfPTable taskTable = createTaskTable(task);
+				doc.add(taskTable);
+			}
+		}
 	}
 
 	private PdfPTable createTaskTable(Task task) throws DocumentException {
