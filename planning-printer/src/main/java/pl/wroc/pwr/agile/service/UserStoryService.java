@@ -15,55 +15,56 @@ import pl.wroc.pwr.agile.repository.UserStoryRepository;
 @Transactional
 public class UserStoryService {
 
-	@Autowired
-	private UserStoryRepository userStoryRepository;
-	
-	@Autowired
-	private UserService userService;
-	
-	public UserStory save(UserStory userStory){
-		return userStoryRepository.save(userStory);
-	}
-	
-	public void delete(Integer userStoryId){
-		userStoryRepository.delete(userStoryId);
-	}
-	
-	public UserStory getUserStoryById(Integer id){
-		return userStoryRepository.findOne(id);
-	}
-	
-	public Collection<Task> getTasksByUserStoryId(Integer userStoryId){
-		UserStory story = userStoryRepository.findOne(userStoryId);
-		return story.getTasks();
-	}
-	
-	public List<UserStory> findAllUserStory(){
-		return userStoryRepository.findAll();
-	}
-	
-	public Integer save(String number, String points, String summary) {
-	    UserStory userStory = new UserStory();
-	    userStory.setNumber(number);
-	    userStory.setPoints(points);
-	    userStory.setSummary(summary);
-	    userStory.setTasks(new java.util.HashSet<Task>());
-	    userStory.setWorkspace(userService.getLoggedUser().getWorkspace());
-	    userStory = userStoryRepository.save(userStory);
-	       
-	    Integer userStoryId = -1;
-	        
-	    if (userStory.getId() != null) {
-	       	userStoryId = userStory.getId();
-	    }
-	    return userStoryId;
-	 }
-	
-	UserStory findById(int id) {
-	    return userStoryRepository.findOne(id);
-	}
-	
-	public UserStory editUserStory(Integer id, String number, String points, String summary) {
-	    return new UserStory();
-	}
+    @Autowired
+    private UserStoryRepository userStoryRepository;
+
+    @Autowired
+    private UserService userService;
+
+    public UserStory save(UserStory userStory) {
+        return userStoryRepository.save(userStory);
+    }
+
+    public void delete(Integer userStoryId) {
+        userStoryRepository.delete(userStoryId);
+    }
+
+    public UserStory getUserStoryById(Integer id) {
+        return userStoryRepository.findOne(id);
+    }
+
+    public Collection<Task> getTasksByUserStoryId(Integer userStoryId) {
+        UserStory story = userStoryRepository.findOne(userStoryId);
+        return story.getTasks();
+    }
+
+    public List<UserStory> findAllUserStory() {
+        return userStoryRepository.findAll();
+    }
+
+    public Integer save(String number, String points, String summary) {
+        UserStory userStory = new UserStory();
+        userStory.setNumber(number);
+        userStory.setPoints(points);
+        userStory.setSummary(summary);
+        userStory.setComplete(false);
+        userStory.setTasks(new java.util.HashSet<Task>());
+        userStory.setWorkspace(userService.getLoggedUser().getWorkspace());
+        userStory = userStoryRepository.save(userStory);
+
+        Integer userStoryId = -1;
+
+        if (userStory.getId() != null) {
+            userStoryId = userStory.getId();
+        }
+        return userStoryId;
+    }
+
+    public void edit(Integer id, String number, String points, String summary) {
+        UserStory storyToEdit = getUserStoryById(id);
+        storyToEdit.setNumber(number);
+        storyToEdit.setPoints(points);
+        storyToEdit.setSummary(summary);
+        save(storyToEdit);
+    }
 }

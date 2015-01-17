@@ -64,20 +64,10 @@ public class TaskController {
     public String addTask(@RequestParam String summary, @RequestParam String estimation,
             @RequestParam String storyId, @RequestParam String taskType, @RequestParam String number, 
             Model model, @RequestParam Boolean planning) {
-        Task task = new Task();
-        
-        UserStory userStoryById = userStoryService.getUserStoryById(Integer.parseInt(storyId));
-        task.setNumber(number);
-        task.setUserStory(userStoryById);
-        task.setEstimation(Double.parseDouble(estimation));
-        task.setSummary(summary);
-        task.setComplete(false);
-        if (taskType.equals("DEV")) {
-            task.setType(TaskType.DEVELOPER_TASK);
-        } else {
-            task.setType(TaskType.TESTER_TASK);
-        }
-        taskService.saveTask(task);
+
+        TaskType type = taskType.equals("DEV") ? TaskType.DEVELOPER_TASK : TaskType.TESTER_TASK;
+        UserStory userStory = userStoryService.getUserStoryById(Integer.parseInt(storyId));
+        taskService.save(number, estimation, summary, type, userStory);
         
         List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findIncompleteUserStories());
         if (!userStories.isEmpty()) {
