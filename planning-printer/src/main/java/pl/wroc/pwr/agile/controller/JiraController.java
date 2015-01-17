@@ -65,6 +65,7 @@ public class JiraController {
         else {
             model.addAttribute("importFailure", true);
         }
+        model.addAttribute("alreadyImported", true);
         List<UserStory> userStories = new ArrayList<UserStory>(workspaceService.findUserStoriesInWorkspace());
         if (!userStories.isEmpty()) {
             Collections.sort(userStories);

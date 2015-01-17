@@ -134,6 +134,10 @@ label.error {
 	background-color: #c4e3f3;
 }
 
+.user-stories tr.jira {
+	background-color: #808080;
+}
+
 .user-story-tr .story-number { width:100px; }
 .user-story-tr .story-summary { padding-left:20px; }
 .user-story-tr .story-points { width:100px; }
