@@ -13,6 +13,7 @@
 		<intercept-url pattern="/planning**" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/createTeam**" access="hasRole('ROLE_USER')" />
 		<intercept-url pattern="/story**" access="hasRole('ROLE_USER')" />
+		<intercept-url pattern="/replanning**" access="hasRole('ROLE_USER')" />
 		<form-login login-page="/login.html" />
 		<logout logout-url="/logout" />
 	</http>

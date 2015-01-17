@@ -70,35 +70,37 @@
 		</div>
 	</div>
 	<div class="col-md-1"></div>
-	
-	<div class="panel panel-default hours-state" style="position:fixed; bottom: 10px; right: 40px">
-		<table class="table">
-			<tr>
-				<td style="text-align:right">
-					Developer tasks hours:<br/>
-					Developers hours:<br/>
-					Summary:
-				</td>
-				<td style="text-align:center">
-					<span class="hours dev-total-hours">0</span><br/>
-					<span class="hours dev-team-hours">0</span><br/>
-					<span class="hours dev-summary">0</span>
-				</td>
-			</tr>
-			<tr>
-				<td style="text-align:right">
-					Tester tasks hours:<br/>
-					Testers hours:<br/>
-					Summary:
-				</td>
-				<td style="text-align:center">
-					<span class="hours test-total-hours">0</span><br/>
-					<span class="hours test-team-hours">0</span><br/>
-					<span class="hours test-summary">0</span>
-				</td>
-			</tr>
-		</table>
-	</div>
+
+	<c:if test="${planning eq true}">
+		<div class="panel panel-default hours-state" style="position:fixed; bottom: 10px; right: 40px">
+			<table class="table">
+				<tr>
+					<td style="text-align:right">
+						Developer tasks hours:<br/>
+						Developers hours:<br/>
+						Summary:
+					</td>
+					<td style="text-align:center">
+						<span class="hours dev-total-hours">0</span><br/>
+						<span class="hours dev-team-hours">0</span><br/>
+						<span class="hours dev-summary">0</span>
+					</td>
+				</tr>
+				<tr>
+					<td style="text-align:right">
+						Tester tasks hours:<br/>
+						Testers hours:<br/>
+						Summary:
+					</td>
+					<td style="text-align:center">
+						<span class="hours test-total-hours">0</span><br/>
+						<span class="hours test-team-hours">0</span><br/>
+						<span class="hours test-summary">0</span>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</c:if>
 	
 	<div class="modal fade" id="popupAddTask" tabindex="-1"
 		role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -285,16 +287,33 @@
 	</div>
 </div>
 <div class="row">
-    <div align="center">
-		<a href="./planning/downloadPDF.pdf" class="btn btn-primary btn-default generate-pdf">Generuj PDF <span class="glyphicon glyphicon-file"></span></a>
+    <div align="center" class="planning-button">
+    	<input type="hidden" value="${planning}" id="planning-variable"/>
+    	<c:if test="${planning eq true}">
+			<a style="display: none" href="./planning/downloadPDF.pdf" class="btn btn-primary btn-default generate-pdf">Generuj PDF <span class="glyphicon glyphicon-file"></span></a>
+	    	<button type="button" id="finishPlanning" data-loading-text="Loading..." class="btn btn-primary" autocomplete="off">
+	  			Finish planning
+			</button>
+		</c:if>
+		<c:if test="${planning eq false}">
+			<a href="./replanning/downloadPDF.pdf" class="btn btn-primary btn-default generate-pdf">Generuj PDF <span class="glyphicon glyphicon-file"></span></a>
+		</c:if>
     </div>
 </div>
 
 <script type="text/javascript">
 $(document).ready(function() {
+	var planning_variable = $('#planning-variable').val() == "true" ? true : false;
 	$('[data-tooltip="tooltip"]').tooltip();
-	$('.generate-pdf').click(function() {
-		
+	$('#finishPlanning').click(function() {
+		$.ajax({
+			url : "<spring:url value='/planning/finish.html' />",
+			type : "get",
+			success : function(response) {
+				$('.planning-button').find('button').hide();
+				$('.generate-pdf').show();
+			}
+		});
 	}); 
 	sum_task_hours();
 	function sum_task_hours() {
@@ -340,6 +359,7 @@ $(document).ready(function() {
 					points : function() {
 						return storyPoints;
 					},
+					planning : planning_variable
 				},
 				beforeSend : function() {
 					display_loader();
@@ -360,6 +380,7 @@ $(document).ready(function() {
 				id : function() {
 					return id;
 				},
+				planning : planning_variable
 			},
 			beforeSend : function() {
 				display_loader();
@@ -379,6 +400,7 @@ $(document).ready(function() {
 				id : function() {
 					return id;
 				},
+				planning : planning_variable
 			},
 			beforeSend : function() {
 				display_loader();
@@ -418,7 +440,8 @@ $(document).ready(function() {
 				},
 				number : function() {
 					return number;
-				}
+				},
+				planning : planning_variable
 			},
 			beforeSend : function() {
 				display_loader();
@@ -458,7 +481,8 @@ $(document).ready(function() {
 				},
 				number : function() {
 					return number;
-				}
+				},
+				planning : planning_variable
 			},
 			beforeSend : function() {
 				display_loader();
@@ -507,7 +531,8 @@ $(document).ready(function() {
 				},
 				number : function() {
 					return number;
-				}
+				},
+				planning : planning_variable
 			},
 			beforeSend : function() {
 				display_loader();

@@ -40,6 +40,12 @@ public class WorkspaceService {
     @Autowired
     private WorkspaceRepository workspaceRepository;
     
+    @Autowired
+    private UserStoryService userStoryService;
+    
+    @Autowired
+    private TaskService taskService;
+    
     public void save(Workspace workspace) {
         workspaceRepository.save(workspace);
     }
@@ -103,8 +109,14 @@ public class WorkspaceService {
         Collection<UserStory> userStories = new ArrayList<UserStory>();
         for (UserStory userStory : findUserStoriesInWorkspace()) {
             Set<Task> tasks = findIncompleteTasksInUserStory(userStory);
-            userStory.setTasks(tasks);
-            userStories.add(userStory);
+            if (tasks.size() > 0) {
+                userStory.setTasks(tasks);
+                userStories.add(userStory);
+            } else {
+                if (!userStory.getComplete()) {
+                    userStories.add(userStory);
+                }
+            }
         }
         return userStories;
     }
@@ -117,5 +129,60 @@ public class WorkspaceService {
             }
         }
         return incompleteTasks;
+    }
+    
+    public Collection<UserStory> findCompleteUserStories() {
+        Collection<UserStory> userStories = new ArrayList<UserStory>();
+        for (UserStory userStory : findUserStoriesInWorkspace()) {
+            Set<Task> tasks = findCompleteTasksInUserStory(userStory);
+            if (tasks.size() > 0) {
+                userStory.setTasks(tasks);
+                userStories.add(userStory);
+            }
+        }
+        return userStories;
+    }
+    
+    public Set<Task> findCompleteTasksInUserStory(UserStory userStory) {
+        Set<Task> completeTasks = new HashSet<Task>();
+        for (Task task : userStory.getTasks()) {
+            if (task.getComplete()) {
+                completeTasks.add(task);
+            }
+        }
+        return completeTasks;
+    }
+    
+    public void deleteAllCompletedUserStoriesAndTasks() {
+        List<UserStory> userStories = new ArrayList<UserStory>(findUserStoriesInWorkspace());
+        for (UserStory userStory : userStories) {
+            if (userStory.getComplete()) {
+                userStoryService.delete(userStory.getId());
+            } else {
+                deleteAllCompletedTasksInUserStory(userStory);
+            }
+        }
+    }
+    
+    public void deleteAllCompletedTasksInUserStory(UserStory userStory) {
+        List<Task> tasks = new ArrayList<Task>(userStory.getTasks());
+        for (Task task : tasks) {
+            if (task.getComplete()) {
+                taskService.deleteTaskById(task.getId());
+            }
+        }
+    }
+    
+    public void setAllTasksAndUserStoriesCompleted() {
+        List<UserStory> userStories = new ArrayList<UserStory>(findUserStoriesInWorkspace());
+        for (UserStory userStory : userStories) {
+            userStory.setComplete(true);
+            List<Task> tasks = new ArrayList<Task>(userStory.getTasks());
+            for (Task task : tasks) {
+                task.setComplete(true);
+            }
+            taskService.saveTasks(tasks);
+            userStoryService.save(userStory);
+        }
     }
 }
