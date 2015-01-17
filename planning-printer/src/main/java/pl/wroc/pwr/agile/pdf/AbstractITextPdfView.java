@@ -1,4 +1,4 @@
-package pl.wroc.pwr.agile.annotation;
+package pl.wroc.pwr.agile.pdf;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.util.Map;
@@ -14,8 +14,8 @@ import com.itextpdf.text.PageSize;
 import com.itextpdf.text.pdf.PdfWriter;
  
 /**
- * This class is a work around for working with iText 5.x in Spring.
- * The code here is almost identical to the AbstractPdfView class. 
+ * 
+ * @author wposlednicka
  *
  */
 public abstract class AbstractITextPdfView extends AbstractView {
