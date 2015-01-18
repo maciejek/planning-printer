@@ -21,6 +21,10 @@ public class UniqueEmailValidator implements ConstraintValidator<UniqueEmail, St
         if (userRepository == null) {
             return true;
         }
+        return userForGivenEmailDoesntExist(email);
+    }
+
+    private boolean userForGivenEmailDoesntExist(String email) {
         return userRepository.findByEmail(email) == null;
     }
 
