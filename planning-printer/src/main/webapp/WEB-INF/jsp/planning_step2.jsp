@@ -127,8 +127,12 @@ function add_all_from_jira() {
 		type : "post",
 		data : {
 		},
+		beforeSend : function() {
+			$('#jiraModal').modal('hide')
+			display_loader();
+		},
 		success : function(data) {
-
+			hide_loader();
 			$('#jiraModal').parent().html(data)
 			
 		}
