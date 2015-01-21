@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import pl.wroc.pwr.agile.jiraExt.JiraRetreiver;
 
 import com.google.api.client.util.Maps;
+import com.google.common.collect.Sets;
 
 @Component
 public class JiraConnector {

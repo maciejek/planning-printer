@@ -49,9 +49,9 @@ public class InitDbService {
             user1.setEmail("bugi@pwr.edu.pl");
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user1.setPassword(encoder.encode("bugi"));
-//            user1.setJiraLogin("tajemnica");
-//            user1.setJiraPassword("top secret");
-//            user1.setJiraUrl("http://176.119.37.132:9013");
+            user1.setJiraLogin("mradoszko");
+            user1.setJiraPassword("jira2014");
+            user1.setJiraUrl("http://176.119.37.132:9013");
 
             Workspace workspace = new Workspace();
             user1.setWorkspace(workspace);
@@ -81,7 +81,7 @@ public class InitDbService {
 
             UserStory story = new UserStory();
             story.setNumber("US01");
-            story.setSummary("Jako u¿ytkownik chcê ponownie wybraæ nieskoñczone taski.");
+            story.setSummary("As a User I want to choose unfinished tasks.");
             story.setPoints("5");
             story.setWorkspace(workspace);
 
@@ -89,7 +89,7 @@ public class InitDbService {
 
             Task t1 = new Task();
             t1.setNumber("T1");
-            t1.setSummary("Widok 4 : widok wybierania nieskoñczonych tasków.");
+            t1.setSummary("View for choosing");
             t1.setType(TaskType.DEVELOPER_TASK);
             t1.setEstimation(2.0D);
             t1.setUserStory(story);
@@ -97,7 +97,7 @@ public class InitDbService {
 
             Task t2 = new Task();
             t2.setNumber("T2");
-            t2.setSummary("Logika dodawania tasków w kontrolerze widoku.");
+            t2.setSummary("Logics for choosing");
             t2.setType(TaskType.DEVELOPER_TASK);
             t2.setEstimation(2.0D);
             t2.setUserStory(story);
@@ -106,7 +106,7 @@ public class InitDbService {
 
             UserStory story2 = new UserStory();
             story2.setNumber("US02");
-            story2.setSummary("Jako u¿ytkownik chcê dodawaæ do user story taski wraz z estymacjami.");
+            story2.setSummary("As a User I want to add tasks with estimations to a user story.");
             story2.setPoints("7");
             story2.setWorkspace(workspace);
 
@@ -114,7 +114,7 @@ public class InitDbService {
 
             Task t3 = new Task();
             t3.setNumber("T3");
-            t3.setSummary("Rozszerzenie widoku dodawania user story o wigdety potrzebne do dodawania tasków w wybranym US.");
+            t3.setSummary("Extension of adding us view with widgets needed for task adding.");
             t3.setType(TaskType.TESTER_TASK);
             t3.setEstimation(6.0D);
             t3.setUserStory(story2);

@@ -17,6 +17,7 @@ import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Paragraph;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.pdf.BaseFont;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -33,7 +34,7 @@ public class PDFBuilder extends AbstractITextPdfView {
 			HttpServletResponse response) throws Exception {
 		
 		List<UserStory> listStories = (List<UserStory>) model.get("listStories");
-
+		
 		doc.add(new Paragraph("User stories:"));
 
 		for (UserStory story : listStories) {
@@ -76,45 +77,45 @@ public class PDFBuilder extends AbstractITextPdfView {
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(2);
-		cellTask.setPhrase(new Phrase("Odpowiedzialny:", smallFont));
+		cellTask.setPhrase(new Phrase("Responsible:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		cellTask.setColspan(8);
-		cellTask.setPhrase(new Phrase("Darek"));
+		cellTask.setPhrase(new Phrase(""));
 		table.addCell(cellTask);
 		table.completeRow();
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(2);
-		cellTask.setPhrase(new Phrase("Estymacja:", smallFont));
+		cellTask.setPhrase(new Phrase("Estimation:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		cellTask.setColspan(8);
-		cellTask.setPhrase(new Phrase("5h"));
+		cellTask.setPhrase(new Phrase(task.getEstimation().toString()));
 		table.addCell(cellTask);
 		table.completeRow();
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(2);
-		cellTask.setPhrase(new Phrase("Spedzono:", smallFont));
+		cellTask.setPhrase(new Phrase("Spent:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		cellTask.setColspan(8);
-		cellTask.setPhrase(new Phrase("3h 30 min"));
+		cellTask.setPhrase(new Phrase(""));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		table.completeRow();
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(1);
-		cellTask.setPhrase(new Phrase("Dzien:", smallFont));
+		cellTask.setPhrase(new Phrase("Day:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		table.completeRow();
 
 		cellTask = new PdfPCell();
 		cellTask.setColspan(1);
-		cellTask.setPhrase(new Phrase("Czas:", smallFont));
+		cellTask.setPhrase(new Phrase("Spent:", smallFont));
 		cellTask.setPaddingBottom(5);
 		table.addCell(cellTask);
 		table.completeRow();
